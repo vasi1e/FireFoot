@@ -79,4 +79,8 @@ class UserService implements UserServiceInterface
         $user->addRole($userRole);
     }
 
+    public function isAdmin(User $user)
+    {
+        return in_array("ROLE_ADMIN", $user->getRoles());
+    }
 }

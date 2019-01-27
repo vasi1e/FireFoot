@@ -23,14 +23,14 @@ class Shoe
     private $id;
 
     /**
-     * @var string
+     * @var Brand
      *
      * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Brand", inversedBy="shoes")
      */
     private $brand;
 
     /**
-     * @var string
+     * @var Model
      *
      * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Model", inversedBy="shoes")
      */
@@ -88,21 +88,20 @@ class Shoe
     /**
      * Set brand
      *
-     * @param string $brand
+     * @param Brand $brand
      *
      * @return Shoe
      */
-    public function setBrand($brand)
+    public function setBrand(Brand $brand)
     {
         $this->brand = $brand;
-
         return $this;
     }
 
     /**
      * Get brand
      *
-     * @return string
+     * @return Brand
      */
     public function getBrand()
     {
@@ -112,21 +111,19 @@ class Shoe
     /**
      * Set model
      *
-     * @param string $model
+     * @param Model $model
      *
      * @return Shoe
      */
-    public function setModel($model)
+    public function setModel(Model $model)
     {
         $this->model = $model;
-
         return $this;
     }
 
     /**
      * Get model
-     *
-     * @return string
+     * @return Model
      */
     public function getModel()
     {

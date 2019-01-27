@@ -1,19 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form method="POST" action="{{ path('shoe_create') }}">
-        <div>
-            Brand: <label><input type="text" name="user[email]"></label>
-        </div>
-        {{ form_row(form.password.first) }}
-        {{ form_row(form.password.second) }}
-        <div>
-            Full Name: <label><input type="text" name="user[fullName]"></label>
-        </div>
-        <div>
-            <input type="submit" name="register" value="Register">
-        </div>
-        {{  form_row(form._token) }}
-
+    {% if(isAdmin) %}
+    <form method="POST" action="{{ path('admin_shoe_create') }}">
+        Brand: {{ form_widget(form.brand) }} Or: <input type="text" name="brandToAdd">
+        Model: <input type="text" name="modelToAdd">
+        <input type="submit" name="create" value="Create new shoe">
     </form>
+    {% else %}
+    <form method="POST" action="{{ path('shoe_create') }}">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" name="create" value="Create new shoe">
+        {{ form_end(form) }}
+    </form>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $('#shoe_brand').on('change',function () {
+            var brandSelector = $(this);
+
+            // Request the neighborhoods of the selected city.
+            $.ajax({
+                url: "{{ path('models_from_brands') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    brandid: brandSelector.val()
+                },
+                success: function (models) {
+                    var modelSelect = $("#shoe_model");
+
+                    // Remove current options
+                    modelSelect.html('');
+
+                    // Empty value ...
+                    modelSelect.append('<option value>Please select model</option>');
+
+
+                    $.each(models, function (key, model) {
+                        modelSelect.append('<option value="' + model.id + '">' + model.name + '</option>');
+                    });
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+            }).done(function(res){
+                console.log(res);
+            });
+        });
+    </script>
 {% endblock %}

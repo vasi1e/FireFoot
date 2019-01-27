@@ -18,4 +18,5 @@ interface UserServiceInterface
     public function isTheUserRegistered(User $user);
     public function encodePassword(UserInterface $user);
     public function setRole(User $user, $role);
+    public function isAdmin(User $user);
 }
