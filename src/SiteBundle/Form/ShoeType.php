@@ -33,8 +33,7 @@ class ShoeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('price')
-                ->add('condition', ChoiceType::class, [
+        $builder->add('condition', ChoiceType::class, [
                     'choices'  => [
                         'New' => 'new',
                         'Used' => 'used'

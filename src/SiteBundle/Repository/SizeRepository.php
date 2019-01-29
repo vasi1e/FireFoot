@@ -2,6 +2,10 @@
 
 namespace SiteBundle\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping;
+use SiteBundle\Entity\Size;
+
 /**
  * SizeRepository
  *
@@ -10,4 +14,52 @@ namespace SiteBundle\Repository;
  */
 class SizeRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * ModelRepository constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        parent::__construct($em, new Mapping\ClassMetadata(Size::class));
+    }
+
+    public function findShoeInTableShoeSizes($shoeId, $sizeId)
+    {
+        $statement = $this->_em->getConnection()->prepare(
+            'SELECT shoe_id AS shoeId, size_id AS sizeId, quantity FROM shoe_site.shoes_sizes
+                       WHERE shoe_id = :shoeId AND size_id = :sizeId'
+        );
+
+        $statement->execute([
+            'shoeId' => $shoeId,
+            'sizeId' => $sizeId
+        ]);
+
+        return $statement->fetch();
+    }
+
+    /**
+     * @param Size $size
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveSize(Size $size)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($size);
+        $em->flush();
+    }
+
+    public function saveShoeSize($shoeId, $sizeId, $quantity)
+    {
+        $statement = $this->_em->getConnection()->prepare(
+            'INSERT INTO shoe_site.shoes_sizes (shoe_id, size_id, quantity)
+                       VALUES (:shoeId, :sizeId, :quantity)'
+        );
+
+        $statement->execute([
+            'shoeId' => $shoeId,
+            'sizeId' => $sizeId,
+            'quantity' => $quantity
+        ]);
+    }
 }

@@ -84,7 +84,7 @@ class BrandModelService implements BrandModelServiceInterface
         else return false;
     }
 
-    public function isModelExisting(Model $model, $brandId)
+    public function isModelExisting(Model $currModel, $brandId)
     {
         $modelNames = [];
 
@@ -94,6 +94,6 @@ class BrandModelService implements BrandModelServiceInterface
             $modelNames[] = $model->getName();
         }
 
-        return in_array($model->getName(), $modelNames);
+        return in_array($currModel->getName(), $modelNames);
     }
 }

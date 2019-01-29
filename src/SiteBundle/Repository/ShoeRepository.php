@@ -2,6 +2,10 @@
 
 namespace SiteBundle\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping;
+use SiteBundle\Entity\Shoe;
+
 /**
  * ShoeRepository
  *
@@ -10,4 +14,52 @@ namespace SiteBundle\Repository;
  */
 class ShoeRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * ModelRepository constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        parent::__construct($em, new Mapping\ClassMetadata(Shoe::class));
+    }
+
+    /**
+     * @param Shoe $shoe
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveShoe(Shoe $shoe)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($shoe);
+        $em->flush();
+    }
+
+    public function findShoeInTableShoesUsers($shoeId, $userId)
+    {
+        $statement = $this->_em->getConnection()->prepare(
+            'SELECT shoe_id AS shoeId, user_id AS userId, price FROM shoe_site.shoes_users
+                       WHERE shoe_id = :shoeId AND user_id = :userId'
+        );
+
+        $statement->execute([
+            'shoeId' => $shoeId,
+            'userId' => $userId
+        ]);
+
+        return $statement->fetch();
+    }
+
+    public function saveShoeUser($shoeId, $userId, $price)
+    {
+        $statement = $this->_em->getConnection()->prepare(
+            'INSERT INTO shoe_site.shoes_users (shoe_id, user_id, price)
+                       VALUES (:shoeId, :userId, :price)'
+        );
+
+        $statement->execute([
+            'shoeId' => $shoeId,
+            'userId' => $userId,
+            'price' => $price
+        ]);
+    }
 }

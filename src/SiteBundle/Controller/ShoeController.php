@@ -6,11 +6,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SiteBundle\Entity\Brand;
 use SiteBundle\Entity\Model;
 use SiteBundle\Entity\Shoe;
+use SiteBundle\Entity\Size;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\ShoeType;
-use SiteBundle\Service\BrandModelService;
+use SiteBundle\Repository\SizeRepository;
 use SiteBundle\Service\BrandModelServiceInterface;
 use SiteBundle\Service\ShoeServiceInterface;
+use SiteBundle\Service\UserService;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,8 +51,23 @@ class ShoeController extends Controller
 
         if ($form->isSubmitted())
         {
-            var_dump($shoe);
-            exit();
+            /** @var Shoe $shoe */
+            $shoe = $this->shoeService->findTheShoe($shoe);
+
+            $size = new Size();
+            $size->setNumber($_POST['size']);
+            $this->shoeService->saveSize($size);
+            $this->shoeService->addShoeSize($shoe, $size);
+
+            /** @var User $seller */
+            $seller = $this->getUser();
+            $price = $_POST['price'];
+
+            $this->shoeService->addShoeUser($shoe, $seller, $price);
+            $shoe->addSeller($seller);
+            $seller->addSellerShoe($shoe);
+
+            return $this->redirect("/");
         }
 
         return $this->render('shoe/create.html.twig', [
@@ -103,11 +120,15 @@ class ShoeController extends Controller
             {
                 $currBrand->addModel($model);
                 $model->setBrand($currBrand);
+                $shoe->setModel($model);
 
                 $this->brandmodelService->saveProperty("model", $model);
                 $this->brandmodelService->updateProperty("brand", $currBrand);
             }
             else throw new \Exception("We already have this model");
+
+            $shoe->setCondition("new");
+            $this->shoeService->saveShoe($shoe);
 
             return $this->redirect("/");
         }

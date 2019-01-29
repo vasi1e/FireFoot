@@ -3,16 +3,48 @@
 {% block body %}
     {% if(isAdmin) %}
     <form method="POST" action="{{ path('admin_shoe_create') }}">
-        Brand: {{ form_widget(form.brand) }} Or: <input type="text" name="brandToAdd">
-        Model: <input type="text" name="modelToAdd">
-        <input type="submit" name="create" value="Create new shoe">
+        <div>
+            Brand: {{ form_widget(form.brand) }} Or: <input type="text" name="brandToAdd">
+        </div>
+        <div>
+            Model: <input type="text" name="modelToAdd">
+        </div>
+        <div>
+            <input type="submit" name="Create" value="Create new shoe">
+        </div>
     </form>
     {% else %}
     <form method="POST" action="{{ path('shoe_create') }}">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" name="create" value="Create new shoe">
-        {{ form_end(form) }}
+        <div>
+            Brand: {{ form_widget(form.brand) }}
+        </div>
+        <div>
+            Model: {{ form_widget(form.model) }}
+        </div>
+        <div>
+            Price: <input type="text" name="price">
+        </div>
+        <div>
+            Size: <select name="size">
+                <option value="">Please select size</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+            </select>
+        </div>
+        <div>
+            Condition: {{ form_widget(form.condition) }}
+        </div>
+        <div>
+            <input type="submit" name="Create" value="Create new shoe">
+        </div>
     </form>
     {% endif %}
 {% endblock %}

@@ -2,23 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="247e92df-7ffa-4907-a99d-17604fc95f94" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SiteBundle/Service/BrandModelServiceInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FireFoot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FireFoot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a3893df2-e783-4dea-951e-3bc22fc07463.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a3893df2-e783-4dea-951e-3bc22fc07463.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/shoe/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/shoe/create.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Entity/Brand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Entity/Brand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Entity/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Entity/Model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Entity/Size.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Entity/Size.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Entity/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Form/ShoeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Form/ShoeType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Repository/BrandRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Repository/BrandRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Repository/ModelRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Repository/ModelRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/UserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/UserServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/UserServiceInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Repository/SizeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Repository/SizeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,13 +54,6 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="shoe_site: schema" type="c314c289:MysqlImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="shoe_site: schema" type="c314c289:MysqlImplModel$Schema" />
-        <item name="model: table" type="98d5ac3d:MysqlImplModel$Table" />
-      </path>
     </expand>
     <select />
   </component>
@@ -76,15 +67,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="SCHEMA:shoe_site" value="5" />
+          <entry key="SCHEMA:shoe_site" value="7" />
           <entry key="console" value="2" />
           <entry key="htaccess" value="1" />
           <entry key="json" value="2" />
           <entry key="model" value="1" />
-          <entry key="php" value="133" />
+          <entry key="php" value="171" />
           <entry key="sql" value="1" />
           <entry key="symfony_requirements" value="1" />
-          <entry key="twig" value="26" />
+          <entry key="twig" value="27" />
           <entry key="yml" value="32" />
         </counts>
       </usages-collector>
@@ -92,10 +83,10 @@
         <counts>
           <entry key="Database Element" value="1" />
           <entry key="JSON" value="2" />
-          <entry key="PHP" value="136" />
+          <entry key="PHP" value="174" />
           <entry key="Scratch" value="1" />
-          <entry key="Twig" value="26" />
-          <entry key="UML" value="5" />
+          <entry key="Twig" value="27" />
+          <entry key="UML" value="7" />
           <entry key="YAML" value="32" />
           <entry key="htaccess" value="1" />
         </counts>
@@ -103,22 +94,23 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="47" />
-          <entry key="php" value="5522" />
-          <entry key="twig" value="619" />
+          <entry key="php" value="8821" />
+          <entry key="twig" value="812" />
           <entry key="yml" value="79" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="5522" />
+          <entry key="PHP" value="8769" />
           <entry key="PLAIN_TEXT" value="47" />
-          <entry key="Twig" value="619" />
+          <entry key="SQL" value="52" />
+          <entry key="Twig" value="812" />
           <entry key="YAML" value="79" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.new.class">
         <counts>
-          <entry key="PHP Class.type" value="3" />
+          <entry key="PHP Class.type" value="4" />
           <entry key="PHP Interface.type" value="6" />
         </counts>
       </usages-collector>
@@ -129,34 +121,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="101" column="52" selection-start-line="101" selection-start-column="52" selection-end-line="101" selection-end-column="52" />
+            <state relative-caret-position="-225">
+              <caret line="67" column="42" lean-forward="true" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ShoeRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="53" column="58" selection-start-line="53" selection-start-column="58" selection-end-line="53" selection-end-column="58" />
               <folding>
-                <element signature="e#42#101#0#PHP" expanded="true" />
-                <element signature="e#1502#1525#0#PHP" expanded="true" />
-                <element signature="e#3644#3667#0#PHP" expanded="true" />
+                <element signature="e#41#81#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/SizeRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="85">
+              <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="63" selection-end-column="5" />
+              <folding>
+                <element signature="e#41#81#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,8 +157,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="125" column="20" selection-start-line="125" selection-start-column="20" selection-end-line="125" selection-end-column="20" />
+            <state relative-caret-position="2787">
+              <caret line="214" column="5" selection-start-line="214" selection-start-column="5" selection-end-line="214" selection-end-column="5" />
               <folding>
                 <element signature="e#37#85#0#PHP" expanded="true" />
               </folding>
@@ -174,36 +167,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/BrandModelServiceInterface.php">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Size.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            <state relative-caret-position="59">
+              <caret line="62" column="27" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
               <folding>
-                <element signature="e#123#151#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="98" column="1" lean-forward="true" selection-start-line="98" selection-start-column="1" selection-end-line="98" selection-end-column="1" />
-              <folding>
-                <element signature="e#123#151#0#PHP" expanded="true" />
+                <element signature="e#37#85#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/UserService.php">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="53" selection-end-column="26" />
+            <state relative-caret-position="183">
+              <caret line="47" column="63" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="63" />
               <folding>
-                <element signature="e#6#88#0#PHP" expanded="true" />
                 <element signature="e#122#149#0#PHP" expanded="true" />
               </folding>
             </state>
@@ -211,36 +191,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ModelRepository.php">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="53" column="22" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
+            <state relative-caret-position="289">
+              <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
               <folding>
-                <element signature="e#42#82#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1462">
-              <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
-              <folding>
-                <element signature="e#41#103#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/shoe/create.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
+                <element signature="e#122#149#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -283,27 +239,30 @@
         <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Controller/DefaultController.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Controller/HomepageController.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Size.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Controller/SecurityController.php" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
         <option value="$PROJECT_DIR$/app/config/security.yml" />
         <option value="$PROJECT_DIR$/app/Resources/views/user/profile.html.twig" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Controller/UserController.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Model.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/UserServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/UserService.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Brand.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Form/ShoeType.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Repository/BrandRepository.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Repository/ModelRepository.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/shoe/create.html.twig" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/BrandModelServiceInterface.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Brand.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Model.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/ShoeSize.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Form/ShoeType.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/shoe/create.html.twig" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Repository/SizeRepository.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Size.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeRepository.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" />
       </list>
     </option>
   </component>
@@ -356,7 +315,7 @@
       <path value="$PROJECT_DIR$/vendor/sensiolabs/security-checker" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -496,12 +455,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1548246290740</updated>
-      <workItem from="1548246292601" duration="76936000" />
+      <workItem from="1548246292601" duration="102045000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76936000" />
+    <option name="totallyTimeSpent" value="102045000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -523,14 +482,14 @@
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
-      <window_info anchor="right" id="Database" order="0" weight="0.19213313" />
+      <window_info anchor="right" id="Database" order="0" visible="true" weight="0.20045386" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" sideWeight="0.5012225" side_tool="true" weight="0.24962178" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4987775" visible="true" weight="0.19591528" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4987775" weight="0.19591528" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Console" order="0" weight="0.3295082" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.3295082" />
@@ -540,12 +499,12 @@
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.3295082" />
-      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.3295082" />
+      <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.3295082" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="right" id="Database" order="0" weight="0.19213313" />
+      <window_info anchor="right" id="Database" order="0" weight="0.20045386" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
@@ -558,30 +517,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Encoder/PasswordEncoderInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="24" column="33" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/UserRepositoryInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="13" column="42" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/RoleRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#41#72#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/user/login.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -657,42 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Size.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="114" column="19" selection-start-line="114" selection-start-column="19" selection-end-line="114" selection-end-column="19" />
-          <folding>
-            <element signature="e#37#85#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://DATABASE/a3893df2-e783-4dea-951e-3bc22fc07463.SCHEMA:shoe_site">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>a3893df2-e783-4dea-951e-3bc22fc07463.SCHEMA:shoe_site</OriginalElement>
-          <nodes>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.roles</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.users</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.sizes</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.model</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.shoes</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.brand</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.shoes_sizes</node>
-            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.users_roles</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.1751211631663974" x="310.49518834204014" y="252.84781413252682" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Key columns</Category>
-            <Category>Columns</Category>
-          </Categories>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/HomepageController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -717,23 +616,6 @@
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="174" column="41" selection-start-line="174" selection-start-column="41" selection-end-line="174" selection-end-column="41" />
-          <folding>
-            <element signature="e#37#85#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Role.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
         </state>
       </provider>
     </entry>
@@ -816,25 +698,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Form/ShoeType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#35#75#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ShoeRepository.php">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -849,20 +718,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/UserRepository.php">
+    <entry file="uml://DATABASE/a3893df2-e783-4dea-951e-3bc22fc07463.SCHEMA:shoe_site">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>a3893df2-e783-4dea-951e-3bc22fc07463.SCHEMA:shoe_site</OriginalElement>
+          <nodes>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.roles</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.users</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.sizes</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.users_roles</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.brands</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.models</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.shoes_sizes</node>
+            <node x="" y="">a3893df2-e783-4dea-951e-3bc22fc07463.TABLE:shoe_site.shoes</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.9049773755656108" x="311.92250000000007" y="191.79500000000002" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="587">
+          <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
+          <folding>
+            <element signature="e#41#103#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/ShoeSize.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#121#169#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/BrandRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
           <folding>
             <element signature="e#41#81#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ModelRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-625">
+          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Brand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        <state relative-caret-position="-622">
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
           <folding>
             <element signature="e#37#85#0#PHP" expanded="true" />
           </folding>
@@ -871,28 +793,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Model.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="75" column="20" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
+        <state relative-caret-position="-580">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
           <folding>
             <element signature="e#37#85#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/BrandRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Role.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="45" selection-end-column="5" />
+        <state relative-caret-position="1105">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2572">
+          <caret line="198" column="5" selection-start-line="198" selection-start-column="5" selection-end-line="198" selection-end-column="5" />
           <folding>
-            <element signature="e#41#81#0#PHP" expanded="true" />
+            <element signature="e#37#85#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/BrandModelServiceInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+          <folding>
+            <element signature="e#123#151#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_8.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="849" column="9" lean-forward="true" selection-start-line="849" selection-start-column="9" selection-end-line="849" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
+          <folding>
+            <element signature="e#123#151#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/UserService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="53" selection-end-column="26" />
+        <state relative-caret-position="225">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="47" />
           <folding>
             <element signature="e#6#88#0#PHP" expanded="true" />
             <element signature="e#122#149#0#PHP" expanded="true" />
@@ -900,89 +856,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
-          <folding>
-            <element signature="e#41#103#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/shoe/create.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        <state relative-caret-position="170">
+          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/UserRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="217">
+          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="29" selection-end-column="21" />
+          <folding>
+            <element signature="e#41#81#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Form/ShoeType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="131">
+          <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
+          <folding>
+            <element signature="e#35#75#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Size.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="125" column="20" selection-start-line="125" selection-start-column="20" selection-end-line="125" selection-end-column="20" />
+        <state relative-caret-position="59">
+          <caret line="62" column="27" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
           <folding>
             <element signature="e#37#85#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ModelRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/SizeRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="53" column="22" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
+        <state relative-caret-position="85">
+          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="63" selection-end-column="5" />
           <folding>
-            <element signature="e#42#82#0#PHP" expanded="true" />
+            <element signature="e#41#81#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ShoeRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="53" column="58" selection-start-line="53" selection-start-column="58" selection-end-line="53" selection-end-column="58" />
+          <folding>
+            <element signature="e#41#81#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="47" column="63" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="63" />
+          <folding>
+            <element signature="e#122#149#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+          <folding>
+            <element signature="e#122#149#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Entity/Shoe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2787">
+          <caret line="214" column="5" selection-start-line="214" selection-start-column="5" selection-end-line="214" selection-end-column="5" />
+          <folding>
+            <element signature="e#37#85#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="101" column="52" selection-start-line="101" selection-start-column="52" selection-end-line="101" selection-end-column="52" />
-          <folding>
-            <element signature="e#42#101#0#PHP" expanded="true" />
-            <element signature="e#1502#1525#0#PHP" expanded="true" />
-            <element signature="e#3644#3667#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/BrandModelServiceInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding>
-            <element signature="e#123#151#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/BrandModelService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="98" column="1" lean-forward="true" selection-start-line="98" selection-start-column="1" selection-end-line="98" selection-end-column="1" />
-          <folding>
-            <element signature="e#123#151#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="-225">
+          <caret line="67" column="42" lean-forward="true" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
         </state>
       </provider>
     </entry>

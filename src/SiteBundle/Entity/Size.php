@@ -4,6 +4,8 @@ namespace SiteBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use SiteBundle\Repository\ShoeRepository;
+use SiteBundle\Repository\SizeRepository;
 
 /**
  * Size
@@ -29,20 +31,13 @@ class Size
      */
     private $number;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="quantity", type="integer")
-     */
-    private $quantity;
 
     /**
      * @var ArrayCollection|Shoe[]
      *
-     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\User", mappedBy="roles")
+     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\Shoe", mappedBy="sizes")
      */
     private $shoes;
-
 
     /**
      * Get id
@@ -57,25 +52,30 @@ class Size
     /**
      * Set quantity
      *
-     * @param integer $quantity
-     *
+     * @param $shoeId
+     * @param SizeRepository $sizeRepository
      * @return Size
      */
-    public function setQuantity($quantity)
+    public function addOneQuantity($shoeId, SizeRepository $sizeRepository)
     {
-        $this->quantity = $quantity;
-
+        $sizeRepository->saveShoeSize(
+            $shoeId,
+            $this->getId(),
+            $this->getQuantity($shoeId, $this->getId(), $sizeRepository) + 1);
         return $this;
     }
 
     /**
      * Get quantity
      *
+     * @param $shoeId
+     * @param $sizeId
+     * @param SizeRepository $sizeRepository
      * @return int
      */
-    public function getQuantity()
+    public function getQuantity($shoeId, $sizeId, SizeRepository $sizeRepository)
     {
-        return $this->quantity;
+        return intval($sizeRepository->findShoeInTableShoeSizes($shoeId, $sizeId)['quantity']);
     }
 
     /**

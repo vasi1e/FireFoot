@@ -57,16 +57,9 @@ class User implements UserInterface
     /**
      * @var ArrayCollection|Shoe[]
      *
-     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Shoe", mappedBy="seller")
+     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\Shoe", mappedBy="sellers")
      */
     private $sellerShoes;
-
-    /**
-     * @var ArrayCollection|Shoe[]
-     *
-     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Shoe", mappedBy="buyer")
-     */
-    private $buyerShoes;
 
 
     /**
@@ -202,32 +195,6 @@ class User implements UserInterface
     public function addSellerShoe($sellerShoe)
     {
         $this->sellerShoes[] = $sellerShoe;
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection|Shoe[]
-     */
-    public function getBuyerShoes()
-    {
-        $shoeIdArray = [];
-
-        foreach ($this->buyerShoes as $buyerShoe)
-        {
-            /** @var Shoe $shoe */
-            $shoeIdArray[] = $buyerShoe->getId();
-        }
-
-        return $shoeIdArray;
-    }
-
-    /**
-     * @param Shoe $buyerShoe
-     * @return User
-     */
-    public function setBuyerShoes($buyerShoe)
-    {
-        $this->buyerShoes[] = $buyerShoe;
         return $this;
     }
 

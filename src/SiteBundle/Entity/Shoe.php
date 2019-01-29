@@ -4,6 +4,7 @@ namespace SiteBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use SiteBundle\Repository\ShoeRepository;
 
 /**
  * Shoe
@@ -39,14 +40,7 @@ class Shoe
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
-     */
-    private $price;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="condition", type="string", length=255)
+     * @ORM\Column(name="shoe_condition", type="string", length=255)
      */
     private $condition;
 
@@ -63,16 +57,12 @@ class Shoe
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\User", inversedBy="sellerShoes")
+     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\User")
+     * @ORM\JoinTable(name="shoes_users",
+     *     joinColumns={@ORM\JoinColumn(name="shoe_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")})
      */
-    private $seller;
-
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\User", inversedBy="buyerShoes")
-     */
-    private $buyer;
+    private $sellers;
 
 
     /**
@@ -135,23 +125,27 @@ class Shoe
      *
      * @param string $price
      *
+     * @param $userId
+     * @param ShoeRepository $shoeRepository
      * @return Shoe
      */
-    public function setPrice($price)
+    public function setPrice($price, $userId, ShoeRepository $shoeRepository)
     {
-        $this->price = $price;
-
+        $shoeRepository->saveShoeUser($this->getId(), $userId, $price);
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return string
+     * @param $userId
+     * @param ShoeRepository $shoeRepository
+     *
+     * @return float
      */
-    public function getPrice()
+    public function getPrice($userId, ShoeRepository $shoeRepository)
     {
-        return $this->price;
+        return doubleval($shoeRepository->findShoeInTableShoesUsers($this->getId(), $userId)['price']);
     }
 
     /**
@@ -171,7 +165,7 @@ class Shoe
     }
 
     /**
-     * @return ArrayCollection|Size[]
+     * @return array
      */
     public function getSizes()
     {
@@ -197,35 +191,27 @@ class Shoe
     }
 
     /**
-     * @return User
+     * @return array
      */
-    public function getSeller()
+    public function getSellers()
     {
-        return $this->seller;
+        $userIdArray = [];
+
+        foreach ($this->sellers as $seller)
+        {
+            /** @var User $seller*/
+            $userIdArray[] = $seller->getId();
+        }
+
+        return $userIdArray;
     }
 
     /**
      * @param User $seller
      */
-    public function setSeller($seller)
+    public function addSeller($seller)
     {
-        $this->seller = $seller;
-    }
-
-    /**
-     * @return User
-     */
-    public function getBuyer()
-    {
-        return $this->buyer;
-    }
-
-    /**
-     * @param User $buyer
-     */
-    public function setBuyer($buyer)
-    {
-        $this->buyer = $buyer;
+        $this->sellers[] = $seller;
     }
 
 }
