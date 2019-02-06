@@ -55,9 +55,9 @@ class User implements UserInterface
     private $roles;
 
     /**
-     * @var ArrayCollection|Shoe[]
+     * @var ShoeUser[]
      *
-     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\Shoe", mappedBy="sellers")
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\ShoeUser", mappedBy="seller")
      */
     private $sellerShoes;
 
@@ -172,7 +172,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return ArrayCollection|Shoe[]
+     * @return array
      */
     public function getSellerShoes()
     {
@@ -180,8 +180,8 @@ class User implements UserInterface
 
         foreach ($this->sellerShoes as $sellerShoe)
         {
-            /** @var Shoe $shoe */
-            $shoeIdArray[] = $sellerShoe->getId();
+            /** @var ShoeUser $sellerShoe */
+            $shoeIdArray[] = $sellerShoe->getShoe()->getId();
         }
 
         return $shoeIdArray;
@@ -189,7 +189,7 @@ class User implements UserInterface
 
     /**
      *
-     * @param Shoe $sellerShoe
+     * @param ShoeUser $sellerShoe
      * @return User
      */
     public function addSellerShoe($sellerShoe)

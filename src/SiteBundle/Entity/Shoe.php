@@ -4,7 +4,8 @@ namespace SiteBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use SiteBundle\Repository\ShoeRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Shoe
@@ -45,24 +46,39 @@ class Shoe
     private $condition;
 
     /**
-     * @var ArrayCollection|Size[]
+     * @var double
      *
-     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\Size")
-     * @ORM\JoinTable(name="shoes_sizes",
-     *     joinColumns={@ORM\JoinColumn(name="shoe_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="size_id", referencedColumnName="id")})
+     * @ORM\Column(name="condition_out_of_10", type="decimal")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10,
+     *      maxMessage = "Rate the condition up to 10"
+     * )
+     */
+    private $conditionOutOf10;
+
+    /**
+     * @var ArrayCollection|ShoeSize[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\ShoeSize", mappedBy="shoe")
      */
     private $sizes;
 
     /**
-     * @var User
+     * @var ShoeUser[]
      *
-     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\User")
-     * @ORM\JoinTable(name="shoes_users",
-     *     joinColumns={@ORM\JoinColumn(name="shoe_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")})
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\ShoeUser", mappedBy="shoe")
      */
     private $sellers;
+
+    /**
+     * @var Image[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Image", mappedBy="shoe")
+     */
+    private $images;
+
+    private $uploadImages;
 
 
     /**
@@ -121,34 +137,6 @@ class Shoe
     }
 
     /**
-     * Set price
-     *
-     * @param string $price
-     *
-     * @param $userId
-     * @param ShoeRepository $shoeRepository
-     * @return Shoe
-     */
-    public function setPrice($price, $userId, ShoeRepository $shoeRepository)
-    {
-        $shoeRepository->saveShoeUser($this->getId(), $userId, $price);
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @param $userId
-     * @param ShoeRepository $shoeRepository
-     *
-     * @return float
-     */
-    public function getPrice($userId, ShoeRepository $shoeRepository)
-    {
-        return doubleval($shoeRepository->findShoeInTableShoesUsers($this->getId(), $userId)['price']);
-    }
-
-    /**
      * @return string
      */
     public function getCondition()
@@ -165,6 +153,22 @@ class Shoe
     }
 
     /**
+     * @return int
+     */
+    public function getConditionOutOf10()
+    {
+        return $this->conditionOutOf10;
+    }
+
+    /**
+     * @param int $conditionOutOf10
+     */
+    public function setConditionOutOf10($conditionOutOf10)
+    {
+        $this->conditionOutOf10 = $conditionOutOf10;
+    }
+
+    /**
      * @return array
      */
     public function getSizes()
@@ -173,15 +177,14 @@ class Shoe
 
         foreach ($this->sizes as $size)
         {
-            /** @var Size $size */
-            $stringSizes[] = $size->getNumber();
+            $stringSizes[] = $size->getSize()->getNumber();
         }
 
         return $stringSizes;
     }
 
     /**
-     * @param Size $size
+     * @param ShoeSize $size
      * @return Shoe
      */
     public function addSize($size)
@@ -199,20 +202,64 @@ class Shoe
 
         foreach ($this->sellers as $seller)
         {
-            /** @var User $seller*/
-            $userIdArray[] = $seller->getId();
+            /** @var ShoeUser $seller*/
+            $userIdArray[] = $seller->getSeller()->getId();
         }
 
         return $userIdArray;
     }
 
     /**
-     * @param User $seller
+     * @param ShoeUser $seller
      */
     public function addSeller($seller)
     {
         $this->sellers[] = $seller;
     }
 
+    /**
+     * @return array
+     */
+    public function getImagesId()
+    {
+        $imageIdArray = [];
+
+        foreach ($this->images as $image)
+        {
+            /** @var Image $image*/
+            $imageIdArray[] = $image->getId();
+        }
+
+        return $imageIdArray;
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param Image $image
+     */
+    public function addImage($image)
+    {
+        $this->images[] = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUploadImages()
+    {
+        return $this->uploadImages;
+    }
+
+    /**
+     * @param mixed $uploadImages
+     */
+    public function setUploadImages($uploadImages)
+    {
+        $this->uploadImages = $uploadImages;
+    }
 }
 

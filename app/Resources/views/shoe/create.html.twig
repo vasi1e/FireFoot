@@ -2,7 +2,7 @@
 
 {% block body %}
     {% if(isAdmin) %}
-    <form method="POST" action="{{ path('admin_shoe_create') }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ path('admin_shoe_create') }}">
         <div>
             Brand: {{ form_widget(form.brand) }} Or: <input type="text" name="brandToAdd">
         </div>
@@ -10,11 +10,14 @@
             Model: <input type="text" name="modelToAdd">
         </div>
         <div>
+            Upload pictures: {{ form_widget(form.uploadImages) }}
+        </div>
+        <div>
             <input type="submit" name="Create" value="Create new shoe">
         </div>
     </form>
     {% else %}
-    <form method="POST" action="{{ path('shoe_create') }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ path('shoe_create') }}">
         <div>
             Brand: {{ form_widget(form.brand) }}
         </div>
@@ -40,7 +43,13 @@
             </select>
         </div>
         <div>
-            Condition: {{ form_widget(form.condition) }}
+            Condition: {{ form_widget(form.condition, {'attr': {'class': 'form-control condition' }}) }}
+        </div>
+        <div>
+            Rate the condition(Only if the shoe is used): {{ form_widget(form.conditionOutOf10, {'attr': {'class': 'hidden conditionOutOf10' }}) }}
+        </div>
+        <div>
+            Upload pictures(Only if the shoe is used): {{ form_widget(form.uploadImages, {'attr': {'class': 'hidden pictures' }}) }}
         </div>
         <div>
             <input type="submit" name="Create" value="Create new shoe">
@@ -83,6 +92,18 @@
             }).done(function(res){
                 console.log(res);
             });
+        });
+    </script>
+    <script>
+        $('.condition').on('change', function () {
+            var condition = $(this).val();
+            if (condition == 'used'){
+                $('.conditionOutOf10').show();
+                $('.pictures').show();
+            }else{
+                $('.conditionOutOf10').hide();
+                $('.pictures').hide();
+            }
         });
     </script>
 {% endblock %}

@@ -1120,7 +1120,6 @@
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>&apos;new&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="278" parent="252" name="IDX_14CF819744F5D008">
@@ -1148,194 +1147,201 @@
       <RefTableName>models</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="283" parent="253" name="shoe_id">
+    <column id="283" parent="253" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="253" name="size_id">
+    <column id="284" parent="253" name="shoe_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="253" name="quantity">
+    <column id="285" parent="253" name="size_id">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="286" parent="253" name="IDX_854221D02AD16370">
+    <column id="286" parent="253" name="quantity">
+      <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="287" parent="253" name="IDX_854221D02AD16370">
       <ColNames>shoe_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="287" parent="253" name="IDX_854221D0498DA827">
+    <index id="288" parent="253" name="IDX_854221D0498DA827">
       <ColNames>size_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="288" parent="253" name="PRIMARY">
+    <key id="289" parent="253" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>shoe_id
-size_id</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="289" parent="253" name="FK_854221D02AD16370">
+    <foreign-key id="290" parent="253" name="FK_854221D02AD16370">
       <ColNames>shoe_id</ColNames>
       <RefSchemaName>shoe_site</RefSchemaName>
       <RefTableName>shoes</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="290" parent="253" name="FK_854221D0498DA827">
+    <foreign-key id="291" parent="253" name="FK_854221D0498DA827">
       <ColNames>size_id</ColNames>
       <RefSchemaName>shoe_site</RefSchemaName>
       <RefTableName>sizes</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="291" parent="254" name="shoe_id">
+    <column id="292" parent="254" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="254" name="user_id">
+    <column id="293" parent="254" name="shoe_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="254" name="price">
+    <column id="294" parent="254" name="seller_id">
       <Position>3</Position>
-      <DataType>decimal(10)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="295" parent="254" name="price">
+      <Position>4</Position>
+      <DataType>decimal(10,2 digit)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="294" parent="254" name="IDX_275F03502AD16370">
+    <index id="296" parent="254" name="IDX_275F03502AD16370">
       <ColNames>shoe_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="295" parent="254" name="IDX_275F0350A76ED395">
-      <ColNames>user_id</ColNames>
+    <index id="297" parent="254" name="IDX_275F03508DE820D9">
+      <ColNames>seller_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="296" parent="254" name="PRIMARY">
+    <key id="298" parent="254" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>shoe_id
-user_id</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="297" parent="254" name="FK_275F03502AD16370">
+    <foreign-key id="299" parent="254" name="FK_275F03502AD16370">
       <ColNames>shoe_id</ColNames>
       <RefSchemaName>shoe_site</RefSchemaName>
       <RefTableName>shoes</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="298" parent="254" name="FK_275F0350A76ED395">
-      <ColNames>user_id</ColNames>
+    <foreign-key id="300" parent="254" name="FK_275F03508DE820D9">
+      <ColNames>seller_id</ColNames>
       <RefSchemaName>shoe_site</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="299" parent="255" name="id">
+    <column id="301" parent="255" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="255" name="number">
+    <column id="302" parent="255" name="number">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="301" parent="255" name="UNIQ_B69E876996901F54">
+    <index id="303" parent="255" name="UNIQ_B69E876996901F54">
       <ColNames>number</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="302" parent="255" name="PRIMARY">
+    <key id="304" parent="255" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="303" parent="255" name="UNIQ_B69E876996901F54">
+    <key id="305" parent="255" name="UNIQ_B69E876996901F54">
       <ColNames>number</ColNames>
       <UnderlyingIndexName>UNIQ_B69E876996901F54</UnderlyingIndexName>
     </key>
-    <column id="304" parent="256" name="id">
+    <column id="306" parent="256" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="256" name="email">
+    <column id="307" parent="256" name="email">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="256" name="fullName">
+    <column id="308" parent="256" name="fullName">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="256" name="password">
+    <column id="309" parent="256" name="password">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="308" parent="256" name="UNIQ_1483A5E9E7927C74">
+    <index id="310" parent="256" name="UNIQ_1483A5E9E7927C74">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="309" parent="256" name="PRIMARY">
+    <key id="311" parent="256" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="310" parent="256" name="UNIQ_1483A5E9E7927C74">
+    <key id="312" parent="256" name="UNIQ_1483A5E9E7927C74">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>UNIQ_1483A5E9E7927C74</UnderlyingIndexName>
     </key>
-    <column id="311" parent="257" name="user_id">
+    <column id="313" parent="257" name="user_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="257" name="role_id">
+    <column id="314" parent="257" name="role_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="313" parent="257" name="IDX_51498A8EA76ED395">
+    <index id="315" parent="257" name="IDX_51498A8EA76ED395">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="314" parent="257" name="IDX_51498A8ED60322AC">
+    <index id="316" parent="257" name="IDX_51498A8ED60322AC">
       <ColNames>role_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="315" parent="257" name="PRIMARY">
+    <key id="317" parent="257" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id
 role_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="316" parent="257" name="FK_51498A8EA76ED395">
+    <foreign-key id="318" parent="257" name="FK_51498A8EA76ED395">
       <ColNames>user_id</ColNames>
       <RefSchemaName>shoe_site</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="317" parent="257" name="FK_51498A8ED60322AC">
+    <foreign-key id="319" parent="257" name="FK_51498A8ED60322AC">
       <ColNames>role_id</ColNames>
       <RefSchemaName>shoe_site</RefSchemaName>
       <RefTableName>roles</RefTableName>

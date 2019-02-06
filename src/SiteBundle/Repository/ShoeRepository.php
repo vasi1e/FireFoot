@@ -34,32 +34,4 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
         $em->flush();
     }
 
-    public function findShoeInTableShoesUsers($shoeId, $userId)
-    {
-        $statement = $this->_em->getConnection()->prepare(
-            'SELECT shoe_id AS shoeId, user_id AS userId, price FROM shoe_site.shoes_users
-                       WHERE shoe_id = :shoeId AND user_id = :userId'
-        );
-
-        $statement->execute([
-            'shoeId' => $shoeId,
-            'userId' => $userId
-        ]);
-
-        return $statement->fetch();
-    }
-
-    public function saveShoeUser($shoeId, $userId, $price)
-    {
-        $statement = $this->_em->getConnection()->prepare(
-            'INSERT INTO shoe_site.shoes_users (shoe_id, user_id, price)
-                       VALUES (:shoeId, :userId, :price)'
-        );
-
-        $statement->execute([
-            'shoeId' => $shoeId,
-            'userId' => $userId,
-            'price' => $price
-        ]);
-    }
 }

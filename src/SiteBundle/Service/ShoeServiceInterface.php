@@ -9,16 +9,21 @@
 namespace SiteBundle\Service;
 
 
+use SiteBundle\Entity\Image;
 use SiteBundle\Entity\Shoe;
+use SiteBundle\Entity\ShoeSize;
+use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Entity\Size;
-use SiteBundle\Entity\User;
 
 interface ShoeServiceInterface
 {
-    public function addShoeSize(Shoe $shoe, Size $size);
-    public function getSizeQuantityForShoe($shoeId, Size $size);
     public function saveShoe(Shoe $shoe);
     public function saveSize(Size $size);
+    public function saveImage(Image $image);
+    public function saveShoeSize(ShoeSize $shoeSize);
+    public function saveShoeUser(ShoeUser $shoeUser);
     public function findTheShoe(Shoe $shoe);
-    public function addShoeUser(Shoe $shoe, User $user, $price);
+    public function isThereThisSizeForThisShoe(ShoeSize $shoeSize);
+    public function isThereSize(Size $size);
+    public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe);
 }

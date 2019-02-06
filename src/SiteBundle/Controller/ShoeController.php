@@ -4,8 +4,11 @@ namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SiteBundle\Entity\Brand;
+use SiteBundle\Entity\Image;
 use SiteBundle\Entity\Model;
 use SiteBundle\Entity\Shoe;
+use SiteBundle\Entity\ShoeSize;
+use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Entity\Size;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\ShoeType;
@@ -15,6 +18,7 @@ use SiteBundle\Service\ShoeServiceInterface;
 use SiteBundle\Service\UserService;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,16 +60,42 @@ class ShoeController extends Controller
 
             $size = new Size();
             $size->setNumber($_POST['size']);
+
+            if ($this->shoeService->isThereSize($size) != false) $size = $this->shoeService->isThereSize($size);
+
             $this->shoeService->saveSize($size);
-            $this->shoeService->addShoeSize($shoe, $size);
+
+            $shoeSize = new ShoeSize();
+            $shoeSize->setSize($size)->setShoe($shoe);
+
+            if ($this->shoeService->isThereThisSizeForThisShoe($shoeSize) != false) $shoeSize = $this->shoeService->isThereThisSizeForThisShoe($shoeSize);
+
+            $shoeSize->setQuantity($shoeSize->getQuantity() + 1);
+            $this->shoeService->saveShoeSize($shoeSize);
+
+            $shoe->addSize($shoeSize);
+            $size->addShoe($shoeSize);
 
             /** @var User $seller */
             $seller = $this->getUser();
-            $price = $_POST['price'];
 
-            $this->shoeService->addShoeUser($shoe, $seller, $price);
-            $shoe->addSeller($seller);
-            $seller->addSellerShoe($shoe);
+            $shoeUser = new ShoeUser();
+            $shoeUser->setShoe($shoe)->setSeller($seller)->setPrice($_POST['price']);
+            $this->shoeService->saveShoeUser($shoeUser);
+
+            //$imageFiles = $form->getData()->getImages();
+            ///** @var UploadedFile $file */
+            //foreach ($imageFiles as $file)
+            //{
+            //    $imageName = md5(uniqid()) . '.' . $file->getExtension();
+            //    $image = new Image();
+            //    $image->setName($imageName);
+            //    $file->move($this->getParameter('shoe_directory'), $imageName);
+            //    $shoe->addImage($image);
+            //}
+
+            $shoe->addSeller($shoeUser);
+            $seller->addSellerShoe($shoeUser);
 
             return $this->redirect("/");
         }
@@ -128,7 +158,11 @@ class ShoeController extends Controller
             else throw new \Exception("We already have this model");
 
             $shoe->setCondition("new");
+            $shoe->setConditionOutOf10('10');
             $this->shoeService->saveShoe($shoe);
+
+            $imageFiles = $form->getData()->getUploadImages();
+            $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
 
             return $this->redirect("/");
         }

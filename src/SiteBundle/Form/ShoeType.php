@@ -4,11 +4,11 @@ namespace SiteBundle\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
 use SiteBundle\Entity\Brand;
-use SiteBundle\Entity\Model;
-use SiteBundle\Entity\Shoe;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -39,6 +39,17 @@ class ShoeType extends AbstractType
                         'Used' => 'used'
                     ],
                     'placeholder' => "Please select condition"
+                ])
+                ->add('conditionOutOf10', TextType::class, [
+                    'required' => false
+                ])
+                ->add('uploadImages', FileType::class, [
+                    'multiple' => true,
+                    'required' => false,
+                    'attr'     => [
+                        'accept' => 'image/*',
+                        'multiple' => 'multiple'
+                    ]
                 ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
