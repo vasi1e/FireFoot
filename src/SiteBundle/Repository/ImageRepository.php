@@ -23,6 +23,10 @@ class ImageRepository extends \Doctrine\ORM\EntityRepository
         parent::__construct($em, new Mapping\ClassMetadata(Image::class));
     }
 
+    /**
+     * @param Image $image
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function saveImage(Image $image)
     {
         $em = $this->getEntityManager();

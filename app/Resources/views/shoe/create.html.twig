@@ -46,7 +46,7 @@
             Condition: {{ form_widget(form.condition, {'attr': {'class': 'form-control condition' }}) }}
         </div>
         <div>
-            Rate the condition(Only if the shoe is used): {{ form_widget(form.conditionOutOf10, {'attr': {'class': 'hidden conditionOutOf10' }}) }}
+            Rate the condition(Only if the shoe is used): {{ form_widget(form.conditionOutOf10, {'attr': {'class': 'hidden conditionOutOf10' }}) }}/10
         </div>
         <div>
             Upload pictures(Only if the shoe is used): {{ form_widget(form.uploadImages, {'attr': {'class': 'hidden pictures' }}) }}

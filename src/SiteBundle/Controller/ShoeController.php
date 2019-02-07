@@ -4,7 +4,6 @@ namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SiteBundle\Entity\Brand;
-use SiteBundle\Entity\Image;
 use SiteBundle\Entity\Model;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
@@ -12,13 +11,12 @@ use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Entity\Size;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\ShoeType;
-use SiteBundle\Repository\SizeRepository;
 use SiteBundle\Service\BrandModelServiceInterface;
+use SiteBundle\Service\SaveService;
+use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ShoeServiceInterface;
-use SiteBundle\Service\UserService;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,19 +25,22 @@ class ShoeController extends Controller
     private $userService;
     private $shoeService;
     private $brandmodelService;
+    private $saveService;
 
     /**
      * ShoeController constructor.
      * @param UserServiceInterface $userService
      * @param ShoeServiceInterface $shoeService
      * @param BrandModelServiceInterface $brandmodelService
+     * @param SaveServiceInterface $saveService
      */
     public function __construct(UserServiceInterface $userService, ShoeServiceInterface $shoeService,
-                                BrandModelServiceInterface $brandmodelService)
+                                BrandModelServiceInterface $brandmodelService, SaveServiceInterface $saveService)
     {
         $this->userService = $userService;
         $this->shoeService = $shoeService;
         $this->brandmodelService = $brandmodelService;
+        $this->saveService = $saveService;
     }
 
     /**
@@ -47,58 +48,35 @@ class ShoeController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createShoeWithoutId(Request $request)
     {
         $shoe = new Shoe();
         $form = $this->createForm(ShoeType::class, $shoe);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted())
-        {
-            /** @var Shoe $shoe */
-            $shoe = $this->shoeService->findTheShoe($shoe);
+        if ($form->isSubmitted()) return $this->createAction($shoe);
 
-            $size = new Size();
-            $size->setNumber($_POST['size']);
+        return $this->render('shoe/create.html.twig', [
+            'form' => $form->createView(),
+            'isAdmin' => false
+        ]);
+    }
 
-            if ($this->shoeService->isThereSize($size) != false) $size = $this->shoeService->isThereSize($size);
+    /**
+     * @Route("/shoe/create/{id}", name="shoe_create_id")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createShoeWithId(Request $request, $id)
+    {
+        /** @var Shoe $shoe */
+        $shoe = $this->shoeService->findShoeById($id);
+        $shoe->setCondition(null)->setConditionOutOf10(null);
+        $form = $this->createForm(ShoeType::class, $shoe);
+        $form->handleRequest($request);
 
-            $this->shoeService->saveSize($size);
-
-            $shoeSize = new ShoeSize();
-            $shoeSize->setSize($size)->setShoe($shoe);
-
-            if ($this->shoeService->isThereThisSizeForThisShoe($shoeSize) != false) $shoeSize = $this->shoeService->isThereThisSizeForThisShoe($shoeSize);
-
-            $shoeSize->setQuantity($shoeSize->getQuantity() + 1);
-            $this->shoeService->saveShoeSize($shoeSize);
-
-            $shoe->addSize($shoeSize);
-            $size->addShoe($shoeSize);
-
-            /** @var User $seller */
-            $seller = $this->getUser();
-
-            $shoeUser = new ShoeUser();
-            $shoeUser->setShoe($shoe)->setSeller($seller)->setPrice($_POST['price']);
-            $this->shoeService->saveShoeUser($shoeUser);
-
-            //$imageFiles = $form->getData()->getImages();
-            ///** @var UploadedFile $file */
-            //foreach ($imageFiles as $file)
-            //{
-            //    $imageName = md5(uniqid()) . '.' . $file->getExtension();
-            //    $image = new Image();
-            //    $image->setName($imageName);
-            //    $file->move($this->getParameter('shoe_directory'), $imageName);
-            //    $shoe->addImage($image);
-            //}
-
-            $shoe->addSeller($shoeUser);
-            $seller->addSellerShoe($shoeUser);
-
-            return $this->redirect("/");
-        }
+        if ($form->isSubmitted()) return $this->createAction($shoe);
 
         return $this->render('shoe/create.html.twig', [
             'form' => $form->createView(),
@@ -135,7 +113,7 @@ class ShoeController extends Controller
 
                 if ($this->brandmodelService->isBrandExisting( $brand) == false)
                 {
-                    $this->brandmodelService->saveProperty("brand", $brand);
+                    $this->saveService->saveProperty("brand", $brand);
                     $shoe->setBrand($brand);
                 }
                 else throw new \Exception("We already have this brand");
@@ -152,14 +130,14 @@ class ShoeController extends Controller
                 $model->setBrand($currBrand);
                 $shoe->setModel($model);
 
-                $this->brandmodelService->saveProperty("model", $model);
+                $this->saveService->saveProperty("model", $model);
                 $this->brandmodelService->updateProperty("brand", $currBrand);
             }
             else throw new \Exception("We already have this model");
 
             $shoe->setCondition("new");
             $shoe->setConditionOutOf10('10');
-            $this->shoeService->saveShoe($shoe);
+            $this->saveService->saveShoe($shoe);
 
             $imageFiles = $form->getData()->getUploadImages();
             $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
@@ -194,5 +172,53 @@ class ShoeController extends Controller
         }
 
         return new JsonResponse($responseArray);
+    }
+
+    public function createAction(Shoe $shoe)
+    {
+        if ($shoe->getCondition() == 'new')
+        {
+            /** @var Shoe $shoe */
+            $shoe = $this->shoeService->findTheShoe($shoe);
+        }
+        else {
+            $this->saveService->saveShoe($shoe);
+            $imageFiles = $shoe->getUploadImages();
+            $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
+            $shoe->setUploadImages(null);
+        }
+
+        $size = new Size();
+        $size->setNumber($_POST['size']);
+
+        if ($this->shoeService->isThereSize($size) != false) $size = $this->shoeService->isThereSize($size);
+        else $this->saveService->saveSize($size);
+
+        $shoeSize = new ShoeSize();
+        $shoeSize->setSize($size)->setShoe($shoe);
+
+        if ($shoe->getCondition() == "new")
+        {
+            if ($this->shoeService->isThereThisSizeForThisShoe($shoeSize) != false) $shoeSize = $this->shoeService->isThereThisSizeForThisShoe($shoeSize);
+            $shoeSize->setQuantity($shoeSize->getQuantity() + 1);
+        }
+        else $shoeSize->setQuantity(1);
+
+        $this->saveService->saveShoeSize($shoeSize);
+
+        $shoe->addSize($shoeSize);
+        $size->addShoe($shoeSize);
+
+        /** @var User $seller */
+        $seller = $this->getUser();
+
+        $shoeUser = new ShoeUser();
+        $shoeUser->setShoe($shoe)->setSeller($seller)->setPrice($_POST['price']);
+        $this->saveService->saveShoeUser($shoeUser);
+
+        $shoe->addSeller($shoeUser);
+        $seller->addSellerShoe($shoeUser);
+
+        return $this->redirect("/");
     }
 }

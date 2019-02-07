@@ -119,5 +119,10 @@ class Model
     {
         $this->brand = $brand;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
 

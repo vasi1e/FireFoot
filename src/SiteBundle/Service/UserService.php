@@ -35,15 +35,6 @@ class UserService implements UserServiceInterface
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    /**
-     * @param User $user
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveUser(User $user)
-    {
-        $this->userRepository->saveUser($user);
-    }
-
     public function isTheUserRegistered(User $user)
     {
         $anotherUserWithSameEmail = $this

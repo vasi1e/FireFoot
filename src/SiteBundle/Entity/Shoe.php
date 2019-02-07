@@ -146,10 +146,12 @@ class Shoe
 
     /**
      * @param string $condition
+     * @return Shoe
      */
     public function setCondition($condition)
     {
         $this->condition = $condition;
+        return $this;
     }
 
     /**
@@ -162,10 +164,12 @@ class Shoe
 
     /**
      * @param int $conditionOutOf10
+     * @return Shoe
      */
     public function setConditionOutOf10($conditionOutOf10)
     {
         $this->conditionOutOf10 = $conditionOutOf10;
+        return $this;
     }
 
     /**
@@ -256,10 +260,12 @@ class Shoe
 
     /**
      * @param mixed $uploadImages
+     * @return Shoe
      */
     public function setUploadImages($uploadImages)
     {
         $this->uploadImages = $uploadImages;
+        return $this;
     }
 }
 

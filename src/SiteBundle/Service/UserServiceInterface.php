@@ -14,7 +14,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface UserServiceInterface
 {
-    public function saveUser(User $user);
     public function isTheUserRegistered(User $user);
     public function encodePassword(UserInterface $user);
     public function setRole(User $user, $role);

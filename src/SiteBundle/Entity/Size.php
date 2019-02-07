@@ -88,5 +88,10 @@ class Size
         $this->shoes[] = $shoe;
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getNumber();
+    }
 }
 
