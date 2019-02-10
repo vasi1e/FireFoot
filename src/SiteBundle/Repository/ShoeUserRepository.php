@@ -33,4 +33,16 @@ class ShoeUserRepository extends \Doctrine\ORM\EntityRepository
         $em->persist($shoeUser);
         $em->flush();
     }
+
+    public function findUserWithLowestPrice($shoeId, $sizeNum)
+    {
+        return $this->createQueryBuilder("q")
+            ->where("q.shoe = :shoeid")
+            ->andWhere("q.size = :sizenum")
+            ->setParameters(["shoeid" => $shoeId, "sizenum" => $sizeNum])
+            ->orderBy("q.price")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
 }

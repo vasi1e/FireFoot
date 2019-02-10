@@ -9,6 +9,7 @@
 namespace SiteBundle\Service;
 
 
+use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\Image;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
@@ -16,6 +17,7 @@ use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Entity\Size;
 use SiteBundle\Entity\User;
 use SiteBundle\Repository\BrandRepository;
+use SiteBundle\Repository\CartOrderRepository;
 use SiteBundle\Repository\ImageRepository;
 use SiteBundle\Repository\ModelRepository;
 use SiteBundle\Repository\ShoeRepository;
@@ -34,6 +36,7 @@ class SaveService implements SaveServiceInterface
     private $shoeUserRepository;
     private $modelRepository;
     private $brandRepository;
+    private $orderRepository;
 
     /**
      * BrandModelService constructor.
@@ -45,10 +48,12 @@ class SaveService implements SaveServiceInterface
      * @param ImageRepository $imageRepository
      * @param ModelRepository $modelRepository
      * @param BrandRepository $brandRepository
+     * @param CartOrderRepository $orderRepository
      */
     public function __construct(UserRepository $userRepository, SizeRepository $sizeRepository, ShoeRepository $shoeRepository,
                                 ShoeSizeRepository $shoeSizeRepository, ShoeUserRepository $shoeUserRepository,
-                                ImageRepository $imageRepository, ModelRepository $modelRepository, BrandRepository $brandRepository)
+                                ImageRepository $imageRepository, ModelRepository $modelRepository, BrandRepository $brandRepository,
+                                CartOrderRepository $orderRepository)
     {
         $this->userRepository = $userRepository;
         $this->modelRepository = $modelRepository;
@@ -58,6 +63,7 @@ class SaveService implements SaveServiceInterface
         $this->shoeSizeRepository = $shoeSizeRepository;
         $this->shoeUserRepository = $shoeUserRepository;
         $this->imageRepository = $imageRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -112,6 +118,15 @@ class SaveService implements SaveServiceInterface
     public function saveImage(Image $image)
     {
         $this->imageRepository->saveImage($image);
+    }
+
+    /**
+     * @param CartOrder $order
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveOrder(CartOrder $order)
+    {
+        $this->orderRepository->saveOrder($order);
     }
 
     public function saveProperty($property, $object)

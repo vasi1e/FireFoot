@@ -61,6 +61,13 @@ class User implements UserInterface
      */
     private $sellerShoes;
 
+    /**
+     * @var CartOrder[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\CartOrder", mappedBy="buyer")
+     */
+    private $orders;
+
 
     /**
      * Get id
@@ -196,6 +203,30 @@ class User implements UserInterface
     {
         $this->sellerShoes[] = $sellerShoe;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrders()
+    {
+        $ordersIdArray = [];
+
+        foreach ($this->orders as $order)
+        {
+            /** @var CartOrder $order */
+            $ordersIdArray[] = $order->getId();
+        }
+
+        return $ordersIdArray;
+    }
+
+    /**
+     * @param CartOrder $order
+     */
+    public function addOrder($order)
+    {
+        $this->orders[] = $order;
     }
 
     /**

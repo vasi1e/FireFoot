@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="success"></div>
+    <div>
+    {% for image in shoe.images %}
+    <img src="{{ asset('uploads/images/' ~ image.name) }}">
+    {% endfor %}
+    </div>
+    <div>{{ shoe.brand.name }}</div>
+    <div>{{ shoe.model.name }}</div>
+    <div>
+    <select id="size">
+        <option value="">Please select size</option>
+    {% for size in shoe.sizes %}
+        <option value="{{ size }}">{{ size }}</option>
+    {% endfor %}
+    </select>
+    </div>
+    <div id="price"></div>
+    <div>
+        <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input type="button" value="Sell"></a>
+        <input type="button" id="buy" value="Buy">
+    </div>
+    <div>Or do you want to buy <a href="#">used shoes</a></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $('#size').on('change', function () {
+           var sizeSelector = $(this);
+
+            $.ajax({
+                url: "{{ path('add_to_cart') }}",
+                type: "GET",
+                dataType: "TEXT",
+                data: {
+                    shoeId: {{ shoe.id }},
+                    sizeNum: sizeSelector.val(),
+                    price: "true"
+                },
+                success: function (price) {
+                    $('#price').text(price);
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+            }).done(function(res){
+                    console.log(res);
+                });
+        });
+    </script>
+    <script>
+        $('#buy').on('click', function () {
+            $.ajax({
+                url: "{{ path('add_to_cart') }}",
+                type: "GET",
+                data: {
+                    shoeId: {{ shoe.id }},
+                    sizeNum: $('#size').val()
+                },
+                success: function () {
+                    $('#success').text("The shoe is in the fire cart!");
+                }})
+            });
+    </script>
+{% endblock %}

@@ -13,6 +13,7 @@
     <div>
         <input type="submit" name="login" value="Log in">
     </div>
+    <div>If you don't have account you can <a href="{{ path('security_register') }}">register</a>.</div>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 </form>
 {% endblock %}

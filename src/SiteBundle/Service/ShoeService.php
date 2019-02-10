@@ -60,20 +60,35 @@ class ShoeService implements ShoeServiceInterface
         return $this->shoeRepository->find($id);
     }
 
+    public function findShoeSizeByShoeAndSize(Shoe $shoe, Size $size)
+    {
+        return $this->shoeSizeRepository->findOneBy(['shoe' => $shoe,
+            'size' => $size]);
+    }
+
+    public function findShoeUserByShoeAndSize(Shoe $shoe, Size $size)
+    {
+        return $this->shoeUserRepository->findUserWithLowestPrice($shoe->getId(), $size->getNumber());
+    }
+
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize)
     {
-        $anotherShoeSizeWithSameName = $this->shoeSizeRepository->findOneBy(['shoe' => $shoeSize->getShoe(),
-            'size' => $shoeSize->getSize()]);
+        $anotherShoeSizeWithSameName = $this->findShoeSizeByShoeAndSize($shoeSize->getShoe(), $shoeSize->getSize());
 
-        if ($anotherShoeSizeWithSameName != null) return $anotherShoeSizeWithSameName;
+        if ($anotherShoeSizeWithSameName != null) return true;
         else return false;
+    }
+
+    public function findSizeByNumber($number)
+    {
+        return $this->sizeRepository->findOneBy(['number' => $number]);
     }
 
     public function isThereSize(Size $size)
     {
-        $anotherSizeWithSameNum = $this->sizeRepository->findOneBy(['number' => $size->getNumber()]);
+        $anotherSizeWithSameNum = $this->findSizeByNumber($size->getNumber());
 
-        if ($anotherSizeWithSameNum != null) return $anotherSizeWithSameNum;
+        if ($anotherSizeWithSameNum != null) return true;
         else return false;
     }
 
@@ -81,8 +96,6 @@ class ShoeService implements ShoeServiceInterface
      * @param $imageFiles
      * @param $directory
      * @param Shoe $shoe
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Exception
      */
     public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe)
     {

@@ -9,6 +9,7 @@
 namespace SiteBundle\Service;
 
 
+use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\Image;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
@@ -22,6 +23,7 @@ interface SaveServiceInterface
     public function saveShoe(Shoe $shoe);
     public function saveSize(Size $size);
     public function saveImage(Image $image);
+    public function saveOrder(CartOrder $order);
     public function saveShoeSize(ShoeSize $shoeSize);
     public function saveShoeUser(ShoeUser $shoeUser);
     public function saveProperty($property, $object);

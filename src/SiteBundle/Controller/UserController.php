@@ -5,6 +5,7 @@ namespace SiteBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\UserType;
+use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,14 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends Controller
 {
     private $userService;
+    private $saveService;
 
     /**
      * UserController constructor.
-     * @param $userService
+     * @param UserServiceInterface $userService
+     * @param SaveServiceInterface $saveService
      */
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(UserServiceInterface $userService, SaveServiceInterface $saveService)
     {
         $this->userService = $userService;
+        $this->saveService = $saveService;
     }
 
     /**
@@ -62,9 +66,9 @@ class UserController extends Controller
 
             $this->userService->encodePassword($user);
             $this->userService->setRole($user, "user");
-            $this->userService->saveUser($user);
+            $this->saveService->saveUser($user);
 
-            return $this->redirect("/login");
+            return $this->redirectToRoute('security_login');
         }
 
         return $this->render('user/register.html.twig', [

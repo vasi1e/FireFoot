@@ -3,7 +3,9 @@
 namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SiteBundle\Entity\Brand;
+use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\Model;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
@@ -19,6 +21,7 @@ use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShoeController extends Controller
 {
@@ -44,7 +47,8 @@ class ShoeController extends Controller
     }
 
     /**
-     * @Route("/shoe/create", name="shoe_create")
+     * @Route("/shoe/sell", name="shoe_sell")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -63,7 +67,8 @@ class ShoeController extends Controller
     }
 
     /**
-     * @Route("/shoe/create/{id}", name="shoe_create_id")
+     * @Route("/shoe/sell/{id}", name="shoe_sell_id")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
@@ -72,6 +77,11 @@ class ShoeController extends Controller
     {
         /** @var Shoe $shoe */
         $shoe = $this->shoeService->findShoeById($id);
+        if ($shoe === null)
+        {
+            return $this->redirect("/");
+        }
+
         $shoe->setCondition(null)->setConditionOutOf10(null);
         $form = $this->createForm(ShoeType::class, $shoe);
         $form->handleRequest($request);
@@ -85,7 +95,20 @@ class ShoeController extends Controller
     }
 
     /**
+     * @Route("/shoe/buy/{id}", name="shoe_buy_id")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function removeAction(Request $request, $id)
+    {
+        
+    }
+
+    /**
      * @Route("/shoe/create/admin", name="admin_shoe_create")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -152,11 +175,29 @@ class ShoeController extends Controller
     }
 
     /**
+     * @Route("/shoe/view/{id}", name="shoe_view")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailsAction($id)
+    {
+        $shoe = $this->shoeService->findShoeById($id);
+        if ($shoe === null)
+        {
+            return $this->redirect("/");
+        }
+
+        return $this->render('shoe/view.html.twig', [
+            'shoe' => $shoe
+        ]);
+    }
+
+    /**
      * @Route("/get-models-from-brands", name="models_from_brands")
      * @param Request $request
      * @return JsonResponse
      */
-    public function listNeighborhoodsOfCityAction(Request $request)
+    public function listModelsOfBrandAction(Request $request)
     {
         $brandId = $request->query->get("brandid");
 
@@ -172,6 +213,42 @@ class ShoeController extends Controller
         }
 
         return new JsonResponse($responseArray);
+    }
+
+    /**
+     * @Route("/addToCart", name="add_to_cart")
+     * @param Request $request
+     * @return string
+     */
+    public function addToCartOrGetPriceAction(Request $request)
+    {
+        $shoeId = $request->query->get("shoeId");
+        $sizeNum = $request->query->get("sizeNum");
+
+        $shoe = $this->shoeService->findShoeById($shoeId);
+        $size = $this->shoeService->findSizeByNumber($sizeNum);
+        if ($shoe == null || $size == null)
+        {
+            return new Response(null);
+        }
+
+        /** @var ShoeUser $shoeUser */
+        $shoeUser = $this->shoeService->findShoeUserByShoeAndSize($shoe, $size)[0];
+
+        if ($request->query->get("price") == "true") return new Response($shoeUser->getPrice());
+        else
+        {
+            $order = new CartOrder();
+            /** @var User $user */
+            $user = $this->getUser();
+            $order->setBuyer($user)->setShoeUser($shoeUser);
+            $this->saveService->saveOrder($order);
+
+            $user->addOrder($order);
+            $shoeUser->addOrder($order);
+
+            return new Response();
+        }
     }
 
     public function createAction(Shoe $shoe)
@@ -191,7 +268,7 @@ class ShoeController extends Controller
         $size = new Size();
         $size->setNumber($_POST['size']);
 
-        if ($this->shoeService->isThereSize($size) != false) $size = $this->shoeService->isThereSize($size);
+        if ($this->shoeService->isThereSize($size)) $size = $this->shoeService->findSizeByNumber($size->getNumber());
         else $this->saveService->saveSize($size);
 
         $shoeSize = new ShoeSize();
@@ -199,7 +276,7 @@ class ShoeController extends Controller
 
         if ($shoe->getCondition() == "new")
         {
-            if ($this->shoeService->isThereThisSizeForThisShoe($shoeSize) != false) $shoeSize = $this->shoeService->isThereThisSizeForThisShoe($shoeSize);
+            if ($this->shoeService->isThereThisSizeForThisShoe($shoeSize)) $shoeSize = $this->shoeService->findShoeSizeByShoeAndSize($shoeSize->getShoe(), $shoeSize->getSize());
             $shoeSize->setQuantity($shoeSize->getQuantity() + 1);
         }
         else $shoeSize->setQuantity(1);
@@ -213,7 +290,7 @@ class ShoeController extends Controller
         $seller = $this->getUser();
 
         $shoeUser = new ShoeUser();
-        $shoeUser->setShoe($shoe)->setSeller($seller)->setPrice($_POST['price']);
+        $shoeUser->setShoe($shoe)->setSeller($seller)->setPrice($_POST['price'])->setSize($size);
         $this->saveService->saveShoeUser($shoeUser);
 
         $shoe->addSeller($shoeUser);

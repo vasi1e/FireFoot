@@ -36,11 +36,25 @@ class ShoeUser
     private $seller;
 
     /**
+     * @var Size
+     *
+     * @ORM\Column(name="size_number", type="string")
+     */
+    private $size;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
      */
     private $price;
+
+    /**
+     * @var CartOrder[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\CartOrder", mappedBy="shoeUser")
+     */
+    private $orders;
 
 
     /**
@@ -102,6 +116,24 @@ class ShoeUser
     }
 
     /**
+     * @return Size
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param Size $size
+     * @return ShoeUser
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+        return $this;
+    }
+
+    /**
      * Set price
      *
      * @param string $price
@@ -123,6 +155,30 @@ class ShoeUser
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrders()
+    {
+        $ordersIdArray = [];
+
+        foreach ($this->orders as $order)
+        {
+            /** @var CartOrder $order */
+            $ordersIdArray[] = $order->getId();
+        }
+
+        return $ordersIdArray;
+    }
+
+    /**
+     * @param CartOrder $order
+     */
+    public function addOrder($order)
+    {
+        $this->orders[] = $order;
     }
 }
 
