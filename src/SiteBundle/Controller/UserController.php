@@ -3,9 +3,11 @@
 namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\UserType;
 use SiteBundle\Service\SaveServiceInterface;
+use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +17,20 @@ class UserController extends Controller
 {
     private $userService;
     private $saveService;
+    private $someService;
 
     /**
      * UserController constructor.
      * @param UserServiceInterface $userService
      * @param SaveServiceInterface $saveService
+     * @param ServiceForThingsIDontKnowWhereToPut $someService
      */
-    public function __construct(UserServiceInterface $userService, SaveServiceInterface $saveService)
+    public function __construct(UserServiceInterface $userService, SaveServiceInterface $saveService,
+                                ServiceForThingsIDontKnowWhereToPut $someService)
     {
         $this->userService = $userService;
         $this->saveService = $saveService;
+        $this->someService = $someService;
     }
 
     /**

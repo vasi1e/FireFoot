@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="POST" enctype="multipart/form-data" action="{{ path('address') }}">
+        <div>
+            Country: <input type="text" name="country">
+        </div>
+        <div>
+            City: <input type="text" name="city">
+        </div>
+        <div>
+            Street: <input type="text" name="street">
+        </div>
+        <div>
+            Street number: <input type="text" name="number">
+        </div>
+        <div>
+           <input type="submit" value="Next" name="submit">
+        </div>
+    </form>
+{% endblock %}

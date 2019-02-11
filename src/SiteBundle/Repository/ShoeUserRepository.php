@@ -34,11 +34,34 @@ class ShoeUserRepository extends \Doctrine\ORM\EntityRepository
         $em->flush();
     }
 
+    /**
+     * @param ShoeUser $shoeUser
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateShoeUser(ShoeUser $shoeUser)
+    {
+        $em = $this->getEntityManager();
+        $em->merge($shoeUser);
+        $em->flush();
+    }
+
+    /**
+     * @param ShoeUser $shoeUser
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteShoeUser(ShoeUser $shoeUser)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($shoeUser);
+        $em->flush();
+    }
+
     public function findUserWithLowestPrice($shoeId, $sizeNum)
     {
         return $this->createQueryBuilder("q")
             ->where("q.shoe = :shoeid")
             ->andWhere("q.size = :sizenum")
+            ->andWhere("q.sold = false")
             ->setParameters(["shoeid" => $shoeId, "sizenum" => $sizeNum])
             ->orderBy("q.price")
             ->setMaxResults(1)

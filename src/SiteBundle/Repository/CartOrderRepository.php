@@ -33,4 +33,15 @@ class CartOrderRepository extends \Doctrine\ORM\EntityRepository
         $em->persist($order);
         $em->flush();
     }
+
+    /**
+     * @param CartOrder $order
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateOrder(CartOrder $order)
+    {
+        $em = $this->getEntityManager();
+        $em->merge($order);
+        $em->flush();
+    }
 }

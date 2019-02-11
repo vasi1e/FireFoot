@@ -2,6 +2,7 @@
 
 namespace SiteBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +56,13 @@ class ShoeUser
      * @ORM\OneToMany(targetEntity="SiteBundle\Entity\CartOrder", mappedBy="shoeUser")
      */
     private $orders;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="sold", type="boolean")
+     */
+    private $sold;
 
 
     /**
@@ -179,6 +187,29 @@ class ShoeUser
     public function addOrder($order)
     {
         $this->orders[] = $order;
+    }
+
+    public function setOrdersToEmpty()
+    {
+        $this->orders = new ArrayCollection();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSold()
+    {
+        return $this->sold;
+    }
+
+    /**
+     * @param bool $sold
+     * @return ShoeUser
+     */
+    public function setSold($sold)
+    {
+        $this->sold = $sold;
+        return $this;
     }
 }
 

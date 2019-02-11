@@ -224,7 +224,7 @@ class User implements UserInterface
     /**
      * @param CartOrder $order
      */
-    public function addOrder($order)
+    public function addOrder(CartOrder $order)
     {
         $this->orders[] = $order;
     }

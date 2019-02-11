@@ -10,12 +10,16 @@
     <div>{{ shoe.brand.name }}</div>
     <div>{{ shoe.model.name }}</div>
     <div>
+        {% if (shoe.sizes != null) %}
     <select id="size">
         <option value="">Please select size</option>
     {% for size in shoe.sizes %}
         <option value="{{ size }}">{{ size }}</option>
     {% endfor %}
     </select>
+        {% else %}
+        <h6>SOLD OUT</h6>
+        {% endif %}
     </div>
     <div id="price"></div>
     <div>

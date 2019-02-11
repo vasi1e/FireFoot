@@ -42,6 +42,20 @@ class CartOrder
      */
     private $shoeUser;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="paid", type="boolean")
+     */
+    private $paid;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="send", type="boolean")
+     */
+    private $send;
+
 
     /**
      * Get id
@@ -110,6 +124,42 @@ class CartOrder
     public function setShoeUser($shoeUser)
     {
         $this->shoeUser = $shoeUser;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaid()
+    {
+        return $this->paid;
+    }
+
+    /**
+     * @param bool $paid
+     * @return CartOrder
+     */
+    public function setPaid($paid)
+    {
+        $this->paid = $paid;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSend()
+    {
+        return $this->send;
+    }
+
+    /**
+     * @param bool $send
+     * @return CartOrder
+     */
+    public function setSend($send)
+    {
+        $this->send = $send;
         return $this;
     }
 }

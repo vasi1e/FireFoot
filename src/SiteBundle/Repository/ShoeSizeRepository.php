@@ -33,4 +33,26 @@ class ShoeSizeRepository extends \Doctrine\ORM\EntityRepository
         $em->persist($shoeSize);
         $em->flush();
     }
+
+    /**
+     * @param ShoeSize $shoeSize
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateShoeSize(ShoeSize $shoeSize)
+    {
+        $em = $this->getEntityManager();
+        $em->merge($shoeSize);
+        $em->flush();
+    }
+
+    /**
+     * @param ShoeSize $shoeSize
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteShoeSize(ShoeSize $shoeSize)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($shoeSize);
+        $em->flush();
+    }
 }
