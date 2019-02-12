@@ -14,6 +14,7 @@ use SiteBundle\Entity\Size;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\ShoeType;
 use SiteBundle\Service\BrandModelServiceInterface;
+use SiteBundle\Service\CartOrderServiceInterface;
 use SiteBundle\Service\SaveService;
 use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
@@ -30,6 +31,7 @@ class ShoeController extends Controller
     private $shoeService;
     private $brandmodelService;
     private $saveService;
+    private $orderService;
     private $someService;
 
     /**
@@ -39,15 +41,17 @@ class ShoeController extends Controller
      * @param BrandModelServiceInterface $brandmodelService
      * @param SaveServiceInterface $saveService
      * @param ServiceForThingsIDontKnowWhereToPut $someService
+     * @param CartOrderServiceInterface $orderService
      */
     public function __construct(UserServiceInterface $userService, ShoeServiceInterface $shoeService,
                                 BrandModelServiceInterface $brandmodelService, SaveServiceInterface $saveService,
-                                ServiceForThingsIDontKnowWhereToPut $someService)
+                                ServiceForThingsIDontKnowWhereToPut $someService, CartOrderServiceInterface $orderService)
     {
         $this->userService = $userService;
         $this->shoeService = $shoeService;
         $this->brandmodelService = $brandmodelService;
         $this->saveService = $saveService;
+        $this->orderService = $orderService;
         $this->someService = $someService;
     }
 
@@ -182,7 +186,7 @@ class ShoeController extends Controller
         foreach ($user->getOrders() as $orderId)
         {
             /** @var CartOrder $order */
-            $order = $this->someService->findOrderById($orderId);
+            $order = $this->orderService->findOrderById($orderId);
             if(!$order->isPaid())
             {
                 $shoe = $order->getShoeUser()->getShoe();
@@ -200,7 +204,7 @@ class ShoeController extends Controller
                 $order->getShoeUser()->setSold(true)->setOrdersToEmpty();
                 $this->someService->updateShoeUser($order->getShoeUser());
                 $order->setPaid(true);
-                $this->someService->updateOrder($order);
+                $this->orderService->updateOrder($order);
             }
         }
 
@@ -214,14 +218,29 @@ class ShoeController extends Controller
      */
     public function detailsAction($id)
     {
+        /** @var Shoe $shoe */
         $shoe = $this->shoeService->findShoeById($id);
         if ($shoe === null)
         {
-            return $this->redirect("/");
+            return $this->redirectToRoute('homepage');
+        }
+
+        $price = null;
+        if ($shoe->getCondition() == "used")
+        {
+            /** @var ShoeUser $shoeUser */
+            $shoeUser = $this->shoeService->findShoeUserByShoeId($shoe->getId())[0];
+            if ($shoeUser->isSold())
+            {
+                return $this->redirectToRoute('homepage');
+            }
+
+            $price = $shoeUser->getPrice();
         }
 
         return $this->render('shoe/view.html.twig', [
-            'shoe' => $shoe
+            'shoe' => $shoe,
+            'price' => $price
         ]);
     }
 

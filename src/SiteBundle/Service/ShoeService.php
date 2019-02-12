@@ -71,6 +71,11 @@ class ShoeService implements ShoeServiceInterface
         return $this->shoeUserRepository->findUserWithLowestPrice($shoe->getId(), $size->getNumber());
     }
 
+    public function findShoeUserByShoeId($id)
+    {
+        return $this->shoeUserRepository->findByShoeId($id);
+    }
+
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize)
     {
         $anotherShoeSizeWithSameName = $this->findShoeSizeByShoeAndSize($shoeSize->getShoe(), $shoeSize->getSize());

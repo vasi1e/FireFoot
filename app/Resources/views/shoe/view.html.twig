@@ -7,25 +7,40 @@
     <img src="{{ asset('uploads/images/' ~ image.name) }}">
     {% endfor %}
     </div>
-    <div>{{ shoe.brand.name }}</div>
-    <div>{{ shoe.model.name }}</div>
     <div>
-        {% if (shoe.sizes != null) %}
-    <select id="size">
-        <option value="">Please select size</option>
-    {% for size in shoe.sizes %}
-        <option value="{{ size }}">{{ size }}</option>
-    {% endfor %}
-    </select>
-        {% else %}
-        <h6>SOLD OUT</h6>
+        {{ shoe.brand.name }}
+        {{ shoe.model.name }}
+    </div>
+    {% if (shoe.condition == "new") %}
+        <div>
+            {% if (shoe.sizes != null) %}
+                <select id="size">
+                    <option value="">Please select size</option>
+                    {% for size in shoe.sizes %}
+                    <option value="{{ size }}">{{ size }}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <h6>SOLD OUT</h6>
+            {% endif %}
+        </div>
+        <div id="price"></div>
+        <div>
+            <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input type="button" value="Sell"></a>
+    {% else %}
+        <div>
+            Condition: {{ shoe.conditionOutOf10 }}
+        </div>
+        <div>
+            Price: {{ price }}
+        </div>
+        <div>
+            <a href="#"><input type="button" value="Message seller"></a>
+    {% endif %}
+        {% if ((shoe.sizes != null)) %}
+            <input type="button" id="buy" value="Buy">
         {% endif %}
-    </div>
-    <div id="price"></div>
-    <div>
-        <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input type="button" value="Sell"></a>
-        <input type="button" id="buy" value="Buy">
-    </div>
+        </div>
     <div>Or do you want to buy <a href="#">used shoes</a></div>
 {% endblock %}
 
@@ -45,7 +60,7 @@
                     price: "true"
                 },
                 success: function (price) {
-                    $('#price').text(price);
+                    $('#price').text("Price: " + price);
                 },
                 error: function (err) {
                     alert("An error ocurred while loading data ...");

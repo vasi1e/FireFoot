@@ -4,8 +4,10 @@ namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SiteBundle\Entity\CartOrder;
+use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Entity\User;
+use SiteBundle\Service\CartOrderServiceInterface;
 use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\ShoeServiceInterface;
@@ -21,21 +23,24 @@ class OrderController extends Controller
     private $shoeService;
     private $saveService;
     private $someService;
+    private $orderService;
 
     /**
      * ShoeController constructor.
      * @param UserServiceInterface $userService
      * @param ShoeServiceInterface $shoeService
      * @param SaveServiceInterface $saveService
+     * @param CartOrderServiceInterface $orderService
      * @param ServiceForThingsIDontKnowWhereToPut $someService
      */
     public function __construct(UserServiceInterface $userService, ShoeServiceInterface $shoeService,
-                                SaveServiceInterface $saveService,
+                                SaveServiceInterface $saveService, CartOrderServiceInterface $orderService,
                                 ServiceForThingsIDontKnowWhereToPut $someService)
     {
         $this->userService = $userService;
         $this->shoeService = $shoeService;
         $this->saveService = $saveService;
+        $this->orderService = $orderService;
         $this->someService = $someService;
     }
 
@@ -48,17 +53,23 @@ class OrderController extends Controller
     public function addToCartOrGetPriceAction(Request $request)
     {
         $shoeId = $request->query->get("shoeId");
-        $sizeNum = $request->query->get("sizeNum");
-
+        /** @var Shoe $shoe */
         $shoe = $this->shoeService->findShoeById($shoeId);
-        $size = $this->shoeService->findSizeByNumber($sizeNum);
-        if ($shoe == null || $size == null)
-        {
-            return new Response(null);
-        }
 
-        /** @var ShoeUser $shoeUser */
-        $shoeUser = $this->shoeService->findShoeUserByShoeAndSize($shoe, $size)[0];
+        if ($shoe->getCondition() == "used")
+        {
+            $shoeUser = $this->shoeService->findShoeUserByShoeId($shoeId)[0];
+        } else {
+            $sizeNum = $request->query->get("sizeNum");
+            $size = $this->shoeService->findSizeByNumber($sizeNum);
+            if ($shoe === null || $size === null)
+            {
+                return new Response(null);
+            }
+
+            /** @var ShoeUser $shoeUser */
+            $shoeUser = $this->shoeService->findShoeUserByShoeAndSize($shoe, $size)[0];
+        }
 
         if ($request->query->get("price") == "true") return new Response($shoeUser->getPrice());
         else
@@ -77,11 +88,23 @@ class OrderController extends Controller
     }
 
     /**
+     * @Route("order/delete/{id}", name="delete_order")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeFromCartAction($id)
+    {
+        $order = $this->orderService->findOrderById($id);
+        $this->orderService->deleteOrder($order);
+
+        return $this->redirectToRoute('my_orders');
+    }
+
+    /**
      * @Route("order/address", name="address")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function addressAction(Request $request)
     {
@@ -100,9 +123,9 @@ class OrderController extends Controller
             /** @var CartOrder $order */
             foreach ($currUser->getOrders() as $orderId)
             {
-                $order = $this->someService->findOrderById($orderId);
+                $order = $this->orderService->findOrderById($orderId);
                 $order->setAddress($fullAddress);
-                $this->someService->updateOrder($order);
+                $this->orderService->updateOrder($order);
             }
             return $this->redirectToRoute('payment');
         }
@@ -116,5 +139,28 @@ class OrderController extends Controller
     public function paymentAction()
     {
         return $this->render('order/payment.html.twig');
+    }
+
+    /**
+     * @Route("/order/my", name="my_orders")
+     */
+    public function listOrdersAction()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $orders = $user->getOrders();
+        $unpaidOrders = $this->orderService->getListOfUnpaidOrders($orders);
+
+        $totalSum = 0;
+        /** @var CartOrder $order */
+        foreach ($unpaidOrders as $order)
+        {
+            $totalSum += doubleval($order->getShoeUser()->getPrice());
+        }
+
+        return $this->render('order/myorders.html.twig', [
+            'orders' => $unpaidOrders,
+            'totalPrice' => number_format($totalSum, 2)
+        ]);
     }
 }

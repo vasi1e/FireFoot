@@ -68,4 +68,13 @@ class ShoeUserRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByShoeId($shoeId)
+    {
+        return $this->createQueryBuilder("q")
+            ->where("q.shoe = :shoeid")
+            ->setParameter("shoeid", $shoeId)
+            ->getQuery()
+            ->getResult();
+    }
 }

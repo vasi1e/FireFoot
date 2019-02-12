@@ -1,5 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    {% for order in orders %}
+        <!--<div>
+            <img src="{# asset('uploads/images/' ~ order.shoeUser.shoe.images[0].name) #}">
+        </div>-->
+        <div>
+            {{ order.shoeUser.shoe.brand }}
+            {{ order.shoeUser.shoe.model }}
+        </div>
+        <div>
+            Size: {{ order.shoeUser.size }}
+            Price: {{ order.shoeUser.price }}
+        </div>
+        <a href="{{ path('delete_order', {'id': order.id}) }}"><button>X</button></a>
+    {% endfor %}
+    <div>
+        Total price: {{ totalPrice }}
+    </div>
+    <div>
+        <a href="{{ path('address') }}"><button>Order</button></a>
+    </div>
 {% endblock %}

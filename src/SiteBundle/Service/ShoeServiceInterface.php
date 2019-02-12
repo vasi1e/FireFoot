@@ -19,6 +19,7 @@ interface ShoeServiceInterface
     public function findShoeById(int $id);
     public function findShoeSizeByShoeAndSize(Shoe $shoe, Size $size);
     public function findShoeUserByShoeAndSize(Shoe $shoe, Size $size);
+    public function findShoeUserByShoeId($id);
     public function findSizeByNumber($number);
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize);
     public function isThereSize(Size $size);
