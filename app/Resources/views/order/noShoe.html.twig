@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <h1>SOMETHING WENT WRONG</h1>
+    <div>
+        We're sorry but we could not make your order because shoe {{ shoeUser.shoe.brand }} {{ shoeUser.shoe.model }} size {{ shoeUser.size }}.
+        Maybe it's already sold so you can check if there is the same size but on different prize.
+    </div>
+    <div>
+        <a href="{{ path('shoe_view', {'id': shoeUser.shoe.id}) }}"><button>Go view shoe</button></a> or
+        <a href="{{ path('delete_order', {'id': order.id}) }}"><button>Remove shoe from the cart</button></a>
+    </div>
 {% endblock %}

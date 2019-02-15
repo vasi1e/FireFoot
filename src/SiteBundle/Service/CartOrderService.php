@@ -10,6 +10,7 @@ namespace SiteBundle\Service;
 
 
 use SiteBundle\Entity\CartOrder;
+use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Repository\CartOrderRepository;
 
 class CartOrderService implements CartOrderServiceInterface
@@ -60,5 +61,14 @@ class CartOrderService implements CartOrderServiceInterface
         }
 
         return $unpaidOrders;
+    }
+
+    public function isTheOrderAlreadyMadeBySomeoneElse(CartOrder $order)
+    {
+        /** @var ShoeUser $shoeUser */
+        $shoeUser = $order->getShoeUser();
+
+        if ($this->orderRepository->findSameOrderButPaidByShoeUserId($shoeUser->getId()) != null) return true;
+        else return false;
     }
 }

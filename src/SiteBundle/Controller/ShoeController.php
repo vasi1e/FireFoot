@@ -187,24 +187,31 @@ class ShoeController extends Controller
         {
             /** @var CartOrder $order */
             $order = $this->orderService->findOrderById($orderId);
-            if(!$order->isPaid())
-            {
-                $shoe = $order->getShoeUser()->getShoe();
-                $sizeNum = $order->getShoeUser()->getSize();
-                $size = $this->shoeService->findSizeByNumber($sizeNum);
-                /** @var ShoeSize $shoeSize */
-                $shoeSize = $this->shoeService->findShoeSizeByShoeAndSize($shoe, $size);
-                if ($shoeSize->getQuantity() == 1) {
-                    $this->someService->deleteShoeSize($shoeSize);
-                } else {
-                    $shoeSize->setQuantity($shoeSize->getQuantity() - 1);
-                    $this->someService->updateShoeSize($shoeSize);
-                }
 
-                $order->getShoeUser()->setSold(true)->setOrdersToEmpty();
-                $this->someService->updateShoeUser($order->getShoeUser());
-                $order->setPaid(true);
-                $this->orderService->updateOrder($order);
+            if (!$order->isPaid()) {
+                if ($this->orderService->isTheOrderAlreadyMadeBySomeoneElse($order)) return $this->redirectToRoute('order_error', ['id' => $order->getId()]);
+                else {
+                    $shoe = $order->getShoeUser()->getShoe();
+
+                    $sizeNum = $order->getShoeUser()->getSize();
+                    $size = $this->shoeService->findSizeByNumber($sizeNum);
+
+                    /** @var ShoeSize $shoeSize */
+                    $shoeSize = $this->shoeService->findShoeSizeByShoeAndSize($shoe, $size);
+
+                    if ($shoeSize->getQuantity() == 1) {
+                        $this->someService->deleteShoeSize($shoeSize);
+                    } else {
+                        $shoeSize->setQuantity($shoeSize->getQuantity() - 1);
+                        $this->someService->updateShoeSize($shoeSize);
+                    }
+
+                    $order->getShoeUser()->setSold(true)->setOrdersToEmpty();
+                    $this->someService->updateShoeUser($order->getShoeUser());
+
+                    $order->setPaid(true);
+                    $this->orderService->updateOrder($order);
+                }
             }
         }
 

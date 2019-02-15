@@ -14,6 +14,7 @@ use SiteBundle\Entity\CartOrder;
 interface CartOrderServiceInterface
 {
     public function findOrderById($id);
+    public function isTheOrderAlreadyMadeBySomeoneElse(CartOrder $order);
     public function updateOrder(CartOrder $order);
     public function deleteOrder(CartOrder $order);
     public function getListOfUnpaidOrders($orders);

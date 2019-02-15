@@ -55,4 +55,14 @@ class CartOrderRepository extends \Doctrine\ORM\EntityRepository
         $em->remove($order);
         $em->flush();
     }
+
+    public function findSameOrderButPaidByShoeUserId($id)
+    {
+        return $this->createQueryBuilder("q")
+            ->where("q.shoeUser = :shoeuserid")
+            ->andWhere("q.paid = true")
+            ->setParameter("shoeuserid", $id)
+            ->getQuery()
+            ->getResult();
+    }
 }

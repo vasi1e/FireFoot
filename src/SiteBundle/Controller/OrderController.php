@@ -142,6 +142,22 @@ class OrderController extends Controller
     }
 
     /**
+     * @Route("/order/error/{id}", name="order_error")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param $id
+     * @return Response
+     */
+    public function errorAction($id)
+    {
+        /** @var CartOrder $order */
+        $order = $this->orderService->findOrderById($id);
+        return $this->render('order/noShoe.html.twig', [
+            'order' => $order,
+            'shoeUser' => $order->getShoeUser(),
+        ]);
+    }
+
+    /**
      * @Route("/order/my", name="my_orders")
      */
     public function listOrdersAction()

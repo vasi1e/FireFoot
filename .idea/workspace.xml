@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="247e92df-7ffa-4907-a99d-17604fc95f94" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/order/address.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/order/address.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/order/myorders.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/order/myorders.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/order/payment.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/order/payment.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SiteBundle/Repository/CartOrderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Repository/CartOrderRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeUserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeUserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/ServiceForThingsIDontKnowWhereToPut.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ServiceForThingsIDontKnowWhereToPut.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,9 +62,10 @@
         <counts>
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.27" value="1" />
+          <entry key="project.open.time.32" value="1" />
           <entry key="project.open.time.34" value="1" />
           <entry key="project.open.time.455" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -82,7 +76,7 @@
           <entry key="jpeg" value="1" />
           <entry key="json" value="2" />
           <entry key="model" value="1" />
-          <entry key="php" value="331" />
+          <entry key="php" value="335" />
           <entry key="shoes_sizes" value="1" />
           <entry key="sql" value="1" />
           <entry key="symfony_requirements" value="1" />
@@ -95,7 +89,7 @@
           <entry key="Database Element" value="2" />
           <entry key="Image" value="1" />
           <entry key="JSON" value="2" />
-          <entry key="PHP" value="334" />
+          <entry key="PHP" value="338" />
           <entry key="Scratch" value="1" />
           <entry key="Twig" value="59" />
           <entry key="UML" value="8" />
@@ -106,17 +100,17 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="47" />
-          <entry key="php" value="19258" />
-          <entry key="twig" value="3732" />
+          <entry key="php" value="19883" />
+          <entry key="twig" value="4141" />
           <entry key="yml" value="129" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="19206" />
+          <entry key="PHP" value="19831" />
           <entry key="PLAIN_TEXT" value="47" />
           <entry key="SQL" value="52" />
-          <entry key="Twig" value="3732" />
+          <entry key="Twig" value="4141" />
           <entry key="YAML" value="129" />
         </counts>
       </usages-collector>
@@ -136,31 +130,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="225" column="9" selection-start-line="225" selection-start-column="9" selection-end-line="225" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="43" />
+            <state relative-caret-position="425">
+              <caret line="207" selection-start-line="207" selection-end-line="207" />
               <folding>
-                <element signature="e#41#103#0#PHP" expanded="true" />
+                <element signature="e#6723#6736#1#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/CartOrderRepository.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="2686">
+              <caret line="158" selection-start-line="158" selection-end-line="158" />
               <folding>
-                <element signature="e#41#81#0#PHP" expanded="true" />
+                <element signature="e#41#103#0#PHP" expanded="true" />
+                <element signature="e#4937#4961#1#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -169,63 +155,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-66">
-              <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+            <state relative-caret-position="255">
+              <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/SaveService.php">
+        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="128" column="38" selection-start-line="128" selection-start-column="38" selection-end-line="128" selection-end-column="38" />
+            <state relative-caret-position="753">
+              <caret line="73" column="1" selection-start-line="73" selection-start-column="1" selection-end-line="73" selection-end-column="1" />
               <folding>
-                <element signature="e#121#153#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/SaveServiceInterface.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
-              <folding>
-                <element signature="e#121#153#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
-              <folding>
-                <element signature="e#122#149#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/homepage/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
+                <element signature="e#123#155#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -234,8 +176,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            <state relative-caret-position="170">
+              <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -288,7 +230,6 @@
         <option value="$PROJECT_DIR$/src/SiteBundle/Entity/ShoeSize.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/SaveServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/SaveService.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeSizeRepository.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Entity/ShoeUser.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Entity/User.php" />
@@ -297,17 +238,18 @@
         <option value="$PROJECT_DIR$/src/SiteBundle/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/order/address.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/order/payment.html.twig" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Service/ServiceForThingsIDontKnowWhereToPut.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Repository/ShoeUserRepository.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/order/myorders.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Repository/CartOrderRepository.php" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Service/ServiceForThingsIDontKnowWhereToPut.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php" />
-        <option value="$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php" />
         <option value="$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig" />
+        <option value="$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php" />
       </list>
     </option>
   </component>
@@ -360,7 +302,7 @@
       <path value="$PROJECT_DIR$/vendor/sensiolabs/security-checker" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -546,18 +488,19 @@
       <workItem from="1549315785213" duration="55162000" />
       <workItem from="1549757190641" duration="48738000" />
       <workItem from="1549962374785" duration="10899000" />
+      <workItem from="1550143629605" duration="5212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224178000" />
+    <option name="totallyTimeSpent" value="229390000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5012225" side_tool="true" weight="0.24962178" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4987775" visible="true" weight="0.28214827" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4987775" visible="true" weight="0.28668684" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3295082" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
@@ -727,9 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="56" column="5" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
-          <folding>
-            <element signature="e#41#81#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -799,9 +739,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -819,9 +756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding>
-            <element signature="e#41#68#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -839,9 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
           <caret line="97" column="5" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
-          <folding>
-            <element signature="e#41#103#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -855,46 +786,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ServiceForThingsIDontKnowWhereToPut.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="58" column="1" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
-          <folding>
-            <element signature="e#122#153#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/BrandRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#41#81#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/RoleRepository.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ShoeUserRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-          <folding>
-            <element signature="e#41#81#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeService.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
           <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
-          <folding>
-            <element signature="e#122#150#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -902,9 +807,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="327">
           <caret line="56" selection-start-line="56" selection-end-line="56" />
-          <folding>
-            <element signature="e#41#81#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -912,32 +814,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
-          <folding>
-            <element signature="e#469#481#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="45" column="49" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="49" />
-          <folding>
-            <element signature="e#123#155#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/SaveService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
+        <state relative-caret-position="1836">
           <caret line="128" column="38" selection-start-line="128" selection-start-column="38" selection-end-line="128" selection-end-column="38" />
           <folding>
             <element signature="e#121#153#0#PHP" expanded="true" />
@@ -947,7 +829,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/SaveServiceInterface.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
+        <state relative-caret-position="221">
           <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
           <folding>
             <element signature="e#121#153#0#PHP" expanded="true" />
@@ -957,7 +839,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ShoeServiceInterface.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
+        <state relative-caret-position="323">
           <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
           <folding>
             <element signature="e#122#149#0#PHP" expanded="true" />
@@ -974,44 +856,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+        <state relative-caret-position="482">
+          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/CartOrderRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="425">
+          <caret line="207" selection-start-line="207" selection-end-line="207" />
+          <folding>
+            <element signature="e#6723#6736#1#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/ShoeUserRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
             <element signature="e#41#81#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/ServiceForThingsIDontKnowWhereToPut.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="43" />
+        <state relative-caret-position="443">
+          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
           <folding>
-            <element signature="e#41#103#0#PHP" expanded="true" />
+            <element signature="e#122#153#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/ShoeController.php">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/CartOrderServiceInterface.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="225" column="9" selection-start-line="225" selection-start-column="9" selection-end-line="225" selection-end-column="9" />
+        <state relative-caret-position="255">
+          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/shoe/view.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Repository/CartOrderRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-66">
-          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+        <state relative-caret-position="409">
+          <caret line="60" column="45" selection-start-line="60" selection-start-column="45" selection-end-line="60" selection-end-column="45" />
+          <folding>
+            <element signature="e#41#81#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Service/CartOrderService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="753">
+          <caret line="73" column="1" selection-start-line="73" selection-start-column="1" selection-end-line="73" selection-end-column="1" />
+          <folding>
+            <element signature="e#123#155#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/order/noShoe.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SiteBundle/Controller/OrderController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2686">
+          <caret line="158" selection-start-line="158" selection-end-line="158" />
+          <folding>
+            <element signature="e#41#103#0#PHP" expanded="true" />
+            <element signature="e#4937#4961#1#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
