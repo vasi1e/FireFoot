@@ -9,6 +9,7 @@
 namespace SiteBundle\Service;
 
 
+use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
 use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Repository\ShoeSizeRepository;

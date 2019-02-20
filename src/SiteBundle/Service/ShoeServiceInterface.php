@@ -12,9 +12,11 @@ namespace SiteBundle\Service;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
 use SiteBundle\Entity\Size;
+use SiteBundle\Entity\User;
 
 interface ShoeServiceInterface
 {
+    public function updateShoe(Shoe $shoe);
     public function findTheShoe(Shoe $shoe);
     public function findShoeById(int $id);
     public function findShoeSizeByShoeAndSize(Shoe $shoe, Size $size);
@@ -24,4 +26,5 @@ interface ShoeServiceInterface
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize);
     public function isThereSize(Size $size);
     public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe);
+    public function doesThisUserLikeTheShoe(Shoe $shoe, User $user);
 }

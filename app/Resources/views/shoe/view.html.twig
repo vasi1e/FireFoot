@@ -2,6 +2,7 @@
 
 {% block body %}
     <div id="success"></div>
+    <div>Do you want to see <a href="#">used shoes</a> of this model</div>
     <div>
     {% for image in shoe.images %}
     <img src="{{ asset('uploads/images/' ~ image.name) }}">
@@ -37,11 +38,14 @@
         <div>
             <a href="#"><input type="button" value="Message seller"></a>
     {% endif %}
-        {% if ((shoe.sizes != null)) %}
-            <input type="button" id="buy" value="Buy">
-        {% endif %}
+    {% if ((shoe.sizes != null)) %}
+        <input type="button" id="buy" value="Buy">
+    {% endif %}
         </div>
-    <div>Or do you want to buy <a href="#">used shoes</a></div>
+    <div>
+        <i id="likeButtn" class="glyphicon glyphicon-fire"></i>
+        <span id="likes"></span>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -83,5 +87,28 @@
                     $('#success').text("The shoe is in the fire cart!");
                 }})
             });
+    </script>
+    <script>
+        if ({{ likeFlag }} == true)
+        {
+            $('#likes').text("Your and {{ shoe.likes - 1 }} other fires");
+        } else
+            {
+                $('#likes').text("{{ shoe.likes }} fires");
+            }
+
+        $('#likeButtn').on('click', function() {
+            $.ajax({
+                url: "{{ path('shoe_likes', {'id' : shoe.id}) }}",
+                type: "GET",
+                success: function (likeFlag) {
+                    if (likeFlag == true)
+                    {
+                        $('#likes').text("Your and {{ shoe.likes - const }} other fires");
+                    } else {
+                        $('#likes').text("{{ shoe.likes - const }} fires");
+                    }
+                }})
+        });
     </script>
 {% endblock %}

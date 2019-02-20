@@ -15,7 +15,6 @@ use SiteBundle\Entity\User;
 use SiteBundle\Form\ShoeType;
 use SiteBundle\Service\BrandModelServiceInterface;
 use SiteBundle\Service\CartOrderServiceInterface;
-use SiteBundle\Service\SaveService;
 use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\ShoeServiceInterface;
@@ -245,10 +244,53 @@ class ShoeController extends Controller
             $price = $shoeUser->getPrice();
         }
 
+        /** @var User $currUser */
+        $currUser = $this->getUser();
+
+        if ($this->shoeService->doesThisUserLikeTheShoe($shoe, $currUser))
+        {
+            $likeFlag = 1;
+            $const = 1;
+        } else {
+            $likeFlag = 0;
+            $const = 0;
+        }
+
         return $this->render('shoe/view.html.twig', [
             'shoe' => $shoe,
-            'price' => $price
+            'price' => $price,
+            'likeFlag' => $likeFlag,
+            'const' => $const,
         ]);
+    }
+
+    /**
+     * @Route("/shoe/{id}/likes", name="shoe_likes")
+     * @param $id
+     * @return Response
+     */
+    public function likeAction($id)
+    {
+        /** @var User $currUser */
+        $currUser = $this->getUser();
+        /** @var Shoe $shoe */
+        $shoe = $this->shoeService->findShoeById($id);
+
+        if ($this->shoeService->doesThisUserLikeTheShoe($shoe, $currUser))
+        {
+            $currUser->removeLikedShoe($shoe);
+            $shoe->removeLike();
+            $likeFlag = 0;
+        }
+        else{
+            $currUser->addLikedShoe($shoe);
+            $shoe->addLike();
+            $likeFlag = 1;
+        }
+        $this->userService->updateUser($currUser);
+        $this->shoeService->updateShoe($shoe);
+
+        return new Response($likeFlag);
     }
 
     /**

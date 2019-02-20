@@ -15,6 +15,8 @@ class HomepageController extends Controller
     public function homeAction()
     {
         $user = $this->getUser();
+        var_dump($user->getLikedShoes());
+        exit();
         return $this->render('homepage/index.html.twig', [
             'user' => $user
         ]);

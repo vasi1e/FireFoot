@@ -29,4 +29,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $em->persist($user);
         $em->flush();
     }
+
+    /**
+     * @param User $user
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateUser(User $user)
+    {
+        $em = $this->getEntityManager();
+        $em->merge($user);
+        $em->flush();
+    }
 }

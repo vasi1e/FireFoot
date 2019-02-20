@@ -34,4 +34,34 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
         $em->flush();
     }
 
+    /**
+     * @param Shoe $shoe
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateShoe(Shoe $shoe)
+    {
+        $em = $this->getEntityManager();
+        $em->merge($shoe);
+        $em->flush();
+    }
+
+    public function findTop5MostLiked()
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.condition = new")
+            ->orderBy("s.likes", "DESC")
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findTop5LatestRelease()
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.condition = new")
+            ->orderBy("s.uploadDateAndTime")
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 }

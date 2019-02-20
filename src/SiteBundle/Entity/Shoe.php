@@ -72,6 +72,14 @@ class Shoe
     private $sellers;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="likes", type="integer")
+     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\User", mappedBy="likedShoes")
+     */
+    private $likes;
+
+    /**
      * @var Image[]
      *
      * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Image", mappedBy="shoe")
@@ -79,6 +87,22 @@ class Shoe
     private $images;
 
     private $uploadImages;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="upload_date_and_time", type="datetime")
+     */
+    private $uploadDateAndTime;
+
+    /**
+     * Shoe constructor.
+     */
+    public function __construct()
+    {
+        $this->uploadDateAndTime = new \DateTime("now");
+        $this->likes = 0;
+    }
 
 
     /**
@@ -219,6 +243,32 @@ class Shoe
     public function addSeller($seller)
     {
         $this->sellers[] = $seller;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addLike()
+    {
+        $this->likes += 1;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeLike()
+    {
+        $this->likes -= 1;
+        return $this;
     }
 
     /**

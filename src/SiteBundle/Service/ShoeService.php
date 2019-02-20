@@ -13,6 +13,7 @@ use SiteBundle\Entity\Image;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
 use SiteBundle\Entity\Size;
+use SiteBundle\Entity\User;
 use SiteBundle\Repository\ImageRepository;
 use SiteBundle\Repository\ShoeRepository;
 use SiteBundle\Repository\ShoeSizeRepository;
@@ -48,6 +49,15 @@ class ShoeService implements ShoeServiceInterface
         $this->shoeUserRepository = $shoeUserRepository;
         $this->imageRepository = $imageRepository;
         $this->saveService = $saveService;
+    }
+
+    /**
+     * @param Shoe $shoe
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateShoe(Shoe $shoe)
+    {
+        $this->shoeRepository->updateShoe($shoe);
     }
 
     public function findTheShoe(Shoe $shoe)
@@ -115,5 +125,10 @@ class ShoeService implements ShoeServiceInterface
             $this->saveService->saveImage($image);
             $shoe->addImage($image);
         }
+    }
+
+    public function doesThisUserLikeTheShoe(Shoe $shoe, User $user)
+    {
+        return in_array($shoe->getId(), $user->getLikedShoes());
     }
 }

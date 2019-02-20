@@ -4,6 +4,9 @@ namespace SiteBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -67,6 +70,14 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="SiteBundle\Entity\CartOrder", mappedBy="buyer")
      */
     private $orders;
+
+    /**
+     * @var Shoe[]
+     *
+     * @ManyToMany(targetEntity="Shoe", inversedBy="likes")
+     * @JoinTable(name="users_shoes_likes")
+     */
+    private $likedShoes;
 
 
     /**
@@ -227,6 +238,45 @@ class User implements UserInterface
     public function addOrder(CartOrder $order)
     {
         $this->orders[] = $order;
+    }
+
+    /**
+     * @return Shoe[]
+     */
+    public function getLikedShoes()
+    {
+        if ($this->likedShoes === null) return array();
+
+        $shoesIdArray = [];
+
+        foreach ($this->likedShoes as $shoe)
+        {
+            /** @var Shoe $shoe */
+            $shoesIdArray[] = $shoe->getId();
+        }
+
+        return $shoesIdArray;
+    }
+
+    /**
+     * @param Shoe $likedShoe
+     */
+    public function addLikedShoe($likedShoe)
+    {
+        $this->likedShoes[] = $likedShoe;
+    }
+
+    /**
+     * @param $likedShoe
+     * @return $this
+     */
+    public function removeLikedShoe($likedShoe)
+    {
+        if(($key = array_search($likedShoe, $this->likedShoes->getSnapshot())) !== false) {
+            unset($this->likedShoes[$key]);
+        }
+
+        return $this;
     }
 
     /**
