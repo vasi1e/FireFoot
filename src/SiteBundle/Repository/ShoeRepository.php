@@ -48,9 +48,9 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
     public function findTop5MostLiked()
     {
         return $this->createQueryBuilder("s")
-            ->where("s.condition = new")
+            ->where("s.condition = 'new'")
             ->orderBy("s.likes", "DESC")
-            ->setMaxResults(5)
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult();
     }
@@ -58,9 +58,9 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
     public function findTop5LatestRelease()
     {
         return $this->createQueryBuilder("s")
-            ->where("s.condition = new")
-            ->orderBy("s.uploadDateAndTime")
-            ->setMaxResults(5)
+            ->where("s.condition = 'new'")
+            ->orderBy("s.uploadDateAndTime", "DESC")
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult();
     }

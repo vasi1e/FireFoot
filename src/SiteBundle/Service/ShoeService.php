@@ -131,4 +131,14 @@ class ShoeService implements ShoeServiceInterface
     {
         return in_array($shoe->getId(), $user->getLikedShoes());
     }
+
+    public function findTop5MostLiked()
+    {
+        return $this->shoeRepository->findTop5MostLiked();
+    }
+
+    public function findTop5LatestRelease()
+    {
+        return $this->shoeRepository->findTop5LatestRelease();
+    }
 }

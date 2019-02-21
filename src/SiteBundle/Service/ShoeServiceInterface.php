@@ -23,6 +23,8 @@ interface ShoeServiceInterface
     public function findShoeUserByShoeAndSize(Shoe $shoe, Size $size);
     public function findShoeUserByShoeId($id);
     public function findSizeByNumber($number);
+    public function findTop5MostLiked();
+    public function findTop5LatestRelease();
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize);
     public function isThereSize(Size $size);
     public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe);

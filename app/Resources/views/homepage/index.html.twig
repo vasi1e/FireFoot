@@ -1,5 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ user.likedShoes }}<h1>
+    <h4>The latest shoes</h4>
+    <div>
+    {% for shoe in latestShoes %}
+        <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
+        <div>
+            {{ shoe.brand }}
+            {{ shoe.model }}
+        </div>
+        <div>
+            <i class="glyphicon glyphicon-fire"></i>
+            {{ shoe.likes }}
+        </div>
+    {% endfor %}
+    </div>
+    <h4>The most fire shoes</h4>
+    <div>
+    {% for shoe in likedShoes %}
+        <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
+        <div>
+            {{ shoe.brand }}
+            {{ shoe.model }}
+        </div>
+        <div>
+            <i class="glyphicon glyphicon-fire"></i>
+            {{ shoe.likes }}
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}
