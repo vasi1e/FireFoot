@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for shoe in shoes %}
+        {% if (shoe.sellers[0].sold == false) %}
+        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+            <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
+            <div>
+                {{ shoe.brand }}
+                {{ shoe.model }}
+            </div>
+            <div>
+                Size: {{ shoe.sellers[0].size }}
+                Price: {{ shoe.sellers[0].price }}
+            </div>
+        </a>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+

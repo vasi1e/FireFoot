@@ -2,31 +2,37 @@
 
 {% block body %}
     <h4>The latest shoes</h4>
+    <a href="#">see more-></a>
     <div>
     {% for shoe in latestShoes %}
-        <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
-        <div>
-            {{ shoe.brand }}
-            {{ shoe.model }}
-        </div>
-        <div>
-            <i class="glyphicon glyphicon-fire"></i>
-            {{ shoe.likes }}
-        </div>
+        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+            <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
+            <div>
+                {{ shoe.brand }}
+                {{ shoe.model }}
+            </div>
+            <div>
+                <i class="glyphicon glyphicon-fire"></i>
+                {{ shoe.likes }}
+            </div>
+        </a>
     {% endfor %}
     </div>
     <h4>The most fire shoes</h4>
+    <a href="#">see more-></a>
     <div>
     {% for shoe in likedShoes %}
-        <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
-        <div>
-            {{ shoe.brand }}
-            {{ shoe.model }}
-        </div>
-        <div>
-            <i class="glyphicon glyphicon-fire"></i>
-            {{ shoe.likes }}
-        </div>
+        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+            <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
+            <div>
+                {{ shoe.brand }}
+                {{ shoe.model }}
+            </div>
+            <div>
+                <i class="glyphicon glyphicon-fire"></i>
+                {{ shoe.likes }}
+            </div>
+        </a>
     {% endfor %}
     </div>
 {% endblock %}

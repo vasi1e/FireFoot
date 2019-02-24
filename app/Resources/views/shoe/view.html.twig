@@ -2,7 +2,7 @@
 
 {% block body %}
     <div id="success"></div>
-    <div>Do you want to see <a href="#">used shoes</a> of this model</div>
+    <div>Do you want to see <a href="{{ path('list_used_shoes', {'id': shoe.id}) }}">used shoes</a> of this model</div>
     <div>
     {% for image in shoe.images %}
     <img src="{{ asset('uploads/images/' ~ image.name) }}">
@@ -33,7 +33,8 @@
             Condition: {{ shoe.conditionOutOf10 }}
         </div>
         <div>
-            Price: {{ price }}
+            Price: {{ shoe.sellers[0].price }}
+            Size: {{ shoe.sellers[0].size }}
         </div>
         <div>
             <a href="#"><input type="button" value="Message seller"></a>

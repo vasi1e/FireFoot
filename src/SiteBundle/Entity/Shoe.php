@@ -226,15 +226,7 @@ class Shoe
      */
     public function getSellers()
     {
-        $userIdArray = [];
-
-        foreach ($this->sellers as $seller)
-        {
-            /** @var ShoeUser $seller*/
-            $userIdArray[] = $seller->getSeller()->getId();
-        }
-
-        return $userIdArray;
+        return $this->sellers;
     }
 
     /**

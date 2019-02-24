@@ -231,19 +231,6 @@ class ShoeController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        $price = null;
-        if ($shoe->getCondition() == "used")
-        {
-            /** @var ShoeUser $shoeUser */
-            $shoeUser = $this->shoeService->findShoeUserByShoeId($shoe->getId())[0];
-            if ($shoeUser->isSold())
-            {
-                return $this->redirectToRoute('homepage');
-            }
-
-            $price = $shoeUser->getPrice();
-        }
-
         /** @var User $currUser */
         $currUser = $this->getUser();
 
@@ -258,7 +245,6 @@ class ShoeController extends Controller
 
         return $this->render('shoe/view.html.twig', [
             'shoe' => $shoe,
-            'price' => $price,
             'likeFlag' => $likeFlag,
             'const' => $const,
         ]);
@@ -320,8 +306,17 @@ class ShoeController extends Controller
     {
         if ($shoe->getCondition() == 'new')
         {
-            /** @var Shoe $shoe */
-            $shoe = $this->shoeService->findTheShoe($shoe);
+            $shoes = $this->shoeService->findShoesByBrandAndModel($shoe);
+
+            /** @var Shoe $s */
+            foreach ($shoes as $s)
+            {
+                if ($s->getCondition() == 'new')
+                {
+                    $shoe = $s;
+                    break;
+                }
+            }
         }
         else {
             $this->saveService->saveShoe($shoe);

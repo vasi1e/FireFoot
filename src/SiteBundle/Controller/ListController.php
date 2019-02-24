@@ -2,17 +2,18 @@
 
 namespace SiteBundle\Controller;
 
+use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
 use SiteBundle\Service\ShoeServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomepageController extends Controller
+class ListController extends Controller
 {
     private $shoeService;
 
     /**
-     * HomepageController constructor.
+     * ListController constructor.
      * @param $shoeService
      */
     public function __construct(ShoeServiceInterface $shoeService)
@@ -32,6 +33,28 @@ class HomepageController extends Controller
         return $this->render('homepage/index.html.twig', [
             'likedShoes' => $topLikedShoes,
             'latestShoes' => $topLatestShoes
+        ]);
+    }
+
+    /**
+     * @Route("/shoe/used/{id}", name="list_used_shoes")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listUsedShoes($id)
+    {
+        $shoe = $this->shoeService->findShoeById($id);
+        $shoes = $this->shoeService->findShoesByBrandAndModel($shoe);
+
+        $usedShoes = [];
+        /** @var Shoe $s */
+        foreach ($shoes as $s)
+        {
+            if ($s->getCondition() == 'used') $usedShoes[] = $s;
+        }
+
+        return $this->render('shoe/listUsedShoes.html.twig', [
+            'shoes' => $usedShoes
         ]);
     }
 }

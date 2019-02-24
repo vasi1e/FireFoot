@@ -50,7 +50,7 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder("s")
             ->where("s.condition = 'new'")
             ->orderBy("s.likes", "DESC")
-            ->setMaxResults(4)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
@@ -60,7 +60,7 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder("s")
             ->where("s.condition = 'new'")
             ->orderBy("s.uploadDateAndTime", "DESC")
-            ->setMaxResults(4)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
