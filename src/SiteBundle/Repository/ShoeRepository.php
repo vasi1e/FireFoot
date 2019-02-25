@@ -64,4 +64,12 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAllShoes()
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.condition = 'new'")
+            ->getQuery()
+            ->getResult();
+    }
 }

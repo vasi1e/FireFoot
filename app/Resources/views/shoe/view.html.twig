@@ -2,16 +2,52 @@
 
 {% block body %}
     <div id="success"></div>
+
     <div>Do you want to see <a href="{{ path('list_used_shoes', {'id': shoe.id}) }}">used shoes</a> of this model</div>
-    <div>
-    {% for image in shoe.images %}
-    <img src="{{ asset('uploads/images/' ~ image.name) }}">
-    {% endfor %}
+
+    <div class="row">
+     <div class="col-md-6">
+      <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+       <ol class="carousel-indicators">
+       {% for key,image in shoe.images %}
+            {% if key == 0 %}
+                <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+            {% else %}
+                <li data-target="#carousel-example-1z" data-slide-to="{{ key }}"></li>
+            {% endif %}
+       {% endfor %}
+       </ol>
+
+       <div class="carousel-inner" role="listbox">
+       {% for image in shoe.images %}
+            {% if image == shoe.images[0] %}
+                <div class="carousel-item active">
+            {% else %}
+                <div class="carousel-item">
+            {% endif %}
+                 <img class="d-block w-100" src="{{ asset('uploads/images/' ~ image.name) }}" alt="First slide">
+                </div>
+       {% endfor %}
+       </div>
+
+       <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+       </a>
+
+       <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+       </a>
+      </div>
+     </div>
     </div>
+
     <div>
         {{ shoe.brand.name }}
         {{ shoe.model.name }}
     </div>
+
     {% if (shoe.condition == "new") %}
         <div>
             {% if (shoe.sizes != null) %}
@@ -44,13 +80,19 @@
     {% endif %}
         </div>
     <div>
-        <i id="likeButtn" class="glyphicon glyphicon-fire"></i>
+        <i id="likeButtn" class="fab fa-gripfire fa-2x"></i>
         <span id="likes"></span>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
     <script>
         $('#size').on('change', function () {
            var sizeSelector = $(this);
@@ -93,20 +135,20 @@
         if ({{ likeFlag }} == true)
         {
             $('#likes').text("Your and {{ shoe.likes - 1 }} other fires");
-        } else
-            {
-                $('#likes').text("{{ shoe.likes }} fires");
-            }
+        } else {
+            $('#likes').text("{{ shoe.likes }} fires");
+        }
 
         $('#likeButtn').on('click', function() {
             $.ajax({
                 url: "{{ path('shoe_likes', {'id' : shoe.id}) }}",
                 type: "GET",
                 success: function (likeFlag) {
-                    if (likeFlag == true)
-                    {
+                    if (likeFlag == "null") {
+                         $('#success').text("You must be logged to like shoe")
+                    } else if (likeFlag == true) {
                         $('#likes').text("Your and {{ shoe.likes - const }} other fires");
-                    } else {
+                    } else if (likeFlag == false) {
                         $('#likes').text("{{ shoe.likes - const }} fires");
                     }
                 }})

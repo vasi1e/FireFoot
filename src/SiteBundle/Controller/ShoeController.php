@@ -20,7 +20,6 @@ use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\ShoeServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -233,14 +232,18 @@ class ShoeController extends Controller
 
         /** @var User $currUser */
         $currUser = $this->getUser();
-
-        if ($this->shoeService->doesThisUserLikeTheShoe($shoe, $currUser))
+        if ($currUser == null)
         {
-            $likeFlag = 1;
-            $const = 1;
-        } else {
             $likeFlag = 0;
             $const = 0;
+        } else {
+            if ($this->shoeService->doesThisUserLikeTheShoe($shoe, $currUser)) {
+                $likeFlag = 1;
+                $const = 1;
+            } else {
+                $likeFlag = 0;
+                $const = 0;
+            }
         }
 
         return $this->render('shoe/view.html.twig', [
@@ -259,6 +262,8 @@ class ShoeController extends Controller
     {
         /** @var User $currUser */
         $currUser = $this->getUser();
+        if ($currUser == null) return new Response("null");
+
         /** @var Shoe $shoe */
         $shoe = $this->shoeService->findShoeById($id);
 
@@ -277,29 +282,6 @@ class ShoeController extends Controller
         $this->shoeService->updateShoe($shoe);
 
         return new Response($likeFlag);
-    }
-
-    /**
-     * @Route("/get-models-from-brands", name="models_from_brands")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function listModelsOfBrandAction(Request $request)
-    {
-        $brandId = $request->query->get("brandid");
-
-        $models = $this->brandmodelService->getModelsForBrand($brandId);
-
-        $responseArray = array();
-        /** @var Model $model */
-        foreach($models as $model){
-            $responseArray[] = array(
-                "id" => $model->getId(),
-                "name" => $model->getName()
-            );
-        }
-
-        return new JsonResponse($responseArray);
     }
 
     public function createAction(Shoe $shoe)

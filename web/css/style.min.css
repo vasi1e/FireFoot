@@ -1,0 +1,7 @@
+#likeButtn {
+    transition: 0.3s;
+}
+
+#likeButtn:hover {
+    color: #ff3a26;
+}

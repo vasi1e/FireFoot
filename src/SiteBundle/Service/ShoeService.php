@@ -141,4 +141,9 @@ class ShoeService implements ShoeServiceInterface
     {
         return $this->shoeRepository->findTop5LatestRelease();
     }
+
+    public function listOfAllShoes()
+    {
+        return $this->shoeRepository->getAllShoes();
+    }
 }
