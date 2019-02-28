@@ -30,4 +30,5 @@ interface ShoeServiceInterface
     public function isThereSize(Size $size);
     public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe);
     public function doesThisUserLikeTheShoe(Shoe $shoe, User $user);
+    public function sortShoesBy($sortMethod, $order = "DESC");
 }

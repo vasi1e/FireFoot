@@ -1,5 +1,10 @@
 #likeButtn {
+    color: #c2bdbf;
     transition: 0.3s;
+}
+
+#fireIcon {
+    color: #c2bdbf;
 }
 
 #likeButtn:hover {

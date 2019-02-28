@@ -74,10 +74,18 @@ class User implements UserInterface
     /**
      * @var Shoe[]
      *
-     * @ManyToMany(targetEntity="Shoe", inversedBy="likes")
+     * @ManyToMany(targetEntity="Shoe", inversedBy="usersThatLiked")
      * @JoinTable(name="users_shoes_likes")
      */
     private $likedShoes;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->likedShoes = array();
+    }
 
 
     /**
@@ -241,21 +249,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return Shoe[]
+     * @return array
      */
     public function getLikedShoes()
     {
-        if ($this->likedShoes === null) return array();
-
-        $shoesIdArray = [];
+        $shoeIdArray = [];
 
         foreach ($this->likedShoes as $shoe)
         {
-            /** @var Shoe $shoe */
-            $shoesIdArray[] = $shoe->getId();
+            /** @var ShoeSize $shoe */
+            $shoeIdArray[] = $shoe->getId();
         }
 
-        return $shoesIdArray;
+        return $shoeIdArray;
     }
 
     /**
@@ -267,7 +273,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param $likedShoe
+     * @param Shoe $likedShoe
      * @return $this
      */
     public function removeLikedShoe($likedShoe)

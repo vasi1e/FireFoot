@@ -1,22 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for shoe in shoes %}
-        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
-            <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
-            <div>
-                {{ shoe.brand }}
-                {{ shoe.model }}
-            </div>
-            {% if (shoe.condition == "used") %}
-                {% if (shoe.sellers[0].sold == false) %}
-                    <div>
-                        Size: {{ shoe.sellers[0].size }}
-                        Price: {{ shoe.sellers[0].price }}
-                    </div>
-                {% endif %}
-            {% endif %}
-        </a>
+    <div>
+        Sort by: <select id="sort">
+            <option value="">Please choose</option>
+            <option value="uploadDateAndTime">New release</option>
+            <option value="alphabetic">Alphabetic</option>
+        </select> 
+    </div>
+
+    {% for key,shoe in shoes %}
+        <a id="linkShoe{{ key }}" href="{{ path('shoe_view', {'id': shoe.id}) }}">
+            <img id="image{{ key }}" src="{{ asset('uploads/images/' ~ shoe.image) }}">
+            <div id="name{{ key }}">{{ shoe.name }}</div>
+
     {% endfor %}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+    <script>
+        $('#sort').on('change', function () {
+            var sortSelector = $(this);
+
+            $.ajax({
+                url: "{{ path('list_shoes_sorted_by') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    sortMethod: sortSelector.val()
+                },
+                success: function (shoes) {
+                    $.each(shoes, function (key, shoe) {
+                        var sorce = "{{ asset('uploads/images/') }}" + shoe.image;
+                        document.getElementById("image" + key).src = sorce;
+                        document.getElementById("name" + key).innerHTML = shoe.name;
+                        var shoeId = shoe.id;
+                        document.getElementById("linkShoe" + key).href = "/shoe/view/" + shoeId;
+                    });
+                }})
+        });
+    </script>
+{% endblock %}

@@ -278,6 +278,7 @@ class ShoeController extends Controller
             $shoe->addLike();
             $likeFlag = 1;
         }
+
         $this->userService->updateUser($currUser);
         $this->shoeService->updateShoe($shoe);
 

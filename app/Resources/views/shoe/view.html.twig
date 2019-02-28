@@ -132,11 +132,24 @@
             });
     </script>
     <script>
+        var likeButtn = document.getElementById("likeButtn");
+        var colorOnStay = "";
+        var colorOnMove = "";
         if ({{ likeFlag }} == true)
         {
+            likeButtn.style.color = "#ff3a26";
+
             $('#likes').text("Your and {{ shoe.likes - 1 }} other fires");
+
+            colorOnStay = "#ff3a26";
+            colorOnMove = "#c2bdbf";
         } else {
+            likeButtn.style.color = "#c2bdbf";
+
             $('#likes').text("{{ shoe.likes }} fires");
+
+            colorOnStay = "#c2bdbf";
+            colorOnMove = "#ff3a26";
         }
 
         $('#likeButtn').on('click', function() {
@@ -147,11 +160,28 @@
                     if (likeFlag == "null") {
                          $('#success').text("You must be logged to like shoe")
                     } else if (likeFlag == true) {
+                        likeButtn.style.color = "#ff3a26";
+
                         $('#likes').text("Your and {{ shoe.likes - const }} other fires");
+
+                        colorOnStay = "#ff3a26";
+                        colorOnMove = "#c2bdbf";
                     } else if (likeFlag == false) {
+                        likeButtn.style.color = "#c2bdbf";
+
                         $('#likes').text("{{ shoe.likes - const }} fires");
+
+                        colorOnStay = "#c2bdbf";
+                        colorOnMove = "#ff3a26";
                     }
                 }})
         });
+
+        likeButtn.onmouseover = function() {
+            likeButtn.style.color = colorOnMove;
+        };
+        likeButtn.onmouseout = function() {
+            likeButtn.style.color = colorOnStay;
+        };
     </script>
 {% endblock %}

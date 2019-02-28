@@ -10,6 +10,7 @@ use SiteBundle\Service\ShoeServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ListController extends Controller
@@ -47,13 +48,32 @@ class ListController extends Controller
      * @Route("/shoe/list", name="list_shoes")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listShoes()
+    public function listShoesAction()
     {
-        $shoes = $this->shoeService->listOfAllShoes();
+        $allShoes = $this->shoeService->listOfAllShoes();
+        $shoes = $this->makeArrayFromShoes($allShoes);
 
-        return $this->render('list.html.twig', [
+        return $this->render('shoe/list.html.twig', [
            'shoes' => $shoes
         ]);
+    }
+
+    /**
+     * @Route("/shoe/sortedList", name="list_shoes_sorted_by")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function listSortedShoesAction(Request $request)
+    {
+        $sortMethod = $request->query->get("sortMethod");
+
+        if ($sortMethod != "likes" && $sortMethod != "uploadDateAndTime")  return new JsonResponse(["error" => "some error"]);
+        else {
+            $shoes = $this->shoeService->sortShoesBy($sortMethod);
+            $responseArray = $this->makeArrayFromShoes($shoes);
+
+            return new JsonResponse($responseArray);
+        }
     }
 
     /**
@@ -73,7 +93,7 @@ class ListController extends Controller
             if ($s->getCondition() == 'used') $usedShoes[] = $s;
         }
 
-        return $this->render('list.html.twig', [
+        return $this->render('shoe/listUsedShoes.html.twig', [
             'shoes' => $usedShoes
         ]);
     }
@@ -99,5 +119,26 @@ class ListController extends Controller
         }
 
         return new JsonResponse($responseArray);
+    }
+
+    public function makeArrayFromShoes($shoes)
+    {
+        $responseArray = array();
+        /** @var Shoe $shoe */
+        foreach($shoes as $shoe){
+            foreach ($shoe->getImages() as $image)
+            {
+                $imageName = $image->getName();
+                break;
+            }
+
+            $responseArray[] = array(
+                "id" => $shoe->getId(),
+                "name" => $shoe->getBrand()->getName() . " " . $shoe->getModel(),
+                "image" => $imageName
+            );
+        }
+
+        return $responseArray;
     }
 }

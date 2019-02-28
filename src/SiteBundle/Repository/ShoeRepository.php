@@ -72,4 +72,13 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function sortShoesBy($sortMethod, $order)
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.condition = 'new'")
+            ->orderBy("s." . $sortMethod, $order)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -146,4 +146,9 @@ class ShoeService implements ShoeServiceInterface
     {
         return $this->shoeRepository->getAllShoes();
     }
+
+    public function sortShoesBy($sortMethod, $order = "DESC")
+    {
+        return $this->shoeRepository->sortShoesBy($sortMethod, $order);
+    }
 }

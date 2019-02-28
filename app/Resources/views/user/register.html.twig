@@ -17,5 +17,6 @@
         <input type="submit" name="register" value="Register">
     </div>
     <div>If you have account you can <a href="{{ path('security_login') }}">login</a>.</div>
+    {{ form_row(form._token) }}
 </form>
 {% endblock %}

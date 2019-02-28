@@ -74,10 +74,16 @@ class Shoe
     /**
      * @var int
      *
-     * @ORM\Column(name="likes", type="integer")
-     * @ORM\ManyToMany(targetEntity="SiteBundle\Entity\User", mappedBy="likedShoes")
+     * @ORM\Column(name="likes", type="integer", nullable=true)
      */
     private $likes;
+
+    /**
+     * @var User[]
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+     */
+    private $usersThatLiked;
 
     /**
      * @var Image[]
@@ -264,6 +270,30 @@ class Shoe
     }
 
     /**
+     * @return User[]
+     */
+    public function getUsersThatLiked()
+    {
+        $userIdArray = [];
+
+        foreach ($this->usersThatLiked as $user)
+        {
+            /** @var User $user */
+            $shoeIdArray[] = $user->getId();
+        }
+
+        return $userIdArray;
+    }
+
+    /**
+     * @param User $userThatLiked
+     */
+    public function addUserThatLiked(User $userThatLiked)
+    {
+        $this->usersThatLiked[] = $userThatLiked;
+    }
+
+    /**
      * @return array
      */
     public function getImagesId()
@@ -308,6 +338,22 @@ class Shoe
     {
         $this->uploadImages = $uploadImages;
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUploadDateAndTime()
+    {
+        return $this->uploadDateAndTime;
+    }
+
+    /**
+     * @param \DateTime $uploadDateAndTime
+     */
+    public function setUploadDateAndTime($uploadDateAndTime)
+    {
+        $this->uploadDateAndTime = $uploadDateAndTime;
     }
 }
 
