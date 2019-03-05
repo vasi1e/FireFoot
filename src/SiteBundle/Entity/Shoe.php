@@ -72,6 +72,13 @@ class Shoe
     private $sellers;
 
     /**
+     * @var Message[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Message", mappedBy="shoe")
+     */
+    private $messages;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="likes", type="integer", nullable=true)
@@ -228,11 +235,12 @@ class Shoe
     }
 
     /**
-     * @return array
+     * @return ShoeUser|ShoeUser[]
      */
     public function getSellers()
     {
-        return $this->sellers;
+        if (count($this->sellers) == 1) return $this->sellers[0];
+        else return $this->sellers;
     }
 
     /**
@@ -241,6 +249,22 @@ class Shoe
     public function addSeller($seller)
     {
         $this->sellers[] = $seller;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @param Message $message
+     */
+    public function addMessage($message)
+    {
+        $this->messages[] = $message;
     }
 
     /**

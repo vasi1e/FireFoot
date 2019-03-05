@@ -1,12 +1,19 @@
-#likeButtn {
-    color: #c2bdbf;
-    transition: 0.3s;
+.navbar {
+    background-color: black !important;
 }
-
-#fireIcon {
-    color: #c2bdbf;
+.navbar-dark .navbar-brand:hover {
+    color: #F5D020;
 }
-
-#likeButtn:hover {
-    color: #ff3a26;
+.navbar-dark .navbar-brand {
+    color: #f53803;
+}
+.footer-rf {
+    background-color: #231F20 !important;
+}
+.btn-aqua {
+    background-color: #45cafc !important;
+}
+.rgba-gradient {
+    background-color: #f5d020;
+    background-image: linear-gradient(315deg, #f5d020 0%, #f53803 74%);
 }

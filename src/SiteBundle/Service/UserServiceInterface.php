@@ -19,4 +19,5 @@ interface UserServiceInterface
     public function encodePassword(UserInterface $user);
     public function setRole(User $user, $role);
     public function isAdmin(User $user);
+    public function findUserById($id);
 }

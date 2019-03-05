@@ -35,6 +35,11 @@ class UserService implements UserServiceInterface
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    public function findUserById($id)
+    {
+        return $this->userRepository->find($id);
+    }
+
     /**
      * @param User $user
      * @throws \Doctrine\ORM\OptimisticLockException

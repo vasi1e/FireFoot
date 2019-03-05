@@ -80,6 +80,20 @@ class User implements UserInterface
     private $likedShoes;
 
     /**
+     * @var Message[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Message", mappedBy="sender")
+     */
+    private $sendMessages;
+
+    /**
+     * @var Message[]
+     *
+     * @ORM\OneToMany(targetEntity="SiteBundle\Entity\Message", mappedBy="recipient")
+     */
+    private $receivedMessages;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -174,7 +188,7 @@ class User implements UserInterface
      * @param Role $role
      * @return User
      */
-    public function addRole($role)
+    public function addRole(Role $role)
     {
         $this->roles[] = $role;
 
@@ -218,7 +232,7 @@ class User implements UserInterface
      * @param ShoeUser $sellerShoe
      * @return User
      */
-    public function addSellerShoe($sellerShoe)
+    public function addSellerShoe(ShoeUser $sellerShoe)
     {
         $this->sellerShoes[] = $sellerShoe;
         return $this;
@@ -267,7 +281,7 @@ class User implements UserInterface
     /**
      * @param Shoe $likedShoe
      */
-    public function addLikedShoe($likedShoe)
+    public function addLikedShoe(Shoe $likedShoe)
     {
         $this->likedShoes[] = $likedShoe;
     }
@@ -276,13 +290,61 @@ class User implements UserInterface
      * @param Shoe $likedShoe
      * @return $this
      */
-    public function removeLikedShoe($likedShoe)
+    public function removeLikedShoe(Shoe $likedShoe)
     {
         if(($key = array_search($likedShoe, $this->likedShoes->getSnapshot())) !== false) {
             unset($this->likedShoes[$key]);
         }
 
         return $this;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getSendMessages()
+    {
+        $messagesText = [];
+
+        foreach ($this->sendMessages as $sendMessage)
+        {
+            /** @var Message $sendMessage */
+            $messagesText[] = $sendMessage->getText();
+        }
+
+        return $messagesText;
+    }
+
+    /**
+     * @param Message $sendMessage
+     */
+    public function addSendMessage(Message $sendMessage)
+    {
+        $this->sendMessages[] = $sendMessage;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getReceivedMessages()
+    {
+        $messagesText = [];
+
+        foreach ($this->receivedMessages as $receivedMessage)
+        {
+            /** @var Message $receivedMessage */
+            $messagesText[] = $receivedMessage->getText();
+        }
+
+        return $messagesText;
+    }
+
+    /**
+     * @param Message $receivedMessage
+     */
+    public function addReceivedMessage(Message $receivedMessage)
+    {
+        $this->receivedMessages[] = $receivedMessage;
     }
 
     /**

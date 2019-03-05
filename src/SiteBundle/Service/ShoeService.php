@@ -127,6 +127,28 @@ class ShoeService implements ShoeServiceInterface
         }
     }
 
+    public function makeJSONFromShoes($shoes)
+    {
+        $responseArray = array();
+        /** @var Shoe $shoe */
+        foreach($shoes as $shoe){
+            foreach ($shoe->getImages() as $image)
+            {
+                $imageName = $image->getName();
+                break;
+            }
+
+            $responseArray[] = array(
+                "id" => $shoe->getId(),
+                "name" => $shoe->getBrand()->getName() . " " . $shoe->getModel(),
+                "likes" => $shoe->getLikes(),
+                "image" => $imageName,
+            );
+        }
+
+        return $responseArray;
+    }
+
     public function doesThisUserLikeTheShoe(Shoe $shoe, User $user)
     {
         return in_array($shoe->getId(), $user->getLikedShoes());

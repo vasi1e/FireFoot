@@ -69,11 +69,11 @@
             Condition: {{ shoe.conditionOutOf10 }}
         </div>
         <div>
-            Price: {{ shoe.sellers[0].price }}
-            Size: {{ shoe.sellers[0].size }}
+            Price: {{ shoe.sellers.price }}
+            Size: {{ shoe.sellers.size }}
         </div>
         <div>
-            <a href="#"><input type="button" value="Message seller"></a>
+            <a href="{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}"><input type="button" value="Message seller"></a>
     {% endif %}
     {% if ((shoe.sizes != null)) %}
         <input type="button" id="buy" value="Buy">

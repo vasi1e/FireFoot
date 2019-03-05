@@ -17,7 +17,7 @@
         </div>
     </form>
     {% else %}
-    <form method="POST" enctype="multipart/form-data" action="{{ path('shoe_sell') }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ path('shoe_sell_id') }}">
         <div>
             Brand: {{ form_widget(form.brand) }}
         </div>
@@ -52,7 +52,7 @@
             Upload pictures: {{ form_widget(form.uploadImages) }}
         </div>
         <div>
-            <input type="submit" name="Create" value="Create new shoe">
+            <input type="submit" name="Create" value="Put for selling">
         </div>
     </form>
     {% endif %}

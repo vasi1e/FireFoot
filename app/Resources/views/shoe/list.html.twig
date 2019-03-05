@@ -5,7 +5,7 @@
         Sort by: <select id="sort">
             <option value="">Please choose</option>
             <option value="uploadDateAndTime">New release</option>
-            <option value="alphabetic">Alphabetic</option>
+            <option value="likes">Most fires</option>
         </select> 
     </div>
 
@@ -13,7 +13,11 @@
         <a id="linkShoe{{ key }}" href="{{ path('shoe_view', {'id': shoe.id}) }}">
             <img id="image{{ key }}" src="{{ asset('uploads/images/' ~ shoe.image) }}">
             <div id="name{{ key }}">{{ shoe.name }}</div>
-
+            <div>
+                <i class="fab fa-gripfire"></i>
+                <span id="likes{{ key }}">{{ shoe.likes }}</span>
+            </div>
+        </a>
     {% endfor %}
 {% endblock %}
 
@@ -26,6 +30,15 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
     <script>
+        var id = window.location.pathname.split("/")[3];
+        if (id != null)
+        {
+            switch (id) {
+                case "1": document.getElementById("sort").value = "uploadDateAndTime"; break;
+                case "2": document.getElementById("sort").value = "likes"; break;
+            }
+        }
+
         $('#sort').on('change', function () {
             var sortSelector = $(this);
 
@@ -41,6 +54,7 @@
                         var sorce = "{{ asset('uploads/images/') }}" + shoe.image;
                         document.getElementById("image" + key).src = sorce;
                         document.getElementById("name" + key).innerHTML = shoe.name;
+                        document.getElementById("likes" + key).innerHTML = shoe.likes;
                         var shoeId = shoe.id;
                         document.getElementById("linkShoe" + key).href = "/shoe/view/" + shoeId;
                     });

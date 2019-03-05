@@ -11,6 +11,7 @@ namespace SiteBundle\Service;
 
 use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\Image;
+use SiteBundle\Entity\Message;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeSize;
 use SiteBundle\Entity\ShoeUser;
@@ -19,6 +20,7 @@ use SiteBundle\Entity\User;
 use SiteBundle\Repository\BrandRepository;
 use SiteBundle\Repository\CartOrderRepository;
 use SiteBundle\Repository\ImageRepository;
+use SiteBundle\Repository\MessageRepository;
 use SiteBundle\Repository\ModelRepository;
 use SiteBundle\Repository\ShoeRepository;
 use SiteBundle\Repository\ShoeSizeRepository;
@@ -37,6 +39,7 @@ class SaveService implements SaveServiceInterface
     private $modelRepository;
     private $brandRepository;
     private $orderRepository;
+    private $messageRepository;
 
     /**
      * BrandModelService constructor.
@@ -49,11 +52,12 @@ class SaveService implements SaveServiceInterface
      * @param ModelRepository $modelRepository
      * @param BrandRepository $brandRepository
      * @param CartOrderRepository $orderRepository
+     * @param MessageRepository $messageRepository
      */
     public function __construct(UserRepository $userRepository, SizeRepository $sizeRepository, ShoeRepository $shoeRepository,
                                 ShoeSizeRepository $shoeSizeRepository, ShoeUserRepository $shoeUserRepository,
                                 ImageRepository $imageRepository, ModelRepository $modelRepository, BrandRepository $brandRepository,
-                                CartOrderRepository $orderRepository)
+                                CartOrderRepository $orderRepository, MessageRepository $messageRepository)
     {
         $this->userRepository = $userRepository;
         $this->modelRepository = $modelRepository;
@@ -64,6 +68,7 @@ class SaveService implements SaveServiceInterface
         $this->shoeUserRepository = $shoeUserRepository;
         $this->imageRepository = $imageRepository;
         $this->orderRepository = $orderRepository;
+        $this->messageRepository = $messageRepository;
     }
 
     /**
@@ -127,6 +132,15 @@ class SaveService implements SaveServiceInterface
     public function saveOrder(CartOrder $order)
     {
         $this->orderRepository->saveOrder($order);
+    }
+
+    /**
+     * @param Message $message
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveMessage(Message $message)
+    {
+        $this->messageRepository->saveMessage($message);
     }
 
     public function saveProperty($property, $object)

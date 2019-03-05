@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in chat %}
+        <div>
+            {{ message.sender }}: {{ message.text }}
+        </div>
+    {% endfor %}
+    <form method="POST" enctype="multipart/form-data" action="{{ path('message_chat', {"shoeId": shoe.id, "userId": recipient.id}) }}">
+        <input type="text" name="messageText">
+        <input type="submit" value="Send" name="submit">
+    </form>
+{% endblock %}

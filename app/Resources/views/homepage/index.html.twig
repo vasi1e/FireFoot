@@ -1,25 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h4>The latest shoes</h4>
-    <a href="#">see more-></a>
-    <div>
+    <div class="container">
+    <h1 class="display-4">The latest shoes</h1>
+    <a href="{{ path('list_shoes_id' , {'id': 1}) }}">see more-></a>
+        <div class="row">
     {% for shoe in latestShoes %}
         <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
-            <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
-            <div>
-                {{ shoe.brand }}
-                {{ shoe.model }}
+        <!-- Card -->
+        <div class="col-md-2">
+        <div class="card">
+            <!-- Card image -->
+            <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap">
+
+            <!-- Card content -->
+            <div class="card-body">
+                <!-- Title -->
+                <h4 class="card-title"><a>{{ shoe.brand }} {{ shoe.model }}</a></h4>
+                <!-- Text -->
+                <p class="card-text">
+                    <i class="fab fa-gripfire"></i>
+                    <span>{{ shoe.likes }}</span>
+                </p>
             </div>
-            <div>
-                <i id="fireIcon" class="fab fa-gripfire"></i>
-                <span>{{ shoe.likes }}</span>
-            </div>
+        </div>
+        </div>
         </a>
     {% endfor %}
-    </div>
+        </div>
     <h4>The most fire shoes</h4>
-    <a href="#">see more-></a>
+    <a href="{{ path('list_shoes_id' , {'id': 2}) }}">see more-></a>
     <div>
     {% for shoe in likedShoes %}
         <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
@@ -29,10 +39,11 @@
                 {{ shoe.model }}
             </div>
             <div>
-                <i class="glyphicon glyphicon-fire"></i>
-                {{ shoe.likes }}
+                <i class="fab fa-gripfire"></i>
+                <span>{{ shoe.likes }}</span>
             </div>
         </a>
     {% endfor %}
+    </div>
     </div>
 {% endblock %}

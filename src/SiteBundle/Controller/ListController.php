@@ -10,7 +10,6 @@ use SiteBundle\Service\ShoeServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ListController extends Controller
@@ -45,16 +44,27 @@ class ListController extends Controller
     }
 
     /**
-     * @Route("/shoe/list", name="list_shoes")
+     * @Route("/shoe/list/{id}", name="list_shoes_id")
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listShoesAction()
+    public function listShoesAction($id = null)
     {
-        $allShoes = $this->shoeService->listOfAllShoes();
-        $shoes = $this->makeArrayFromShoes($allShoes);
+        $sortMethod = "";
+        switch ($id)
+        {
+            case 1: $sortMethod = "uploadDateAndTime"; break;
+            case 2: $sortMethod = "likes"; break;
+            default: $sortMethod = ""; break;
+        }
+
+        if ($sortMethod == "") $allShoes = $this->shoeService->listOfAllShoes();
+        else $allShoes = $this->shoeService->sortShoesBy($sortMethod);
+
+        $shoes = $this->shoeService->makeJSONFromShoes($allShoes);
 
         return $this->render('shoe/list.html.twig', [
-           'shoes' => $shoes
+            'shoes' => $shoes
         ]);
     }
 
@@ -70,7 +80,7 @@ class ListController extends Controller
         if ($sortMethod != "likes" && $sortMethod != "uploadDateAndTime")  return new JsonResponse(["error" => "some error"]);
         else {
             $shoes = $this->shoeService->sortShoesBy($sortMethod);
-            $responseArray = $this->makeArrayFromShoes($shoes);
+            $responseArray = $this->shoeService->makeJSONFromShoes($shoes);
 
             return new JsonResponse($responseArray);
         }
@@ -119,26 +129,5 @@ class ListController extends Controller
         }
 
         return new JsonResponse($responseArray);
-    }
-
-    public function makeArrayFromShoes($shoes)
-    {
-        $responseArray = array();
-        /** @var Shoe $shoe */
-        foreach($shoes as $shoe){
-            foreach ($shoe->getImages() as $image)
-            {
-                $imageName = $image->getName();
-                break;
-            }
-
-            $responseArray[] = array(
-                "id" => $shoe->getId(),
-                "name" => $shoe->getBrand()->getName() . " " . $shoe->getModel(),
-                "image" => $imageName
-            );
-        }
-
-        return $responseArray;
     }
 }
