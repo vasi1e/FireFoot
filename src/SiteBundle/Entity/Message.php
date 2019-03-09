@@ -57,6 +57,13 @@ class Message
     private $sendTime;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_read", type="boolean")
+     */
+    private $read;
+
+    /**
      * Message constructor.
      */
     public function __construct()
@@ -179,5 +186,22 @@ class Message
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isRead()
+    {
+        return $this->read;
+    }
+
+    /**
+     * @param bool $read
+     */
+    public function setRead($read)
+    {
+        $this->read = $read;
+    }
+
 }
 

@@ -56,6 +56,16 @@ class MessageController extends Controller
         $recipient = $this->userService->findUserById($userId);
 
         $allMessages = $this->messageService->findChatByShoe($shoe, $currUser, $recipient);
+        foreach ($allMessages as $m)
+        {
+            /** @var Message $m */
+            if ($currUser === $m->getRecipient())
+            {
+                $m->setRead(true);
+                $this->messageService->updateMessage($m);
+            }
+        }
+
         $chat = $this->messageService->makeJSONFromMessages($allMessages, $currUser);
 
         if (isset($_POST['submit']))

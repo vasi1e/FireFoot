@@ -214,7 +214,7 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getSellerShoes()
+    public function getSellerShoesId()
     {
         $shoeIdArray = [];
 
@@ -225,6 +225,11 @@ class User implements UserInterface
         }
 
         return $shoeIdArray;
+    }
+
+    public function getSellerShoes()
+    {
+        return $this->sellerShoes;
     }
 
     /**

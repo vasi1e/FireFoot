@@ -83,16 +83,19 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/profile", name="profile")
+     * @Route("/user/profile/{id}", name="profile")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function profileAction()
+    public function profileAction($id)
     {
         /** @var User $user */
-        $user = $this->getUser();
+        $user = $this->userService->findUserById($id);
         $shoes = $user->getSellerShoes();
 
         return $this->render('user/profile.html.twig', [
+            'user' => $user,
             'shoes' => $shoes
         ]);
     }

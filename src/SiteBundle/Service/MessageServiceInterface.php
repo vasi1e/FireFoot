@@ -9,11 +9,13 @@
 namespace SiteBundle\Service;
 
 
+use SiteBundle\Entity\Message;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
 
 interface MessageServiceInterface
 {
+    public function updateMessage(Message $message);
     public function findChatByShoe(Shoe $shoe, User $user, User $recipient);
     public function makeJSONFromMessages($messages, User $user);
 }

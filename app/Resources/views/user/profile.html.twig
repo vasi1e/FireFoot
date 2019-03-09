@@ -1,6 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <div>
+        {{ user.fullName }}
+    </div>
+    {% for shoe in shoes %}
+        {% if (shoe.shoe.condition == "used") %}
+        {% if (shoe.sold == false) %}
+            <a href="{{ path('shoe_view', {'id': shoe.shoe.id}) }}">
+                <img src="{{ asset('uploads/images/' ~ shoe.shoe.images.snapshot[0].name) }}">
+                <div>
+                    {{ shoe.shoe.brand }}
+                    {{ shoe.shoe.model }}
+                </div>
+                <div>
+                    Size: {{ shoe.size }}
+                    Price: {{ shoe.price }}
+                </div>
+            </a>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 

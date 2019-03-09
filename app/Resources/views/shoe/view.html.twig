@@ -2,9 +2,6 @@
 
 {% block body %}
     <div id="success"></div>
-
-    <div>Do you want to see <a href="{{ path('list_used_shoes', {'id': shoe.id}) }}">used shoes</a> of this model</div>
-
     <div class="row">
      <div class="col-md-6">
       <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
@@ -62,6 +59,9 @@
             {% endif %}
         </div>
         <div id="price"></div>
+
+        <div>Do you want to see <a href="{{ path('list_used_shoes', {'id': shoe.id}) }}">used shoes</a> of this model</div>
+
         <div>
             <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input type="button" value="Sell"></a>
     {% else %}

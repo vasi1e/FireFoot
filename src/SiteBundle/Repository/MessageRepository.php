@@ -30,6 +30,17 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         $em->flush();
     }
 
+    /**
+     * @param Message $message
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateMessage(Message $message)
+    {
+        $em = $this->getEntityManager();
+        $em->merge($message);
+        $em->flush();
+    }
+
     public function getChat($shoeId, $senderId, $recipientId)
     {
         return $this->createQueryBuilder("m")
