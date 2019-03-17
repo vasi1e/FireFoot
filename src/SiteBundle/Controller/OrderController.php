@@ -46,7 +46,6 @@ class OrderController extends Controller
 
     /**
      * @Route("/addToCart", name="add_to_cart")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @return string
      */
@@ -77,13 +76,16 @@ class OrderController extends Controller
             $order = new CartOrder();
             /** @var User $user */
             $user = $this->getUser();
+
+            if ($user == null) return new Response("nooo");
+
             $order->setBuyer($user)->setShoeUser($shoeUser)->setSend(false)->setPaid(false);
             $this->saveService->saveOrder($order);
 
             $user->addOrder($order);
             $shoeUser->addOrder($order);
 
-            return new Response();
+            return new Response("yess");
         }
     }
 

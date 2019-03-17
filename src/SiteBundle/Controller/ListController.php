@@ -6,7 +6,9 @@ use SiteBundle\Entity\Model;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
 use SiteBundle\Service\BrandModelServiceInterface;
+use SiteBundle\Service\MessageServiceInterface;
 use SiteBundle\Service\ShoeServiceInterface;
+use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,16 +18,23 @@ class ListController extends Controller
 {
     private $shoeService;
     private $brandmodelService;
+    private $messageService;
+    private $userService;
 
     /**
      * ListController constructor.
      * @param ShoeServiceInterface $shoeService
      * @param BrandModelServiceInterface $brandmodelService
+     * @param MessageServiceInterface $messageService
+     * @param UserServiceInterface $userService
      */
-    public function __construct(ShoeServiceInterface $shoeService, BrandModelServiceInterface $brandmodelService)
+    public function __construct(ShoeServiceInterface $shoeService, BrandModelServiceInterface $brandmodelService,
+                                MessageServiceInterface $messageService, UserServiceInterface $userService)
     {
         $this->shoeService = $shoeService;
         $this->brandmodelService = $brandmodelService;
+        $this->messageService = $messageService;
+        $this->userService = $userService;
     }
 
     /**
@@ -46,9 +55,10 @@ class ListController extends Controller
     /**
      * @Route("/shoe/list/{id}", name="list_shoes_id")
      * @param $id
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listShoesAction($id = null)
+    public function listShoesAction($id = null, Request $request)
     {
         $sortMethod = "";
         switch ($id)
@@ -63,8 +73,15 @@ class ListController extends Controller
 
         $shoes = $this->shoeService->makeJSONFromShoes($allShoes);
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $shoes, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+
         return $this->render('shoe/list.html.twig', [
-            'shoes' => $shoes
+            'pagination' => $pagination
         ]);
     }
 
@@ -105,6 +122,46 @@ class ListController extends Controller
 
         return $this->render('shoe/listUsedShoes.html.twig', [
             'shoes' => $usedShoes
+        ]);
+    }
+
+    /**
+     * @Route("/message/list", name="chats_list")
+     */
+    public function listMessages()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $chats = $this->messageService->getListOfChats($user->getId());
+        $rightChats = [];
+
+        foreach ($chats as $chat)
+        {
+            /** @var Shoe $shoe */
+            $shoe = $this->shoeService->findShoeById($chat[1]);
+            $shoeName = $shoe->getBrand() . ' ' . $shoe->getModel();
+            $rightChat['shoeName'] = $shoeName;
+            $rightChat['shoeId'] = $chat[1];
+
+            if($chat[2] == $user->getId())
+            {
+                $rightChat['personId'] = $chat[3];
+                $person = $this->userService->findUserById($chat[3]);
+                $rightChat['personName'] = $person->getFullName();
+            } else {
+                $rightChat['personId'] = $chat[2];
+                $person = $this->userService->findUserById($chat[2]);
+                $rightChat['personName'] = $person->getFullName();
+            }
+
+            if ($this->messageService->isTheChatRead($chat['chatId'], $user->getId())[0]['read']) $rightChat['read'] = true;
+            else $rightChat['read'] = false;
+
+            $rightChats[] = $rightChat;
+        }
+
+        return $this->render('message/list.html.twig', [
+            'chats' => $rightChats
         ]);
     }
 

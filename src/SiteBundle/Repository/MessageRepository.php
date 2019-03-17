@@ -41,6 +41,31 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         $em->flush();
     }
 
+    public function getListOfChats($userId)
+    {
+        return $this->createQueryBuilder("m")
+            ->select("IDENTITY(m.shoe), IDENTITY(m.sender), IDENTITY(m.recipient), m.read, m.chatId")
+            ->where("m.sender = :userid OR m.recipient = :userid")
+            ->setParameter("userid", $userId)
+            ->orderBy("m.sendTime", "DESC")
+            ->groupBy("m.chatId")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function isTheChatRead($chatId, $userId)
+    {
+        return $this->createQueryBuilder("m")
+            ->select("m.read")
+            ->where("m.chatId = :chatid")
+            ->andWhere("m.recipient = :userid")
+            ->setParameters(["chatid" => $chatId, "userid" => $userId])
+            ->orderBy("m.sendTime", "DESC")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getChat($shoeId, $senderId, $recipientId)
     {
         return $this->createQueryBuilder("m")

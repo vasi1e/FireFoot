@@ -43,6 +43,13 @@ class Message
     private $recipient;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="chat_id", type="string")
+     */
+    private $chatId;
+
+    /**
      * @var Shoe
      *
      * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Shoe", inversedBy="messages")
@@ -92,7 +99,6 @@ class Message
     public function setText($text)
     {
         $this->text = $text;
-
         return $this;
     }
 
@@ -116,18 +122,17 @@ class Message
     public function setSendTime($sendTime)
     {
         $this->sendTime = $sendTime;
-
         return $this;
     }
 
     /**
      * Get sendTime
      *
-     * @return \DateTime
+     * @return string
      */
     public function getSendTime()
     {
-        return $this->sendTime;
+        return $this->sendTime->format('Y-m-d H:i:s');
     }
 
     /**
@@ -145,7 +150,6 @@ class Message
     public function setSender(User $sender)
     {
         $this->sender = $sender;
-
         return $this;
     }
 
@@ -164,7 +168,24 @@ class Message
     public function setRecipient(User $recipient)
     {
         $this->recipient = $recipient;
+        return $this;
+    }
 
+    /**
+     * @return string
+     */
+    public function getChatId()
+    {
+        return $this->chatId;
+    }
+
+    /**
+     * @param string $chatId
+     * @return Message
+     */
+    public function setChatId($chatId)
+    {
+        $this->chatId = $chatId;
         return $this;
     }
 
@@ -183,7 +204,6 @@ class Message
     public function setShoe(Shoe $shoe)
     {
         $this->shoe = $shoe;
-
         return $this;
     }
 
@@ -197,10 +217,12 @@ class Message
 
     /**
      * @param bool $read
+     * @return Message
      */
     public function setRead($read)
     {
         $this->read = $read;
+        return $this;
     }
 
 }

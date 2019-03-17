@@ -1,22 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>USER REGISTER</h1>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-4">
 
+                <h1 class="text-center mb-5 mt-5 display-5 font-weight-bold" style="text-shadow: 1px 1px 4px black;">USER REGISTER</h1>
 
-<form method="POST" action="{{ path('security_register') }}">
+<form class="text-center border border-light p-5 mb-5" method="POST" action="{{ path('security_register') }}">
     <div>
-        Email: {{ form_widget(form.email) }}
+        Email: {{ form_widget(form.email, {'attr': {'class': 'form-control mb-4', 'placeholder': 'example@mail.com' }}) }}
     </div>
-    {{ form_row(form.password.first) }}
-    {{ form_row(form.password.second) }}
+    {{ form_row(form.password.first, {'attr': {'class': 'form-control mb-4', 'placeholder': '1234567' }}) }}
+    {{ form_row(form.password.second, {'attr': {'class': 'form-control mb-4', 'placeholder': '1234567' }}) }}
     <div>
-        Full Name: {{ form_widget(form.fullName) }}
+        Full Name: {{ form_widget(form.fullName, {'attr': {'class': 'form-control mb-4', 'placeholder': 'John Doe' }}) }}
     </div>
     <div>
-        <input type="submit" name="register" value="Register">
+        <input class="btn rgba-gradient btn-block my-4" type="submit" name="register" value="Register">
     </div>
     <div>If you have account you can <a href="{{ path('security_login') }}">login</a>.</div>
     {{ form_row(form._token) }}
 </form>
+        </div>
+        </div>
+</div>
 {% endblock %}

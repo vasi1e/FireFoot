@@ -5,11 +5,11 @@ use SiteBundle\Entity\Message;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
 use SiteBundle\Service\MessageServiceInterface;
-use SiteBundle\Service\SaveService;
 use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ShoeServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -56,16 +56,7 @@ class MessageController extends Controller
         $recipient = $this->userService->findUserById($userId);
 
         $allMessages = $this->messageService->findChatByShoe($shoe, $currUser, $recipient);
-        foreach ($allMessages as $m)
-        {
-            /** @var Message $m */
-            if ($currUser === $m->getRecipient())
-            {
-                $m->setRead(true);
-                $this->messageService->updateMessage($m);
-            }
-        }
-
+        $this->messageService->readMessages($allMessages, $currUser);
         $chat = $this->messageService->makeJSONFromMessages($allMessages, $currUser);
 
         if (isset($_POST['submit']))
@@ -73,10 +64,15 @@ class MessageController extends Controller
             $message = new Message();
             $text = $request->request->get('messageText');
 
+            if ($allMessages == null) $chatId = md5(uniqid(rand(), true));
+            else $chatId = $allMessages[0]->getChatId();
+
             $message->setText($text)
                      ->setShoe($shoe)
                      ->setSender($currUser)
-                     ->setRecipient($recipient);
+                     ->setRecipient($recipient)
+                     ->setChatId($chatId)
+                     ->setRead(false);
             $this->saveService->saveMessage($message);
 
             $currUser->addSendMessage($message);
@@ -90,5 +86,29 @@ class MessageController extends Controller
             'shoe' => $shoe,
             'recipient' => $recipient,
         ]);
+    }
+
+    /**
+     * @Route("/messages-refresh", name="message_refresh")
+     * @param Request $request
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function refreshChatAction(Request $request)
+    {
+        /** @var Shoe $shoe */
+        $shoe = $this->shoeService->findShoeById($request->query->get("shoeId"));
+
+        if($shoe->getCondition() == "new") return $this->redirectToRoute("homepage");
+
+        /** @var User $currUser */
+        $currUser = $this->getUser();
+        /** @var User $recipient */
+        $recipient = $this->userService->findUserById($request->query->get("recipientId"));
+
+        $allMessages = $this->messageService->findChatByShoe($shoe, $currUser, $recipient);
+        $this->messageService->readMessages($allMessages, $currUser);
+        $chat = $this->messageService->makeJSONFromMessages($allMessages, $currUser);
+
+        return new JsonResponse($chat);
     }
 }

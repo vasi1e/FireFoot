@@ -17,5 +17,8 @@ interface MessageServiceInterface
 {
     public function updateMessage(Message $message);
     public function findChatByShoe(Shoe $shoe, User $user, User $recipient);
+    public function getListOfChats($userId);
+    public function isTheChatRead($chatId, $userId);
+    public function readMessages($allMessages, User $currUser);
     public function makeJSONFromMessages($messages, User $user);
 }

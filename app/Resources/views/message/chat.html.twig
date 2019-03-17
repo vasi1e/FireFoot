@@ -1,13 +1,58 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for message in chat %}
-        <div>
-            {{ message.sender }}: {{ message.text }}
-        </div>
+    <h1><a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a></h1>
+    <ul id="messages">
+    {% for key,message in chat %}
+        <li>
+        <div id="sender{{ key }}">{{ message.sender }}:</div>
+        <div id="text{{ key }}">{{ message.text }}</div>
+        <div id="time{{ key }}">{{ message.time }}</div>
+        </li>
     {% endfor %}
+    </ul>
     <form method="POST" enctype="multipart/form-data" action="{{ path('message_chat', {"shoeId": shoe.id, "userId": recipient.id}) }}">
         <input type="text" name="messageText">
         <input type="submit" value="Send" name="submit">
     </form>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var lastKey = 0;
+        var constKey = 0;
+        function send() {
+            $.ajax({
+                url: "{{ path('message_refresh') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    shoeId: {{ shoe.id }},
+                    recipientId: {{ recipient.id }}
+                },
+                success:function (chat) {
+                    $.each(chat, function (key,message) {
+                        if (document.getElementById("sender" + key) === null && constKey < key) {
+                            $('#messages').append("<li>\n" +
+                                "<div>" + message.sender + ":" + "</div>\n" +
+                                "<div>" + message.text + "</div>\n" +
+                                "<div>" + message.time + "</div>\n" +
+                                "</li>");
+                        }else if (document.getElementById("sender" + key) !== null){
+                            document.getElementById("sender" + key).innerHTML = message.sender + ":";
+                            document.getElementById("text" + key).innerHTML = message.text;
+                            document.getElementById("time" + key).innerHTML = message.time;
+                        }
+
+                        lastKey = key;
+                    });
+                    constKey = lastKey;
+                    setTimeout(function () {
+                        send();
+                    }, 3000)
+                }
+            })
+        }
+
+        send();
+    </script>
 {% endblock %}

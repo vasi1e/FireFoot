@@ -41,6 +41,34 @@ class MessageService implements MessageServiceInterface
         return  $this->messageRepository->getChat($shoe->getId(), $sender->getId(), $recipient->getId());
     }
 
+    public function getListOfChats($userId)
+    {
+        return $this->messageRepository->getListOfChats($userId);
+    }
+
+    public function isTheChatRead($chatId, $userId)
+    {
+        return $this->messageRepository->isTheChatRead($chatId, $userId);
+    }
+
+    /**
+     * @param $allMessages
+     * @param User $currUser
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function readMessages($allMessages, User $currUser)
+    {
+        foreach ($allMessages as $m)
+        {
+            /** @var Message $m */
+            if ($currUser === $m->getRecipient())
+            {
+                $m->setRead(true);
+                $this->updateMessage($m);
+            }
+        }
+    }
+
     public function makeJSONFromMessages($messages, User $user)
     {
         $responseArray = array();
@@ -51,11 +79,9 @@ class MessageService implements MessageServiceInterface
             else $sender = $message->getSender()->getFullName();
 
             $responseArray[] = array(
-                "id" => $message->getId(),
                 "text" => $message->getText(),
-                "shoe" => $message->getShoe(),
                 "sender" => $sender,
-                //"time" => $message->getSendTime(),
+                "time" => $message->getSendTime(),
             );
         }
 

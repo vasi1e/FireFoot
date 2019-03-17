@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for chat in chats %}
+        {% if chat['read'] == true %}
+            {% set color = "grey" %}
+        {% else %}
+            {% set color = "pink" %}
+        {% endif %}
+        <a href="{{ path('message_chat', {"shoeId": chat['shoeId'], "userId": chat['personId']}) }}">
+            <div style="color: {{ color }}">
+                {{ chat['personName'] }} for
+                {{ chat['shoeName'] }}
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}
+
+

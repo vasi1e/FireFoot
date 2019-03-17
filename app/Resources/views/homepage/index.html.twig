@@ -3,20 +3,18 @@
 {% block body %}
     <div class="container">
     <h1 class="display-4">The latest shoes</h1>
-    <a href="{{ path('list_shoes_id' , {'id': 1}) }}">see more-></a>
         <div class="row">
     {% for shoe in latestShoes %}
-        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
         <!-- Card -->
         <div class="col-md-2">
         <div class="card">
             <!-- Card image -->
-            <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap">
+            <a href="{{ path('shoe_view', {'id': shoe.id}) }}"><img class="card-img-top"  src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap"></a>
 
             <!-- Card content -->
             <div class="card-body">
                 <!-- Title -->
-                <h4 class="card-title"><a>{{ shoe.brand }} {{ shoe.model }}</a></h4>
+                <h4 class="card-title"><a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a></h4>
                 <!-- Text -->
                 <p class="card-text">
                     <i class="fab fa-gripfire"></i>
@@ -25,25 +23,50 @@
             </div>
         </div>
         </div>
-        </a>
     {% endfor %}
+            <div class="col-md-2">
+                <div class="card h-100 justify-content-center">
+                    <div class="card-title text-center">
+                        <!-- Title -->
+                        <h4 class="card-title"><a href="{{ path('list_shoes_id' , {'id': 1}) }}">See more</a>
+                        </h4>
+                        <!-- Text -->
+                    </div>
+                </div>
+            </div>
         </div>
-    <h4>The most fire shoes</h4>
-    <a href="{{ path('list_shoes_id' , {'id': 2}) }}">see more-></a>
-    <div>
+    <h1 class="display-4 mt-5">The most fiery shoes</h1>
+        <div class="row mb-5">
     {% for shoe in likedShoes %}
-        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
-            <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
-            <div>
-                {{ shoe.brand }}
-                {{ shoe.model }}
+            <!-- Card -->
+            <div class="col-md-2">
+                <div class="card">
+                    <!-- Card image -->
+                    <a href="{{ path('shoe_view', {'id': shoe.id}) }}"><img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap"></a>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+                        <!-- Title -->
+                        <h4 class="card-title"><a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a></h4>
+                        <!-- Text -->
+                        <p class="card-text">
+                            <i class="fab fa-gripfire"></i>
+                            <span>{{ shoe.likes }}</span>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <i class="fab fa-gripfire"></i>
-                <span>{{ shoe.likes }}</span>
-            </div>
-        </a>
     {% endfor %}
+            <div class="col-md-2">
+                <div class="card h-100 justify-content-center">
+                    <div class="card-title text-center">
+                        <!-- Title -->
+                        <h4 class="card-title"><a href="{{ path('list_shoes_id' , {'id': 2}) }}">See more</a>
+                        </h4>
+                        <!-- Text -->
+                    </div>
+                </div>
+            </div>
     </div>
     </div>
 {% endblock %}

@@ -1,19 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>USER LOGIN</h1>
+    <div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-4">
 
-<form name="authenticate" method="POST" action="{{ path('security_login') }}">
+            <h1 class="text-center mb-5 mt-5 display-5 font-weight-bold" style="text-shadow: 1px 1px 4px black;">USER LOGIN</h1>
+
+<form class="text-center border border-light p-5 mb-5" name="authenticate" method="POST" action="{{ path('security_login') }}">
     <div>
-        Email: <label><input type="text" name="_username"></label>
+        Email: <label><input class="form-control mb-4" type="text" name="_username" placeholder="Email"></label>
     </div>
     <div>
-        Password: <label><input type="password" name="_password"></label>
+        Password: <label><input class="form-control mb-4" type="password" name="_password" placeholder="Password"></label>
     </div>
     <div>
-        <input type="submit" name="login" value="Log in">
+        <input class="btn rgba-gradient btn-block my-4" type="submit" name="login" value="Log in">
     </div>
     <div>If you don't have account you can <a href="{{ path('security_register') }}">register</a>.</div>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 </form>
+    </div>
+    </div>
+    </div>
 {% endblock %}

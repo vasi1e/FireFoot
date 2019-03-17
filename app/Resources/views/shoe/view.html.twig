@@ -38,61 +38,54 @@
        </a>
       </div>
      </div>
-    </div>
+         <div class="col-md-6">
+             <h1 class="display-5 font-weight-bold mt-5 mb-5">
+             {{ shoe.brand.name }}
+             {{ shoe.model.name }}
+             </h1>
+             {% if (shoe.condition == "new") %}
+             <div>
+                 {% if (shoe.sizes != null) %}
+                     <select id="size">
+                         <option value="">Please select size</option>
+                         {% for size in shoe.sizes %}
+                             <option value="{{ size }}">{{ size }}</option>
+                         {% endfor %}
+                     </select>
+                 {% else %}
+                     <h6 class="mb-1 mt-2 font-weight-bold" style="color: red;">SOLD OUT</h6>
+                 {% endif %}
+             </div>
+             <div id="price"></div>
 
-    <div>
-        {{ shoe.brand.name }}
-        {{ shoe.model.name }}
-    </div>
+             <div>Do you want to see <a href="{{ path('list_used_shoes', {'id': shoe.id}) }}">used shoes</a> of this model</div>
 
-    {% if (shoe.condition == "new") %}
-        <div>
-            {% if (shoe.sizes != null) %}
-                <select id="size">
-                    <option value="">Please select size</option>
-                    {% for size in shoe.sizes %}
-                    <option value="{{ size }}">{{ size }}</option>
-                    {% endfor %}
-                </select>
-            {% else %}
-                <h6>SOLD OUT</h6>
-            {% endif %}
-        </div>
-        <div id="price"></div>
-
-        <div>Do you want to see <a href="{{ path('list_used_shoes', {'id': shoe.id}) }}">used shoes</a> of this model</div>
-
-        <div>
-            <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input type="button" value="Sell"></a>
-    {% else %}
-        <div>
-            Condition: {{ shoe.conditionOutOf10 }}
-        </div>
-        <div>
-            Price: {{ shoe.sellers.price }}
-            Size: {{ shoe.sellers.size }}
-        </div>
-        <div>
-            <a href="{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}"><input type="button" value="Message seller"></a>
-    {% endif %}
-    {% if ((shoe.sizes != null)) %}
-        <input type="button" id="buy" value="Buy">
-    {% endif %}
-        </div>
-    <div>
-        <i id="likeButtn" class="fab fa-gripfire fa-2x"></i>
-        <span id="likes"></span>
+             <div>
+                 <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input class="btn rgba-gradient" type="button" value="Sell"></a>
+                 {% else %}
+                 <div>
+                     Condition: {{ shoe.conditionOutOf10 }}
+                 </div>
+                 <div>
+                     Price: {{ shoe.sellers.price }}
+                     Size: {{ shoe.sellers.size }}
+                 </div>
+                 <div>
+                     <a href="{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}"><input type="button" value="Message seller"></a>
+                     {% endif %}
+                     {% if ((shoe.sizes != null)) %}
+                         <input class="btn rgba-gradient" type="button" id="buy" value="Buy">
+                     {% endif %}
+                 </div>
+                 <div>
+                     <i id="likeButtn" class="fab fa-gripfire fa-2x"></i>
+                     <span id="likes"></span>
+                 </div>
+         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
     <script>
         $('#size').on('change', function () {
            var sizeSelector = $(this);
@@ -126,8 +119,9 @@
                     shoeId: {{ shoe.id }},
                     sizeNum: $('#size').val()
                 },
-                success: function () {
-                    $('#success').text("The shoe is in the fire cart!");
+                success: function (response) {
+                    if(response == "nooo") $('#success').text("You must be logged in to buy shoe");
+                    else if(response == "yess") $('#success').text("The shoe is in the fire cart!");
                 }})
             });
     </script>
