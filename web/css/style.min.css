@@ -29,3 +29,24 @@
 .pagination.pg-blue .page-item.active .page-link:hover {
     background-color: maroon;
 }
+.img-slider {
+    height: 350px;
+    object-fit: contain;
+}
+.dot {
+    height: 12px;
+    width: 12px;
+    background-color: #ff3a26;
+    border-radius: 50%;
+    display: inline-block;
+}
+#messages {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.alert-ff {
+    border-radius: 17px;
+    margin-bottom: 0rem;
+    border: 0px
+}

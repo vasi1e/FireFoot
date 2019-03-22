@@ -2,7 +2,7 @@
 
 {% block body %}
     <div id="success"></div>
-    <div class="row">
+    <div class="row py-5">
      <div class="col-md-6">
       <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
        <ol class="carousel-indicators">
@@ -22,7 +22,7 @@
             {% else %}
                 <div class="carousel-item">
             {% endif %}
-                 <img class="d-block w-100" src="{{ asset('uploads/images/' ~ image.name) }}" alt="First slide">
+                 <img class="d-block w-100 img-slider" src="{{ asset('uploads/images/' ~ image.name) }}" alt="First slide">
                 </div>
        {% endfor %}
        </div>

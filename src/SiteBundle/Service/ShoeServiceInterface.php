@@ -29,7 +29,6 @@ interface ShoeServiceInterface
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize);
     public function isThereSize(Size $size);
     public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe);
-    public function makeJSONFromShoes($shoes);
     public function doesThisUserLikeTheShoe(Shoe $shoe, User $user);
     public function sortShoesBy($sortMethod, $order = "DESC");
 }

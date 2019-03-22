@@ -58,7 +58,7 @@ class ListController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listShoesAction($id = null, Request $request)
+    public function listShoesAction(Request $request, $id = null)
     {
         $sortMethod = "";
         switch ($id)
@@ -68,39 +68,19 @@ class ListController extends Controller
             default: $sortMethod = ""; break;
         }
 
-        if ($sortMethod == "") $allShoes = $this->shoeService->listOfAllShoes();
-        else $allShoes = $this->shoeService->sortShoesBy($sortMethod);
-
-        $shoes = $this->shoeService->makeJSONFromShoes($allShoes);
+        if ($sortMethod == "") $shoes = $this->shoeService->listOfAllShoes();
+        else $shoes = $this->shoeService->sortShoesBy($sortMethod);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $shoes, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            2 /*limit per page*/
+            1 /*limit per page*/
         );
 
         return $this->render('shoe/list.html.twig', [
             'pagination' => $pagination
         ]);
-    }
-
-    /**
-     * @Route("/shoe/sortedList", name="list_shoes_sorted_by")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function listSortedShoesAction(Request $request)
-    {
-        $sortMethod = $request->query->get("sortMethod");
-
-        if ($sortMethod != "likes" && $sortMethod != "uploadDateAndTime")  return new JsonResponse(["error" => "some error"]);
-        else {
-            $shoes = $this->shoeService->sortShoesBy($sortMethod);
-            $responseArray = $this->shoeService->makeJSONFromShoes($shoes);
-
-            return new JsonResponse($responseArray);
-        }
     }
 
     /**

@@ -1,34 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
+    <div class="row justify-content-center align-items-center">
+    <div class="col-md-4">
+    <h1 class="text-center mb-5 mt-5 display-5 font-weight-bold" style="text-shadow: 1px 1px 4px black;">SELL SHOES</h1>
     {% if(isAdmin) %}
-    <form method="POST" enctype="multipart/form-data" action="{{ path('admin_shoe_create') }}">
+    <form method="POST" class="text-center border border-light p-5 mb-5" enctype="multipart/form-data" action="{{ path('admin_shoe_create') }}">
         <div>
-            Brand: {{ form_widget(form.brand) }} Or: <input type="text" name="brandToAdd">
+            Brand: {{ form_widget(form.brand, {'attr': {'class': 'form-control mb-4' }}) }} Or (CUSTOM): <input class="form-control mb-4" type="text" name="brandToAdd">
         </div>
         <div>
-            Model: <input type="text" name="modelToAdd">
+            Model: <input class="form-control mb-4" type="text" name="modelToAdd">
         </div>
         <div>
-            Upload pictures: {{ form_widget(form.uploadImages) }}
+            Upload pictures: {{ form_widget(form.uploadImages, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
         <div>
-            <input type="submit" name="Create" value="Create new shoe">
+            <input class="btn rgba-gradient btn-block my-4" type="submit" name="Create" value="Create new shoe">
         </div>
     </form>
+    </div>
+    </div>
+        </div>
     {% else %}
-    <form method="POST" enctype="multipart/form-data" action="{{ path('shoe_sell_id') }}">
+    <form method="POST" class="text-center border border-light p-5 mb-5" enctype="multipart/form-data" action="{{ path('shoe_sell_id') }}">
         <div>
-            Brand: {{ form_widget(form.brand) }}
+            Brand: {{ form_widget(form.brand, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
         <div>
-            Model: {{ form_widget(form.model) }}
+            Model: {{ form_widget(form.model, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
         <div>
-            Price: <input type="text" name="price">
+            Price: <input class="form-control mb-4" type="text" name="price">
         </div>
         <div>
-            Size: <select name="size">
+            Size: <select class="form-control mb-4" name="size">
                 <option value="">Please select size</option>
                 <option value="36">36</option>
                 <option value="37">37</option>
@@ -43,19 +50,22 @@
             </select>
         </div>
         <div>
-            Condition: {{ form_widget(form.condition) }}
+            Condition: {{ form_widget(form.condition, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
         <div id="1">
-            Rate the condition: {{ form_widget(form.conditionOutOf10) }}/10
+            Rate the condition: {{ form_widget(form.conditionOutOf10, {'attr': {'class': 'form-control mb-4' }}) }}/10
         </div>
         <div id="2">
-            Upload pictures: {{ form_widget(form.uploadImages) }}
+            Upload pictures: {{ form_widget(form.uploadImages, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
         <div>
-            <input type="submit" name="Create" value="Put for selling">
+            <input class="btn rgba-gradient btn-block my-4" type="submit" name="Create" value="Put for selling">
         </div>
     </form>
     {% endif %}
+    </div>
+    </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

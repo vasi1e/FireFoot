@@ -1,13 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
+    <div class="row justify-content-center align-items-center">
+    <div class="col-lg-4">
     <h1><a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a></h1>
     <ul id="messages">
     {% for key,message in chat %}
-        <li>
-        <div id="sender{{ key }}">{{ message.sender }}:</div>
-        <div id="text{{ key }}">{{ message.text }}</div>
-        <div id="time{{ key }}">{{ message.time }}</div>
+        {% if message.sender == "Me" %}
+            {% set backColor = "#DED9C7" %}
+            {% set color = "#544F4D" %}
+        {% else %}
+            {% set backColor = "" %}
+            {% set color = "" %}
+        {% endif %}
+        <li style="margin-bottom: 1rem;">
+        <small class="font-weight-bold" id="sender{{ key }}">{{ message.sender }}:</small>
+            <div class="alert alert-primary alert-ff" style="color: {{ color }};background-color: {{ backColor }};">
+            <div class="font-weight-bold" id="text{{ key }}">{{ message.text }}</div>
+            </div>
+        <small id="time{{ key }}">{{ message.time }}</small>
         </li>
     {% endfor %}
     </ul>
@@ -15,6 +27,9 @@
         <input type="text" name="messageText">
         <input type="submit" value="Send" name="submit">
     </form>
+    </div>
+    </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     <script>
@@ -32,9 +47,21 @@
                 success:function (chat) {
                     $.each(chat, function (key,message) {
                         if (document.getElementById("sender" + key) === null && constKey < key) {
-                            $('#messages').append("<li>\n" +
-                                "<div>" + message.sender + ":" + "</div>\n" +
-                                "<div>" + message.text + "</div>\n" +
+                            var color = "";
+                            var backColor = "";
+                            if (message.sender == "Me")
+                            {
+                                backColor = "#DED9C7";
+                                color = "#544F4D";
+                            } else {
+                                backColor = "";
+                                color = "";
+                            }
+
+                            $('#messages').append("<li style=\"margin-bottom: 1rem;\">\n" +
+                                "<small class=\"font-weight-bold\">" + message.sender + ":" + "</small>\n" +
+                                "<div class=\"alert alert-primary alert-ff\" style=\"color: " + color + ";background-color: " + backColor + ";\">" +
+                                "<div class=\"font-weight-bold\">" + message.text + "</div>\n" + "</div>\n" +
                                 "<div>" + message.time + "</div>\n" +
                                 "</li>");
                         }else if (document.getElementById("sender" + key) !== null){
