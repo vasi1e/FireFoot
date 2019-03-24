@@ -3,6 +3,10 @@
 {% block body %}
     <div>
         {{ user.fullName }}
+        <a href="{{ path('chats_list') }}">
+            <i class="far fa-envelope"></i>
+            ({{ count }})
+        </a>
     </div>
     {% for shoe in shoes %}
         {% if (shoe.shoe.condition == "used") %}

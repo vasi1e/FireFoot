@@ -131,11 +131,11 @@
         var colorOnMove = "";
         if ({{ likeFlag }} == true)
         {
-            likeButtn.style.color = "#ff3a26";
+            likeButtn.style.color = "#f53803";
 
             $('#likes').text("Your and {{ shoe.likes - 1 }} other fires");
 
-            colorOnStay = "#ff3a26";
+            colorOnStay = "#f53803";
             colorOnMove = "#c2bdbf";
         } else {
             likeButtn.style.color = "#c2bdbf";
@@ -143,7 +143,7 @@
             $('#likes').text("{{ shoe.likes }} fires");
 
             colorOnStay = "#c2bdbf";
-            colorOnMove = "#ff3a26";
+            colorOnMove = "#f53803";
         }
 
         $('#likeButtn').on('click', function() {
@@ -154,11 +154,11 @@
                     if (likeFlag == "null") {
                          $('#success').text("You must be logged to like shoe")
                     } else if (likeFlag == true) {
-                        likeButtn.style.color = "#ff3a26";
+                        likeButtn.style.color = "#f53803";
 
                         $('#likes').text("Your and {{ shoe.likes - const }} other fires");
 
-                        colorOnStay = "#ff3a26";
+                        colorOnStay = "#f53803";
                         colorOnMove = "#c2bdbf";
                     } else if (likeFlag == false) {
                         likeButtn.style.color = "#c2bdbf";
@@ -166,7 +166,7 @@
                         $('#likes').text("{{ shoe.likes - const }} fires");
 
                         colorOnStay = "#c2bdbf";
-                        colorOnMove = "#ff3a26";
+                        colorOnMove = "#f53803";
                     }
                 }})
         });

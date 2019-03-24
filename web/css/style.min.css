@@ -24,10 +24,10 @@
     padding: 5%;
 }
 .pagination.pg-blue .page-item.active .page-link {
-    background-color: maroon;
+    background-color: #f53803;
 }
 .pagination.pg-blue .page-item.active .page-link:hover {
-    background-color: maroon;
+    background-color: #f57528;
 }
 .img-slider {
     height: 350px;

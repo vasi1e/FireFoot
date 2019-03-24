@@ -333,15 +333,7 @@ class User implements UserInterface
      */
     public function getReceivedMessages()
     {
-        $messagesText = [];
-
-        foreach ($this->receivedMessages as $receivedMessage)
-        {
-            /** @var Message $receivedMessage */
-            $messagesText[] = $receivedMessage->getText();
-        }
-
-        return $messagesText;
+        return $this->receivedMessages;
     }
 
     /**

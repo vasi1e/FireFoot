@@ -4,8 +4,10 @@ namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SiteBundle\Entity\CartOrder;
+use SiteBundle\Entity\Message;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\UserType;
+use SiteBundle\Service\MessageServiceInterface;
 use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\UserServiceInterface;
@@ -18,19 +20,22 @@ class UserController extends Controller
     private $userService;
     private $saveService;
     private $someService;
+    private $messageService;
 
     /**
      * UserController constructor.
      * @param UserServiceInterface $userService
      * @param SaveServiceInterface $saveService
      * @param ServiceForThingsIDontKnowWhereToPut $someService
+     * @param MessageServiceInterface $messageService
      */
     public function __construct(UserServiceInterface $userService, SaveServiceInterface $saveService,
-                                ServiceForThingsIDontKnowWhereToPut $someService)
+                                ServiceForThingsIDontKnowWhereToPut $someService, MessageServiceInterface $messageService)
     {
         $this->userService = $userService;
         $this->saveService = $saveService;
         $this->someService = $someService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -94,9 +99,25 @@ class UserController extends Controller
         $user = $this->userService->findUserById($id);
         $shoes = $user->getSellerShoes();
 
+        $counterForUnreadMessages = 0;
+        $chatIds = [];
+        /** @var Message $message */
+        foreach ($user->getReceivedMessages() as $message)
+        {
+            $chatId = $message->getChatId();
+
+            if(!in_array($chatId, $chatIds))
+            {
+                $chatIds[] = $chatId;
+
+                if (!($this->messageService->isTheChatRead($chatId, $user->getId())[0]['read'])) $counterForUnreadMessages++;
+            }
+        }
+
         return $this->render('user/profile.html.twig', [
             'user' => $user,
-            'shoes' => $shoes
+            'shoes' => $shoes,
+            'count' => $counterForUnreadMessages,
         ]);
     }
 }

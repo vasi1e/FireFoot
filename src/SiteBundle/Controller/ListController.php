@@ -75,7 +75,7 @@ class ListController extends Controller
         $pagination = $paginator->paginate(
             $shoes, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            1 /*limit per page*/
+            3 /*limit per page*/
         );
 
         return $this->render('shoe/list.html.twig', [
@@ -134,8 +134,12 @@ class ListController extends Controller
                 $rightChat['personName'] = $person->getFullName();
             }
 
-            if ($this->messageService->isTheChatRead($chat['chatId'], $user->getId())[0]['read']) $rightChat['read'] = true;
-            else $rightChat['read'] = false;
+            $rightChat['read'] = true;
+            if (!empty($this->messageService->isTheChatRead($chat['chatId'], $user->getId())))
+            {
+                if ($this->messageService->isTheChatRead($chat['chatId'], $user->getId())[0]['read']) $rightChat['read'] = true;
+                else $rightChat['read'] = false;
+            }
 
             $rightChats[] = $rightChat;
         }

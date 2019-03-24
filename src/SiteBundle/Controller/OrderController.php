@@ -160,7 +160,7 @@ class OrderController extends Controller
     }
 
     /**
-     * @Route("/order/my", name="my_orders")
+     * @Route("/order/list", name="my_orders")
      */
     public function listOrdersAction()
     {
