@@ -24,8 +24,8 @@
     {% endfor %}
     </ul>
     <form method="POST" enctype="multipart/form-data" action="{{ path('message_chat', {"shoeId": shoe.id, "userId": recipient.id}) }}">
-        <input type="text" name="messageText">
-        <input type="submit" value="Send" name="submit">
+        <input class="form-control mb-3" style="width: 75%; display: inline;" type="text" name="messageText">
+        <input style="display: inline;" type="submit" value="Send" name="submit"><i class="fas fa-paper-plane"></i>
     </form>
     </div>
     </div>

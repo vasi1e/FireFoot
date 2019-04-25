@@ -34,8 +34,8 @@
     object-fit: contain;
 }
 .dot {
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     background-color: #ff3a26;
     border-radius: 50%;
     display: inline-block;
@@ -49,4 +49,8 @@
     border-radius: 17px;
     margin-bottom: 0rem;
     border: 0px
+}
+.btn-ff {
+    background-color: black;
+    color: white;
 }

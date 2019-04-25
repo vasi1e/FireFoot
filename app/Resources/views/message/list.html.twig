@@ -8,18 +8,20 @@
     {% for chat in chats %}
         {% if chat['read'] == true %}
             {% set style = "color: grey;"  %}
+            {% set class = "" %}
         {% else %}
             {% set style = "font-weight: 900;color: black;" %}
+            {% set class = " dot" %}
         {% endif %}
         <div class="mt-3 mb-3">
         <a href="{{ path('message_chat', {"shoeId": chat['shoeId'], "userId": chat['personId']}) }}">
-
-            <span class="align-middle" style="{{ style }}">
-                {{ chat['personName'] }} for
+            <span class="{{ class }} align-middle"></span>
+            <span class="align-middle display-4" style="{{ style }}">
+                {{ chat['personName'] }} <i class="fas fa-angle-double-right"></i>
                 {{ chat['shoeName'] }}
             </span>
-
         </a>
+            <hr>
         </div>
     {% endfor %}
             </div>

@@ -10,166 +10,151 @@
             <!-- Material Design Bootstrap -->
             <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
+            <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar navbar-none" id="nav-bar">
-        <div class="container">
-            <a class="navbar-brand font-weight-bold ml-5 text-uppercase" href="{{ path('homepage') }}" style="text-shadow: 1.5px 1.5px black;"><i class="fab fa-gripfire fa-1x"></i>FireFoot</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav smooth-scroll mr-auto" style="text-shadow: 1px 1px 1px black;">
-                    <li class="nav-item ml-5">
-                        <a class="nav-link text-uppercase font-weight-bold" href="{{ path('list_shoes_id') }}">Shop</a>
-                    </li>
-                    <li class="nav-item ml-5">
-                        <a class="nav-link text-uppercase font-weight-bold" href="#">About us</a>
-                    </li>
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar navbar-none" id="nav-bar">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold ml-5 text-uppercase" href="{{ path('homepage') }}" style="text-shadow: 1.5px 1.5px black;">
+                    <i class="fab fa-gripfire fa-1x"></i>FireFoot
+                </a>
 
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li>
-                        <form class="form-inline">
-                            <div class="md-form my-0">
-                                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav smooth-scroll mr-auto" style="text-shadow: 1px 1px 1px black;">
+                        <li class="nav-item ml-5">
+                            <a class="nav-link text-uppercase font-weight-bold" href="{{ path('list_shoes_id') }}">Shop</a>
+                        </li>
+
+                        <li class="nav-item ml-5">
+                            <a class="nav-link text-uppercase font-weight-bold" href="#">About us</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-auto nav-flex-icons">
+                        <li>
+                            <form class="form-inline">
+                                <div class="md-form my-0">
+                                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                                </div>
+                            </form>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+                                {% if app.user %}
+                                    <a class="dropdown-item" href="{{ path('profile', {'id': app.user.id}) }}">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('my_orders') }}">My cart</a>
+                                    <a class="dropdown-item" href="{{ path('shoe_sell_id') }}">Sell</a>
+                                    <hr style="margin: 0px;">
+                                    <a class="dropdown-item" style="padding-bottom: 0px;" href="{{ path('security_logout') }}">Logout</a>
+                                {% else %}
+                                    <a class="dropdown-item" href="{{ path('security_register') }}">Register</a>
+                                    <a class="dropdown-item" href="{{ path('security_login') }}">Login</a>
+                                {% endif %}
                             </div>
-                        </form>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                            {% if app.user %}
-                                <a class="dropdown-item" href="{{ path('profile', {'id': app.user.id}) }}">My profile</a>
-                                <a class="dropdown-item" href="{{ path('my_orders') }}">My cart</a>
-                                <a class="dropdown-item" href="{{ path('shoe_sell_id') }}">Sell</a>
-                                <hr style="margin: 0px;">
-                                <a class="dropdown-item" style="padding-bottom: 0px;" href="{{ path('security_logout') }}">Logout</a>
-                            {% else %}
-                                <a class="dropdown-item" href="{{ path('security_register') }}">Register</a>
-                                <a class="dropdown-item" href="{{ path('security_login') }}">Login</a>
-                            {% endif %}
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-    </nav>
-    <!--/.Navbar-->
-    <div style="margin-bottom: 6%;"></div>
+        </nav>
+
+        <div style="margin-bottom: 6%;"></div>
+
         {% block body %}{% endblock %}
-    <footer class="page-footer font-small pt-0 footer-rf">
 
-        <!-- Social buttons -->
-        <div class="rgba-gradient">
-            <div class="container" >
-                <!--Grid row-->
-                <div class="row py-4 d-flex align-items-center">
+        <footer class="page-footer font-small pt-0 footer-rf">
+            <div class="rgba-gradient">
+                <div class="container" >
+                    <div class="row py-4 d-flex align-items-center">
+                        <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                            <h6 class="mb-0 white-text">Connect with us in social media!</h6>
+                        </div>
 
-                    <!--Grid column-->
-                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-                        <h6 class="mb-0 white-text">Connect with us in social media!</h6>
+                        <div class="col-md-6 col-lg-7 text-center text-md-right">
+                            <a class="fb-ic ml-0" href="https://facebook.com" target="_blank">
+                                <i class="fab fa-facebook-f white-text mr-lg-4"> </i>
+                            </a>
+                            <a class="ins-ic" href="https://instagram.com" target="_blank">
+                                <i class="fab fa-instagram white-text mr-lg-4"> </i>
+                            </a>
+                        </div>
                     </div>
-                    <!--Grid column-->
+                </div>
+            </div>
 
-                    <!--Grid column-->
-                    <div class="col-md-6 col-lg-7 text-center text-md-right">
-                        <!--Facebook-->
-                        <a class="fb-ic ml-0" href="https://facebook.com" target="_blank">
-                            <i class="fab fa-facebook-f white-text mr-lg-4"> </i>
-                        </a>
-                        <!--Instagram-->
-                        <a class="ins-ic" href="https://instagram.com" target="_blank">
-                            <i class="fab fa-instagram white-text mr-lg-4"> </i>
-                        </a>
+            <div class="container mt-3 mb-2 text-center text-md-left">
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <i class="fab fa-gripfire fa-1x"></i>FireFoot
+                        </h6>
+
+                        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto rgba-gradient" style="width: 60px;">
+
+                        <p style="line-height: 1.5;">Reseller Website</p>
+
+                        <p><a href="#">More Info</a></p>
                     </div>
-                    <!--Grid column-->
 
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <strong>Pages</strong>
+                        </h6>
+
+                        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto rgba-gradient" style="width: 60px;">
+
+                        <p><a href="{{ path('homepage') }}">Home</a></p>
+
+                        <p><a href="{{ path('list_shoes_id') }}">Shop</a></p>
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-xl-3">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <strong>Contacts</strong>
+                        </h6>
+
+                        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto rgba-gradient" style="width: 60px;">
+
+                        <p><i class="fa fa-envelope mr-3"></i>firefoot@gmail.com</p>
+
+                        <p><i class="fa fa-phone mr-3"></i> +359 887 887 761</p>
+                    </div>
                 </div>
-                <!--Grid row-->
             </div>
-        </div>
-        <!-- Social buttons -->
 
-        <!--Footer Links-->
-        <div class="container mt-3 mb-2 text-center text-md-left">
-            <div class="row mt-3">
-
-                <!--First column-->
-                <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <i class="fab fa-gripfire fa-1x"></i>FireFoot
-                    </h6>
-                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto rgba-gradient" style="width: 60px;">
-                    <p style="line-height: 1.5;">
-                        Reseller Website
-                    </p>
-                    <p>
-                        <a href="#">More Info</a>
-                    </p>
-
-                </div>
-                <!--/.First column-->
-
-                <!--Second column-->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <strong>Pages</strong>
-                    </h6>
-                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto rgba-gradient" style="width: 60px;">
-                    <p>
-                        <a href="{{ path('homepage') }}">Home</a>
-                    </p>
-                    <p>
-                        <a href="{{ path('list_shoes_id') }}">Shop</a>
-                    </p>
-
-                </div>
-                <!--/.Second column-->
-
-                <!--Third column-->
-                <div class="col-md-4 col-lg-3 col-xl-3">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <strong>Contacts</strong>
-                    </h6>
-                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto rgba-gradient" style="width: 60px;">
-                    <p>
-                        <i class="fa fa-envelope mr-3"></i>firefoot@gmail.com</p>
-                    <p>
-                        <i class="fa fa-phone mr-3"></i> +359 887 887 761</p>
-                </div>
-                <!--/.Third column-->
-
-                <!--Fourth column-->
-                <div class="col-md-4 col-lg-3 col-xl-3">
-
-                </div>
-                <!--/.Fourth column-->
-
+            <div class="footer-copyright py-3 text-center">
+                © 2019 Copyright:
+                <a>FireFoot</a>
             </div>
-        </div>
-        <!--/.Footer Links-->
+        </footer>
 
-        <!--Copyright-->
-        <div class="footer-copyright py-3 text-center">
-            © 2019 Copyright:
-            <a>FireFoot</a>
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
-    <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+        <script>
+            setTimeout(function () {
+                $('.flashMssg').fadeOut();
+            }, 4000)
+        </script>
         {% block javascripts %}{% endblock %}
+        <script>
+            $(document).ready(function(c) {
+                $('.alert-close').on('click', function(c){
+                    $(this).parent().fadeOut('slow', function(c){
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

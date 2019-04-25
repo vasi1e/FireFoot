@@ -14,6 +14,7 @@ use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends Controller
 {
@@ -40,10 +41,13 @@ class UserController extends Controller
 
     /**
      * @Route("/user/login", name="security_login")
+     * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loginAction()
+    public function loginAction(AuthenticationUtils $authenticationUtils)
     {
+        if ($authenticationUtils->getLastAuthenticationError() != null) $this->addFlash("error", "Invalid email or password");
+
         return $this->render('user/login.html.twig');
     }
 
@@ -70,16 +74,24 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            if ($this->userService->isTheUserRegistered($user))
-            {
-                throw new \Exception("This email is already registered!");
+            if (!$this->userService->isTheUserRegistered($user)) {
+
+                $this->userService->encodePassword($user);
+                $this->userService->setRole($user, "user");
+                $this->saveService->saveUser($user);
+
+                return $this->redirectToRoute('security_login');
+
+            } else {
+
+                $this->addFlash("error", "This email is already registered!");
             }
+        } else {
 
-            $this->userService->encodePassword($user);
-            $this->userService->setRole($user, "user");
-            $this->saveService->saveUser($user);
-
-            return $this->redirectToRoute('security_login');
+            foreach ($form->getErrors(true) as $formError)
+            {
+                $this->addFlash("error", $formError->getMessage());
+            }
         }
 
         return $this->render('user/register.html.twig', [

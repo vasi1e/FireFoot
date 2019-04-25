@@ -14,7 +14,7 @@
             Model: <input class="form-control mb-4" type="text" name="modelToAdd">
         </div>
         <div>
-            Upload pictures: {{ form_widget(form.uploadImages, {'attr': {'class': 'form-control mb-4' }}) }}
+            Upload pictures: {{ form_widget(form.uploadImages, {'attr': {'class': '' }}) }}
         </div>
         <div>
             <input class="btn rgba-gradient btn-block my-4" type="submit" name="Create" value="Create new shoe">
@@ -52,8 +52,9 @@
         <div>
             Condition: {{ form_widget(form.condition, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
-        <div id="1">
-            Rate the condition: {{ form_widget(form.conditionOutOf10, {'attr': {'class': 'form-control mb-4', 'style': 'width: 75%'}}) }}/10
+        <div class="mb-4" id="1">
+            <span style="display: inline-block;">Rate the condition: {{ form_widget(form.conditionOutOf10, {'attr': {'class': 'form-control', 'style': 'width: 95%'}}) }}</span>
+            <span style="display: inline-block;">/10</span>
         </div>
         <div id="2">
             Upload pictures: {{ form_widget(form.uploadImages, {'attr': {'class': ''}}) }}
