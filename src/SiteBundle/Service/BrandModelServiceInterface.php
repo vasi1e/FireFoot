@@ -21,4 +21,5 @@ interface BrandModelServiceInterface
     public function generateRepositoryName($property);
     public function findPropertyByName($property, $name);
     public function isGoingToAddBrand();
+    public function getAllBrandsName();
 }

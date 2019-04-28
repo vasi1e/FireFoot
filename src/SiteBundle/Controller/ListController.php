@@ -78,8 +78,11 @@ class ListController extends Controller
             3 /*limit per page*/
         );
 
+        $brands = $this->brandmodelService->getAllBrandsName();
+
         return $this->render('shoe/list.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'brands' => $brands
         ]);
     }
 

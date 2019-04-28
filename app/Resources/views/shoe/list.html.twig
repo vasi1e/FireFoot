@@ -2,25 +2,50 @@
 
 {% block body %}
     <div class="container">
+        <h1>FILTERS</h1>
+
+        <h3>Brands</h3>
+        <ul id="brandFilter" style="list-style-type: none;margin-left: -35px;">
+            {% for brand in brands %}
+            <li><input id="brand{{ brand }}" type="checkbox" value="{{ brand }}">{{ brand }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Size</h3>
+        <ul id="sizeFilter" style="list-style-type: none;margin-left: -35px;">
+            <li style="display: inline;"><input id="36" type="checkbox" value="36">36</li>
+            <li style="display: inline;"><input id="37" type="checkbox" value="37">37</li>
+            <li style="display: inline;"><input id="38" type="checkbox" value="38">38</li>
+            <br>
+            <li style="display: inline;"><input id="39" type="checkbox" value="39">39</li>
+            <li style="display: inline;"><input id="40" type="checkbox" value="40">40</li>
+            <li style="display: inline;"><input id="41" type="checkbox" value="41">41</li>
+            <br>
+            <li style="display: inline;"><input id="42" type="checkbox" value="42">42</li>
+            <li style="display: inline;"><input id="43" type="checkbox" value="43">43</li>
+            <li style="display: inline;"><input id="44" type="checkbox" value="44">44</li>
+        </ul>
+
         Sort by:
-        <select id="sort" class="browser-default custom-select" style="width: 15%;" onchange="location = this.value;">
+        <select id="sort" class="browser-default custom-select" style="width: 15%;" onchange="location = this.value + '?' + '{{ app.request.queryString }}';">
             <option value="">Please choose</option>
             <option value="{{ path('list_shoes_id', {'id': 1}) }}">New release</option>
             <option value="{{ path('list_shoes_id', {'id': 2}) }}">Most fires</option>
         </select>
-    <div class="row mt-5 mb-5">
-    {% for shoe in pagination %}
-            <!-- Card -->
+
+        <div class="row mt-5 mb-5">
+            {% for shoe in pagination %}
             <div class="col-md-2">
                 <div class="card">
-                    <!-- Card image -->
-                    <a href="{{ path('shoe_view', {'id': shoe.id}) }}"><img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap"></a>
+                    <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+                        <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap">
+                    </a>
 
-                    <!-- Card content -->
                     <div class="card-body">
-                        <!-- Title -->
-                        <h5 class="card-title"><a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a></h5>
-                        <!-- Text -->
+                        <h5 class="card-title">
+                            <a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a>
+                        </h5>
+
                         <p class="card-text">
                             <i class="fab fa-gripfire"></i>
                             <span>{{ shoe.likes }}</span>
@@ -28,26 +53,22 @@
                     </div>
                 </div>
             </div>
-    {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+
         <div class="row mt-5 mb-5">
             <div class="col-lg-12">
-                {# display navigation #}
                 <div class="navigation">
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>
     </div>
-
-
-
 {% endblock %}
 
 {% block javascripts %}
     <script>
         var id = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
-        console.log(id);
         if (id != null)
         {
             switch (id) {
@@ -55,5 +76,80 @@
                 case "2": document.getElementById("sort").value = "{{ path('list_shoes_id', {'id': 2}) }}"; break;
             }
         }
+    </script>
+    <script>
+        var url = new URL(location.href);
+        var brandsString = url.searchParams.get("brand");
+        if (brandsString != null)
+        {
+            var brands = brandsString.split("And");
+            for (var brandIndex in brands) {
+                if (document.getElementById("brand" + brands[brandIndex]) != null) document.getElementById("brand" + brands[brandIndex]).checked = true;
+            }
+        }
+        var sizesString = url.searchParams.get("size");
+        if (sizesString != null)
+        {
+            var sizes = sizesString.split("And");
+            for (var sizeIndex in sizes)
+            {
+                if (document.getElementById(sizes[sizeIndex]) != null) document.getElementById(sizes[sizeIndex]).checked = true;
+            }
+        }
+
+        let locationString = location.href;
+        $('#brandFilter').on('change', function () {
+            {% for brand in brands %}
+            if (document.getElementById("brand{{ brand }}").checked == true)
+            {
+                var index = location.href.indexOf("brand");
+                if (index != -1)
+                {
+                    if (!locationString.includes("{{ brand }}")) locationString = [locationString.slice(0, index + 6), "{{ brand }}And", locationString.slice(index + 6)].join('');
+                } else {
+                    if (locationString.includes("size=") || locationString.includes("page=")) locationString = locationString + "&brand=" + "{{ brand }}";
+                    else locationString = locationString + "?brand=" + "{{ brand }}";
+                }
+            } else {
+                var indexOfBrand = locationString.indexOf("{{ brand }}");
+                if (indexOfBrand != -1)
+                {
+                    var part1 = locationString.substring(0, indexOfBrand);
+                    var part2 = locationString.substring(indexOfBrand + "{{ brand }}".length + 3, locationString.length);
+                    locationString = part1 + part2;
+                }
+            }
+            {% endfor %}
+
+            location = locationString;
+        });
+
+        $('#sizeFilter').on('change', function () {
+            var listOfCheckboxes = document.getElementById("sizeFilter").getElementsByTagName("input");
+            for (let checkboxIndex in listOfCheckboxes)
+            {
+               if (listOfCheckboxes[checkboxIndex].checked == true)
+               {
+                   var index = location.href.indexOf("size");
+                   if (index != -1)
+                   {
+                       if (!locationString.includes(listOfCheckboxes[checkboxIndex].value)) locationString = [locationString.slice(0, index + 5), listOfCheckboxes[checkboxIndex].value+"And", locationString.slice(index + 5)].join('');
+                   } else {
+                       if (locationString.includes("brand=") || locationString.includes("page=")) locationString = locationString + "&size=" + listOfCheckboxes[checkboxIndex].value;
+                       else locationString = locationString + "?size=" + listOfCheckboxes[checkboxIndex].value;
+                   }
+               } else {
+                   var indexOfSize = locationString.indexOf(listOfCheckboxes[checkboxIndex].value);
+                   if (indexOfSize != -1)
+                   {
+                       var part1 = locationString.substring(0, indexOfSize);
+                       var part2 = locationString.substring(indexOfSize + 5, locationString.length);
+                       locationString = part1 + part2;
+                   }
+               }
+            }
+
+            location = locationString;
+        });
     </script>
 {% endblock %}

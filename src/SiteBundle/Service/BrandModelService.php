@@ -64,13 +64,11 @@ class BrandModelService implements BrandModelServiceInterface
 
     public function isGoingToAddBrand()
     {
-        if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "")
-        {
+        if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "") {
             throw new \Exception("You must choose one brand or write a new one");
         }
 
-        if ($_POST['shoe']['brand'] != "" && $_POST["brandToAdd"] != "")
-        {
+        if ($_POST['shoe']['brand'] != "" && $_POST["brandToAdd"] != "") {
             throw new \Exception("You must choose one brand or write a new one");
         }
 
@@ -83,11 +81,22 @@ class BrandModelService implements BrandModelServiceInterface
         $modelNames = [];
 
         /** @var Model $model */
-        foreach ($this->modelRepository->getModelsForBrand($brandId) as $model)
-        {
+        foreach ($this->modelRepository->getModelsForBrand($brandId) as $model) {
             $modelNames[] = $model->getName();
         }
 
         return in_array($currModel->getName(), $modelNames);
+    }
+
+    public function getAllBrandsName()
+    {
+        $brandNames = [];
+
+        /** @var Brand $brand */
+        foreach ($this->brandRepository->findAll() as $brand) {
+            $brandNames[] = $brand->getName();
+        }
+
+        return $brandNames;
     }
 }
