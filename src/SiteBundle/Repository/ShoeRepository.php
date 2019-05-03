@@ -65,20 +65,40 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getAllShoes()
+    public function getAllShoes($brands, $sortMethod, $order)
     {
-        return $this->createQueryBuilder("s")
-            ->where("s.condition = 'new'")
-            ->getQuery()
-            ->getResult();
-    }
+        if (is_null($brands) && is_null($sortMethod))
+        {
+            return $this->createQueryBuilder("s")
+                ->where("s.condition = 'new'")
+                ->getQuery()
+                ->getResult();
 
-    public function sortShoesBy($sortMethod, $order)
-    {
-        return $this->createQueryBuilder("s")
-            ->where("s.condition = 'new'")
-            ->orderBy("s." . $sortMethod, $order)
-            ->getQuery()
-            ->getResult();
+        }
+        else if (is_null($sortMethod) && !is_null($brands))
+        {
+            return $this->createQueryBuilder("s")
+                ->where("s.condition = 'new'")
+                ->andWhere("s.brand = ".$brands)
+                ->getQuery()
+                ->getResult();
+        }
+        else if (is_null($brands) && !is_null($sortMethod))
+        {
+            return $this->createQueryBuilder("s")
+                ->where("s.condition = 'new'")
+                ->orderBy("s." . $sortMethod, $order)
+                ->getQuery()
+                ->getResult();
+        }
+        else if (!is_null($brands) && !is_null($sortMethod))
+        {
+            return $this->createQueryBuilder("s")
+                ->where("s.condition = 'new'")
+                ->andWhere("s.brand = ".$brands)
+                ->orderBy("s." . $sortMethod, $order)
+                ->getQuery()
+                ->getResult();
+        }
     }
 }

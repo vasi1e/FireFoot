@@ -81,7 +81,7 @@ class ShoeController extends Controller
                 $brand = new Brand();
                 $brand->setName($_POST['brandToAdd']);
 
-                if ($this->brandmodelService->isBrandExisting( $brand) == false)
+                if ($this->brandmodelService->isBrandExisting($brand) == false)
                 {
                     $this->saveService->saveProperty("brand", $brand);
                     $shoe->setBrand($brand);

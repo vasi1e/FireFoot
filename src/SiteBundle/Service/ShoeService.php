@@ -142,13 +142,22 @@ class ShoeService implements ShoeServiceInterface
         return $this->shoeRepository->findTop5LatestRelease();
     }
 
-    public function listOfAllShoes()
+    public function listOfAllShoes($filters, $sortMethod, $order = "DESC")
     {
-        return $this->shoeRepository->getAllShoes();
-    }
+        if (empty($filters["brands"])) $brands = null;
+        else $brands = implode(" OR s.brand = ", $filters["brands"]);
 
-    public function sortShoesBy($sortMethod, $order = "DESC")
-    {
-        return $this->shoeRepository->sortShoesBy($sortMethod, $order);
+        $shoes = $this->shoeRepository->getAllShoes($brands, $sortMethod, $order);
+        $rightShoes = [];
+
+        if (empty($filters["sizes"])) $rightShoes = $shoes;
+        else {
+            /** @var Shoe $shoe */
+            foreach ($shoes as $shoe) {
+                if (!empty(array_intersect($filters["sizes"], $shoe->getSizes()))) $rightShoes[] = $shoe;
+            }
+        }
+
+        return $rightShoes;
     }
 }

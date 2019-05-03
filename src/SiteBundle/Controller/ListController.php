@@ -57,25 +57,37 @@ class ListController extends Controller
      * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function listShoesAction(Request $request, $id = null)
     {
-        $sortMethod = "";
+        $brandsNameFilter = array_filter(explode("And", $request->query->get('brand')));
+        $sizeFilter = array_filter(explode("And", $request->query->get('size')));
+
+        $brandsFilter = [];
+        foreach ($brandsNameFilter as $brandName)
+        {
+            $brand = $this->brandmodelService->findPropertyByName("brand", $brandName);
+            if (is_null($brand)) throw new \Exception("Invalid brand in URL");
+            else $brandsFilter[] = $brand->getId();
+        }
+
+        $filters = array("brands" => $brandsFilter, "sizes" => $sizeFilter);
+
         switch ($id)
         {
             case 1: $sortMethod = "uploadDateAndTime"; break;
             case 2: $sortMethod = "likes"; break;
-            default: $sortMethod = ""; break;
+            default: $sortMethod = null; break;
         }
 
-        if ($sortMethod == "") $shoes = $this->shoeService->listOfAllShoes();
-        else $shoes = $this->shoeService->sortShoesBy($sortMethod);
+        $shoes = $this->shoeService->listOfAllShoes($filters, $sortMethod);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $shoes, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            3 /*limit per page*/
+            10 /*limit per page*/
         );
 
         $brands = $this->brandmodelService->getAllBrandsName();

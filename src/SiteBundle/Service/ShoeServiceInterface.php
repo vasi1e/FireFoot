@@ -25,10 +25,9 @@ interface ShoeServiceInterface
     public function findSizeByNumber($number);
     public function findTop5MostLiked();
     public function findTop5LatestRelease();
-    public function listOfAllShoes();
+    public function listOfAllShoes($filters, $sortMethod, $order = "DESC");
     public function isThereThisSizeForThisShoe(ShoeSize $shoeSize);
     public function isThereSize(Size $size);
     public function addingImagesForShoe($imageFiles, $directory, Shoe $shoe);
     public function doesThisUserLikeTheShoe(Shoe $shoe, User $user);
-    public function sortShoesBy($sortMethod, $order = "DESC");
 }

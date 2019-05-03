@@ -27,7 +27,7 @@
         </ul>
 
         Sort by:
-        <select id="sort" class="browser-default custom-select" style="width: 15%;" onchange="location = this.value + '?' + '{{ app.request.queryString }}';">
+        <select id="sort" class="browser-default custom-select" style="width: 15%;" onchange="location = this.value + '?{{ app.request.queryString }}';">
             <option value="">Please choose</option>
             <option value="{{ path('list_shoes_id', {'id': 1}) }}">New release</option>
             <option value="{{ path('list_shoes_id', {'id': 2}) }}">Most fires</option>
@@ -98,6 +98,7 @@
         }
 
         let locationString = location.href;
+
         $('#brandFilter').on('change', function () {
             {% for brand in brands %}
             if (document.getElementById("brand{{ brand }}").checked == true)
@@ -105,18 +106,23 @@
                 var index = location.href.indexOf("brand");
                 if (index != -1)
                 {
-                    if (!locationString.includes("{{ brand }}")) locationString = [locationString.slice(0, index + 6), "{{ brand }}And", locationString.slice(index + 6)].join('');
+                    if (!brandsString.includes("{{ brand }}")) locationString = [locationString.slice(0, index + 6), "{{ brand }}And", locationString.slice(index + 6)].join('');
                 } else {
                     if (locationString.includes("size=") || locationString.includes("page=")) locationString = locationString + "&brand=" + "{{ brand }}";
-                    else locationString = locationString + "?brand=" + "{{ brand }}";
+                    else if (locationString.includes("?")) locationString = locationString + "brand=" + "{{ brand }}";
+                    else if (!locationString.includes("?")) locationString = locationString + "?brand=" + "{{ brand }}";
                 }
             } else {
-                var indexOfBrand = locationString.indexOf("{{ brand }}");
-                if (indexOfBrand != -1)
+                if (brandsString)
                 {
-                    var part1 = locationString.substring(0, indexOfBrand);
-                    var part2 = locationString.substring(indexOfBrand + "{{ brand }}".length + 3, locationString.length);
-                    locationString = part1 + part2;
+                    var indexOfBrand = brandsString.indexOf("{{ brand }}");
+
+                    if (indexOfBrand != -1) {
+                        var part1 = brandsString.substring(0, indexOfBrand);
+                        var part2 = brandsString.substring(indexOfBrand + "{{ brand }}".length + 3, brandsString.length);
+                        url.searchParams.set("brand", part1 + part2);
+                        locationString = url.href;
+                    }
                 }
             }
             {% endfor %}
@@ -136,7 +142,8 @@
                        if (!locationString.includes(listOfCheckboxes[checkboxIndex].value)) locationString = [locationString.slice(0, index + 5), listOfCheckboxes[checkboxIndex].value+"And", locationString.slice(index + 5)].join('');
                    } else {
                        if (locationString.includes("brand=") || locationString.includes("page=")) locationString = locationString + "&size=" + listOfCheckboxes[checkboxIndex].value;
-                       else locationString = locationString + "?size=" + listOfCheckboxes[checkboxIndex].value;
+                       else if (locationString.includes("?")) locationString = locationString + "size=" + listOfCheckboxes[checkboxIndex].value;
+                       else if (!locationString.includes("?")) locationString = locationString + "?size=" + listOfCheckboxes[checkboxIndex].value;
                    }
                } else {
                    var indexOfSize = locationString.indexOf(listOfCheckboxes[checkboxIndex].value);
