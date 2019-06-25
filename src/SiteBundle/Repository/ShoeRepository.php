@@ -27,7 +27,7 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
      * @param Shoe $shoe
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveShoe(Shoe $shoe)
+    public function save(Shoe $shoe)
     {
         $em = $this->getEntityManager();
         $em->persist($shoe);
@@ -38,7 +38,7 @@ class ShoeRepository extends \Doctrine\ORM\EntityRepository
      * @param Shoe $shoe
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateShoe(Shoe $shoe)
+    public function update(Shoe $shoe)
     {
         $em = $this->getEntityManager();
         $em->merge($shoe);

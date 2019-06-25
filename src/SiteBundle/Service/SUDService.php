@@ -2,21 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Mim40
- * Date: 2/7/2019
- * Time: 2:33 PM
+ * Date: 6/25/2019
+ * Time: 2:58 PM
  */
 
 namespace SiteBundle\Service;
 
 
-use SiteBundle\Entity\CartOrder;
-use SiteBundle\Entity\Image;
-use SiteBundle\Entity\Message;
-use SiteBundle\Entity\Shoe;
-use SiteBundle\Entity\ShoeSize;
-use SiteBundle\Entity\ShoeUser;
-use SiteBundle\Entity\Size;
-use SiteBundle\Entity\User;
 use SiteBundle\Repository\BrandRepository;
 use SiteBundle\Repository\CartOrderRepository;
 use SiteBundle\Repository\ImageRepository;
@@ -28,7 +20,7 @@ use SiteBundle\Repository\ShoeUserRepository;
 use SiteBundle\Repository\SizeRepository;
 use SiteBundle\Repository\UserRepository;
 
-class SaveService implements SaveServiceInterface
+class SUDService implements SUDServiceInterface
 {
     private $userRepository;
     private $sizeRepository;
@@ -71,81 +63,21 @@ class SaveService implements SaveServiceInterface
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * @param User $user
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveUser(User $user)
-    {
-        $this->userRepository->saveUser($user);
-    }
-
-    /**
-     * @param Shoe $shoe
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveShoe(Shoe $shoe)
-    {
-        $this->shoeRepository->saveShoe($shoe);
-    }
-
-    /**
-     * @param Size $size
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveSize(Size $size)
-    {
-        $this->sizeRepository->saveSize($size);
-    }
-
-    /**
-     * @param ShoeSize $shoeSize
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveShoeSize(ShoeSize $shoeSize)
-    {
-        $this->shoeSizeRepository->saveShoeSize($shoeSize);
-    }
-
-    /**
-     * @param ShoeUser $shoeUser
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveShoeUser(ShoeUser $shoeUser)
-    {
-        $this->shoeUserRepository->saveShoeUser($shoeUser);
-    }
-
-    /**
-     * @param Image $image
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveImage(Image $image)
-    {
-        $this->imageRepository->saveImage($image);
-    }
-
-    /**
-     * @param CartOrder $order
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveOrder(CartOrder $order)
-    {
-        $this->orderRepository->saveOrder($order);
-    }
-
-    /**
-     * @param Message $message
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveMessage(Message $message)
-    {
-        $this->messageRepository->saveMessage($message);
-    }
-
     public function saveProperty($property, $object)
     {
         $repositoryName = $property . "Repository";
         $this->$repositoryName->save($object);
+    }
+
+    public function updateProperty($property, $object)
+    {
+        $repositoryName = $property . "Repository";
+        $this->$repositoryName->update($object);
+    }
+
+    public function deleteProperty($property, $object)
+    {
+        $repositoryName = $property . "Repository";
+        $this->$repositoryName->delete($object);
     }
 }

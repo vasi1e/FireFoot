@@ -27,7 +27,7 @@ class CartOrderRepository extends \Doctrine\ORM\EntityRepository
      * @param CartOrder $order
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveOrder(CartOrder $order)
+    public function save(CartOrder $order)
     {
         $em = $this->getEntityManager();
         $em->persist($order);
@@ -38,7 +38,7 @@ class CartOrderRepository extends \Doctrine\ORM\EntityRepository
      * @param CartOrder $order
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateOrder(CartOrder $order)
+    public function update(CartOrder $order)
     {
         $em = $this->getEntityManager();
         $em->merge($order);
@@ -49,7 +49,7 @@ class CartOrderRepository extends \Doctrine\ORM\EntityRepository
      * @param CartOrder $order
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function deleteOrder(CartOrder $order)
+    public function delete(CartOrder $order)
     {
         $em = $this->getEntityManager();
         $em->remove($order);

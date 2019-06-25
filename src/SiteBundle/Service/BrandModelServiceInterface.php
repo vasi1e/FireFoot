@@ -17,7 +17,6 @@ interface BrandModelServiceInterface
     public function getModelsForBrand($brandId);
     public function isBrandExisting(Brand $brand);
     public function isModelExisting(Model $model, $brandId);
-    public function updateProperty($property, $object);
     public function generateRepositoryName($property);
     public function findPropertyByName($property, $name);
     public function isGoingToAddBrand();

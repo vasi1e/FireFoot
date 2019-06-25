@@ -32,10 +32,10 @@
             Model: {{ form_widget(form.model, {'attr': {'class': 'form-control mb-4' }}) }}
         </div>
         <div>
-            Price: <input class="form-control mb-4" type="text" name="price">
+            Price: <input class="form-control mb-4" type="text" name="price" required>
         </div>
         <div>
-            Size: <select class="form-control mb-4" name="size">
+            Size: <select class="form-control mb-4" name="size" required>
                 <option value="">Please select size</option>
                 <option value="36">36</option>
                 <option value="37">37</option>

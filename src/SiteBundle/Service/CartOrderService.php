@@ -31,24 +31,6 @@ class CartOrderService implements CartOrderServiceInterface
         return $this->orderRepository->find($id);
     }
 
-    /**
-     * @param CartOrder $order
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function updateOrder(CartOrder $order)
-    {
-        $this->orderRepository->updateOrder($order);
-    }
-
-    /**
-     * @param CartOrder $order
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function deleteOrder(CartOrder $order)
-    {
-        $this->orderRepository->deleteOrder($order);
-    }
-
     public function getListOfUnpaidOrders($orders)
     {
         $unpaidOrders = [];

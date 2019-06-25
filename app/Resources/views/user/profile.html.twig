@@ -8,6 +8,11 @@
             ({{ count }})
         </a>
     </div>
+    {% if(isAdmin) %}
+    <div>
+        You're admin. That's cool! You can <a href="{{ path('admin_shoe_create') }}">put new models</a> in FireFoot.
+    </div>
+    {% endif %}
     {% for shoe in shoes %}
         {% if (shoe.shoe.condition == "used") %}
         {% if (shoe.sold == false) %}

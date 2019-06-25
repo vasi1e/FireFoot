@@ -27,15 +27,6 @@ class MessageService implements MessageServiceInterface
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * @param Message $message
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function updateMessage(Message $message)
-    {
-        $this->messageRepository->updateMessage($message);
-    }
-
     public function findChatByShoe(Shoe $shoe, User $sender, User $recipient)
     {
         return  $this->messageRepository->getChat($shoe->getId(), $sender->getId(), $recipient->getId());

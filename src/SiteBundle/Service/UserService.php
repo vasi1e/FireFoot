@@ -40,15 +40,6 @@ class UserService implements UserServiceInterface
         return $this->userRepository->find($id);
     }
 
-    /**
-     * @param User $user
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function updateUser(User $user)
-    {
-        $this->userRepository->updateUser($user);
-    }
-
     public function isTheUserRegistered(User $user)
     {
         $anotherUserWithSameEmail = $this

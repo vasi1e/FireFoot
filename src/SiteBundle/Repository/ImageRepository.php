@@ -27,7 +27,7 @@ class ImageRepository extends \Doctrine\ORM\EntityRepository
      * @param Image $image
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveImage(Image $image)
+    public function save(Image $image)
     {
         $em = $this->getEntityManager();
         $em->persist($image);

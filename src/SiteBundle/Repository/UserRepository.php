@@ -23,7 +23,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
      * @param User $user
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveUser(User $user)
+    public function save(User $user)
     {
         $em = $this->getEntityManager();
         $em->persist($user);
@@ -34,7 +34,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
      * @param User $user
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateUser(User $user)
+    public function update(User $user)
     {
         $em = $this->getEntityManager();
         $em->merge($user);

@@ -45,12 +45,6 @@ class BrandModelService implements BrandModelServiceInterface
         else return false;
     }
 
-    public function updateProperty($property, $object)
-    {
-        $repositoryName = $this->generateRepositoryName($property);
-        $this->$repositoryName->update($object);
-    }
-
     public function findPropertyByName($property, $name)
     {
         $repositoryName = $this->generateRepositoryName($property);

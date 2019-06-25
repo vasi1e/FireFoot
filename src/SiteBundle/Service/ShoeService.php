@@ -28,37 +28,29 @@ class ShoeService implements ShoeServiceInterface
     private $imageRepository;
     private $shoeSizeRepository;
     private $shoeUserRepository;
-    private $saveService;
+    private $SUDService;
 
     /**
      * ShoeService constructor.
      * @param SizeRepository $sizeRepository
      * @param ShoeRepository $shoeRepository
      * @param ShoeSizeRepository $shoeSizeRepository
-     * @param SaveServiceInterface $saveService
      * @param ShoeUserRepository $shoeUserRepository
      * @param ImageRepository $imageRepository
+     * @param SUDServiceInterface $SUDService
      */
     public function __construct(SizeRepository $sizeRepository, ShoeRepository $shoeRepository,
-                                ShoeSizeRepository $shoeSizeRepository, SaveServiceInterface $saveService,
-                                ShoeUserRepository $shoeUserRepository, ImageRepository $imageRepository)
+                                ShoeSizeRepository $shoeSizeRepository, ShoeUserRepository $shoeUserRepository,
+                                ImageRepository $imageRepository, SUDServiceInterface $SUDService)
     {
         $this->sizeRepository = $sizeRepository;
         $this->shoeRepository = $shoeRepository;
         $this->shoeSizeRepository = $shoeSizeRepository;
         $this->shoeUserRepository = $shoeUserRepository;
         $this->imageRepository = $imageRepository;
-        $this->saveService = $saveService;
+        $this->SUDService = $SUDService;
     }
 
-    /**
-     * @param Shoe $shoe
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function updateShoe(Shoe $shoe)
-    {
-        $this->shoeRepository->updateShoe($shoe);
-    }
 
     public function findShoesByBrandAndModel(Shoe $shoe)
     {
@@ -122,7 +114,7 @@ class ShoeService implements ShoeServiceInterface
             $image = new Image();
             $image->setName($imageName);
             $image->setShoe($shoe);
-            $this->saveService->saveImage($image);
+            $this->SUDService->saveProperty("image", $image);
             $shoe->addImage($image);
         }
     }

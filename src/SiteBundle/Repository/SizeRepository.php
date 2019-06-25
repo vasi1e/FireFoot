@@ -27,7 +27,7 @@ class SizeRepository extends \Doctrine\ORM\EntityRepository
      * @param Size $size
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveSize(Size $size)
+    public function save(Size $size)
     {
         $em = $this->getEntityManager();
         $em->persist($size);

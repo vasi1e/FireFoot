@@ -23,7 +23,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
      * @param Message $message
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveMessage(Message $message)
+    public function save(Message $message)
     {
         $em = $this->getEntityManager();
         $em->persist($message);
@@ -34,7 +34,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
      * @param Message $message
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateMessage(Message $message)
+    public function update(Message $message)
     {
         $em = $this->getEntityManager();
         $em->merge($message);

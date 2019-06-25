@@ -2,10 +2,12 @@
 
 namespace SiteBundle\Controller;
 
+use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\Model;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
 use SiteBundle\Service\BrandModelServiceInterface;
+use SiteBundle\Service\CartOrderServiceInterface;
 use SiteBundle\Service\MessageServiceInterface;
 use SiteBundle\Service\ShoeServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
@@ -20,6 +22,7 @@ class ListController extends Controller
     private $brandmodelService;
     private $messageService;
     private $userService;
+    private $orderService;
 
     /**
      * ListController constructor.
@@ -27,14 +30,17 @@ class ListController extends Controller
      * @param BrandModelServiceInterface $brandmodelService
      * @param MessageServiceInterface $messageService
      * @param UserServiceInterface $userService
+     * @param CartOrderServiceInterface $orderService
      */
     public function __construct(ShoeServiceInterface $shoeService, BrandModelServiceInterface $brandmodelService,
-                                MessageServiceInterface $messageService, UserServiceInterface $userService)
+                                MessageServiceInterface $messageService, UserServiceInterface $userService,
+                                CartOrderServiceInterface $orderService)
     {
         $this->shoeService = $shoeService;
         $this->brandmodelService = $brandmodelService;
         $this->messageService = $messageService;
         $this->userService = $userService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -185,5 +191,28 @@ class ListController extends Controller
         }
 
         return new JsonResponse($responseArray);
+    }
+
+    /**
+     * @Route("/order/list", name="my_orders")
+     */
+    public function listOrdersAction()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $orders = $user->getOrders();
+        $unpaidOrders = $this->orderService->getListOfUnpaidOrders($orders);
+
+        $totalSum = 0;
+        /** @var CartOrder $order */
+        foreach ($unpaidOrders as $order)
+        {
+            $totalSum += doubleval($order->getShoeUser()->getPrice());
+        }
+
+        return $this->render('order/myorders.html.twig', [
+            'orders' => $unpaidOrders,
+            'totalPrice' => number_format($totalSum, 2)
+        ]);
     }
 }

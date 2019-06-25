@@ -8,9 +8,8 @@ use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\ShoeUser;
 use SiteBundle\Entity\User;
 use SiteBundle\Service\CartOrderServiceInterface;
-use SiteBundle\Service\SaveServiceInterface;
-use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\ShoeServiceInterface;
+use SiteBundle\Service\SUDServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,27 +20,23 @@ class OrderController extends Controller
 {
     private $userService;
     private $shoeService;
-    private $saveService;
-    private $someService;
+    private $SUDService;
     private $orderService;
 
     /**
      * ShoeController constructor.
      * @param UserServiceInterface $userService
      * @param ShoeServiceInterface $shoeService
-     * @param SaveServiceInterface $saveService
+     * @param SUDServiceInterface $SUDService
      * @param CartOrderServiceInterface $orderService
-     * @param ServiceForThingsIDontKnowWhereToPut $someService
      */
     public function __construct(UserServiceInterface $userService, ShoeServiceInterface $shoeService,
-                                SaveServiceInterface $saveService, CartOrderServiceInterface $orderService,
-                                ServiceForThingsIDontKnowWhereToPut $someService)
+                                SUDServiceInterface $SUDService, CartOrderServiceInterface $orderService)
     {
         $this->userService = $userService;
         $this->shoeService = $shoeService;
-        $this->saveService = $saveService;
+        $this->SUDService = $SUDService;
         $this->orderService = $orderService;
-        $this->someService = $someService;
     }
 
     /**
@@ -60,6 +55,7 @@ class OrderController extends Controller
             $shoeUser = $this->shoeService->findShoeUserByShoeId($shoeId)[0];
         } else {
             $sizeNum = $request->query->get("sizeNum");
+            if ($sizeNum == null) return new Response("Please choose size.");
             $size = $this->shoeService->findSizeByNumber($sizeNum);
             if ($shoe === null || $size === null)
             {
@@ -77,15 +73,15 @@ class OrderController extends Controller
             /** @var User $user */
             $user = $this->getUser();
 
-            if ($user == null) return new Response("nooo");
+            if ($user == null) return new Response("not logged");
 
             $order->setBuyer($user)->setShoeUser($shoeUser)->setSend(false)->setPaid(false);
-            $this->saveService->saveOrder($order);
+            $this->SUDService->saveProperty("order", $order);
 
             $user->addOrder($order);
             $shoeUser->addOrder($order);
 
-            return new Response("yess");
+            return new Response("okay");
         }
     }
 
@@ -97,7 +93,7 @@ class OrderController extends Controller
     public function removeFromCartAction($id)
     {
         $order = $this->orderService->findOrderById($id);
-        $this->orderService->deleteOrder($order);
+        $this->SUDService->deleteProperty("order", $order);
 
         return $this->redirectToRoute('my_orders');
     }
@@ -127,7 +123,7 @@ class OrderController extends Controller
             {
                 $order = $this->orderService->findOrderById($orderId);
                 $order->setAddress($fullAddress);
-                $this->orderService->updateOrder($order);
+                $this->SUDService->updateProperty("order", $order);
             }
             return $this->redirectToRoute('payment');
         }
@@ -156,29 +152,6 @@ class OrderController extends Controller
         return $this->render('order/noShoe.html.twig', [
             'order' => $order,
             'shoeUser' => $order->getShoeUser(),
-        ]);
-    }
-
-    /**
-     * @Route("/order/list", name="my_orders")
-     */
-    public function listOrdersAction()
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-        $orders = $user->getOrders();
-        $unpaidOrders = $this->orderService->getListOfUnpaidOrders($orders);
-
-        $totalSum = 0;
-        /** @var CartOrder $order */
-        foreach ($unpaidOrders as $order)
-        {
-            $totalSum += doubleval($order->getShoeUser()->getPrice());
-        }
-
-        return $this->render('order/myorders.html.twig', [
-            'orders' => $unpaidOrders,
-            'totalPrice' => number_format($totalSum, 2)
         ]);
     }
 }

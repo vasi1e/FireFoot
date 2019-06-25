@@ -27,7 +27,7 @@ class ShoeSizeRepository extends \Doctrine\ORM\EntityRepository
      * @param ShoeSize $shoeSize
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveShoeSize(ShoeSize $shoeSize)
+    public function save(ShoeSize $shoeSize)
     {
         $em = $this->getEntityManager();
         $em->persist($shoeSize);
@@ -38,7 +38,7 @@ class ShoeSizeRepository extends \Doctrine\ORM\EntityRepository
      * @param ShoeSize $shoeSize
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateShoeSize(ShoeSize $shoeSize)
+    public function update(ShoeSize $shoeSize)
     {
         $em = $this->getEntityManager();
         $em->merge($shoeSize);
@@ -49,7 +49,7 @@ class ShoeSizeRepository extends \Doctrine\ORM\EntityRepository
      * @param ShoeSize $shoeSize
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function deleteShoeSize(ShoeSize $shoeSize)
+    public function delete(ShoeSize $shoeSize)
     {
         $em = $this->getEntityManager();
         $em->remove($shoeSize);

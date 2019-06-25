@@ -38,14 +38,12 @@ class ShoeType extends AbstractType
                         'New' => 'new',
                         'Used' => 'used'
                     ],
-                    'placeholder' => "Please select condition"
+                    'placeholder' => "Please select condition",
+                    'required' => true
                 ])
-                ->add('conditionOutOf10', TextType::class, [
-                    'required' => false
-                ])
+                ->add('conditionOutOf10', TextType::class)
                 ->add('uploadImages', FileType::class, [
                     'multiple' => true,
-                    'required' => false,
                     'attr'     => [
                         'accept' => 'image/*',
                         'multiple' => 'multiple'
@@ -58,7 +56,7 @@ class ShoeType extends AbstractType
 
     protected function addElements(FormInterface $form, Brand $brand = null) {
         $form->add('brand', EntityType::class, [
-            'required' => false,
+            'required' => true,
             'data' => $brand,
             'placeholder' => "Please select brand",
             'class' => 'SiteBundle\Entity\Brand'
@@ -77,7 +75,7 @@ class ShoeType extends AbstractType
         }
 
         $form->add('model', EntityType::class, [
-            'required' => false,
+            'required' => true,
             'placeholder' => "Please select model",
             'class' => 'SiteBundle\Entity\Model',
             'choices' => $models,

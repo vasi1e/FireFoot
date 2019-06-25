@@ -3,13 +3,11 @@
 namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use SiteBundle\Entity\CartOrder;
 use SiteBundle\Entity\Message;
 use SiteBundle\Entity\User;
 use SiteBundle\Form\UserType;
 use SiteBundle\Service\MessageServiceInterface;
-use SiteBundle\Service\SaveServiceInterface;
-use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
+use SiteBundle\Service\SUDServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,23 +17,20 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UserController extends Controller
 {
     private $userService;
-    private $saveService;
-    private $someService;
+    private $SUDService;
     private $messageService;
 
     /**
      * UserController constructor.
      * @param UserServiceInterface $userService
-     * @param SaveServiceInterface $saveService
-     * @param ServiceForThingsIDontKnowWhereToPut $someService
+     * @param SUDServiceInterface $SUDService
      * @param MessageServiceInterface $messageService
      */
-    public function __construct(UserServiceInterface $userService, SaveServiceInterface $saveService,
-                                ServiceForThingsIDontKnowWhereToPut $someService, MessageServiceInterface $messageService)
+    public function __construct(UserServiceInterface $userService, SUDServiceInterface $SUDService,
+                                MessageServiceInterface $messageService)
     {
         $this->userService = $userService;
-        $this->saveService = $saveService;
-        $this->someService = $someService;
+        $this->SUDService = $SUDService;
         $this->messageService = $messageService;
     }
 
@@ -78,7 +73,7 @@ class UserController extends Controller
 
                 $this->userService->encodePassword($user);
                 $this->userService->setRole($user, "user");
-                $this->saveService->saveUser($user);
+                $this->SUDService->saveProperty("user", $user);
 
                 return $this->redirectToRoute('security_login');
 
@@ -109,6 +104,8 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = $this->userService->findUserById($id);
+        $isAdmin = false;
+        if ($this->userService->isAdmin($user)) $isAdmin = true;
         $shoes = $user->getSellerShoes();
 
         $counterForUnreadMessages = 0;
@@ -130,6 +127,7 @@ class UserController extends Controller
             'user' => $user,
             'shoes' => $shoes,
             'count' => $counterForUnreadMessages,
+            'isAdmin' => $isAdmin,
         ]);
     }
 }

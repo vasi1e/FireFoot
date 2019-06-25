@@ -5,8 +5,8 @@ use SiteBundle\Entity\Message;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
 use SiteBundle\Service\MessageServiceInterface;
-use SiteBundle\Service\SaveServiceInterface;
 use SiteBundle\Service\ShoeServiceInterface;
+use SiteBundle\Service\SUDServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,22 +17,22 @@ class MessageController extends Controller
 {
     private $shoeService;
     private $messageService;
-    private $saveService;
+    private $SUDService;
     private $userService;
 
     /**
      * MessageController constructor.
      * @param ShoeServiceInterface $shoeService
      * @param MessageServiceInterface $messageService
-     * @param SaveServiceInterface $saveService
+     * @param SUDServiceInterface $SUDService
      * @param UserServiceInterface $userService
      */
     public function __construct(ShoeServiceInterface $shoeService, MessageServiceInterface $messageService,
-                                SaveServiceInterface $saveService, UserServiceInterface $userService)
+                                SUDServiceInterface $SUDService, UserServiceInterface $userService)
     {
         $this->shoeService = $shoeService;
         $this->messageService = $messageService;
-        $this->saveService = $saveService;
+        $this->SUDService = $SUDService;
         $this->userService = $userService;
     }
 
@@ -73,7 +73,7 @@ class MessageController extends Controller
                      ->setRecipient($recipient)
                      ->setChatId($chatId)
                      ->setRead(false);
-            $this->saveService->saveMessage($message);
+            $this->SUDService->saveProperty("message", $message);
 
             $currUser->addSendMessage($message);
             $recipient->addReceivedMessage($message);

@@ -15,9 +15,8 @@ use SiteBundle\Entity\User;
 use SiteBundle\Form\ShoeType;
 use SiteBundle\Service\BrandModelServiceInterface;
 use SiteBundle\Service\CartOrderServiceInterface;
-use SiteBundle\Service\SaveServiceInterface;
-use SiteBundle\Service\ServiceForThingsIDontKnowWhereToPut;
 use SiteBundle\Service\ShoeServiceInterface;
+use SiteBundle\Service\SUDServiceInterface;
 use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,29 +27,26 @@ class ShoeController extends Controller
     private $userService;
     private $shoeService;
     private $brandmodelService;
-    private $saveService;
+    private $SUDService;
     private $orderService;
-    private $someService;
 
     /**
      * ShoeController constructor.
      * @param UserServiceInterface $userService
      * @param ShoeServiceInterface $shoeService
      * @param BrandModelServiceInterface $brandmodelService
-     * @param SaveServiceInterface $saveService
-     * @param ServiceForThingsIDontKnowWhereToPut $someService
+     * @param SUDServiceInterface $SUDService
      * @param CartOrderServiceInterface $orderService
      */
     public function __construct(UserServiceInterface $userService, ShoeServiceInterface $shoeService,
-                                BrandModelServiceInterface $brandmodelService, SaveServiceInterface $saveService,
-                                ServiceForThingsIDontKnowWhereToPut $someService, CartOrderServiceInterface $orderService)
+                                BrandModelServiceInterface $brandmodelService, SUDServiceInterface $SUDService,
+                                CartOrderServiceInterface $orderService)
     {
         $this->userService = $userService;
         $this->shoeService = $shoeService;
         $this->brandmodelService = $brandmodelService;
-        $this->saveService = $saveService;
+        $this->SUDService = $SUDService;
         $this->orderService = $orderService;
-        $this->someService = $someService;
     }
 
     /**
@@ -83,7 +79,7 @@ class ShoeController extends Controller
 
                 if ($this->brandmodelService->isBrandExisting($brand) == false)
                 {
-                    $this->saveService->saveProperty("brand", $brand);
+                    $this->SUDService->saveProperty("brand", $brand);
                     $shoe->setBrand($brand);
                 }
                 else throw new \Exception("We already have this brand");
@@ -100,14 +96,14 @@ class ShoeController extends Controller
                 $model->setBrand($currBrand);
                 $shoe->setModel($model);
 
-                $this->saveService->saveProperty("model", $model);
-                $this->brandmodelService->updateProperty("brand", $currBrand);
+                $this->SUDService->saveProperty("model", $model);
+                $this->SUDService->updateProperty("brand", $currBrand);
             }
             else throw new \Exception("We already have this model");
 
             $shoe->setCondition("new");
             $shoe->setConditionOutOf10('10');
-            $this->saveService->saveShoe($shoe);
+            $this->SUDService->saveProperty("shoe", $shoe);
 
             $imageFiles = $form->getData()->getUploadImages();
             $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
@@ -150,7 +146,7 @@ class ShoeController extends Controller
             $form->handleRequest($request);
         }
 
-        if ($form->isSubmitted())
+        if ($form->isSubmitted() && $form->isValid())
         {
             if ($shoe->getCondition() == 'new')
             {
@@ -167,7 +163,7 @@ class ShoeController extends Controller
                 }
             }
             else {
-                $this->saveService->saveShoe($shoe);
+                $this->SUDService->saveProperty("shoe", $shoe);
                 $imageFiles = $shoe->getUploadImages();
                 $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
                 $shoe->setUploadImages(null);
@@ -177,7 +173,7 @@ class ShoeController extends Controller
             $size->setNumber($_POST['size']);
 
             if ($this->shoeService->isThereSize($size)) $size = $this->shoeService->findSizeByNumber($size->getNumber());
-            else $this->saveService->saveSize($size);
+            else $this->SUDService->saveProperty("size", $size);
 
             $shoeSize = new ShoeSize();
             $shoeSize->setSize($size)->setShoe($shoe);
@@ -189,7 +185,7 @@ class ShoeController extends Controller
             }
             else $shoeSize->setQuantity(1);
 
-            $this->saveService->saveShoeSize($shoeSize);
+            $this->SUDService->saveProperty("shoeSize", $shoeSize);
 
             $shoe->addSize($shoeSize);
             $size->addShoe($shoeSize);
@@ -199,7 +195,7 @@ class ShoeController extends Controller
 
             $shoeUser = new ShoeUser();
             $shoeUser->setShoe($shoe)->setSeller($seller)->setPrice($_POST['price'])->setSize($size)->setSold(false);
-            $this->saveService->saveShoeUser($shoeUser);
+            $this->SUDService->saveProperty("shoeUser", $shoeUser);
 
             $shoe->addSeller($shoeUser);
             $seller->addSellerShoe($shoeUser);
@@ -242,17 +238,17 @@ class ShoeController extends Controller
                     $shoeSize = $this->shoeService->findShoeSizeByShoeAndSize($shoe, $size);
 
                     if ($shoeSize->getQuantity() == 1) {
-                        $this->someService->deleteShoeSize($shoeSize);
+                        $this->SUDService->deleteProperty("shoeSize", $shoeSize);
                     } else {
                         $shoeSize->setQuantity($shoeSize->getQuantity() - 1);
-                        $this->someService->updateShoeSize($shoeSize);
+                        $this->SUDService->updateProperty("shoeSize", $shoeSize);
                     }
 
                     $order->getShoeUser()->setSold(true)->setOrdersToEmpty();
-                    $this->someService->updateShoeUser($order->getShoeUser());
+                    $this->SUDService->updateProperty("shoeUser", $order->getShoeUser());
 
                     $order->setPaid(true);
-                    $this->orderService->updateOrder($order);
+                    $this->SUDService->updateProperty("order", $order);
                 }
             }
         }
@@ -323,8 +319,8 @@ class ShoeController extends Controller
             $likeFlag = 1;
         }
 
-        $this->userService->updateUser($currUser);
-        $this->shoeService->updateShoe($shoe);
+        $this->SUDService->updateProperty("user", $currUser);
+        $this->SUDService->updateProperty("shoe", $shoe);
 
         return new Response($likeFlag);
     }

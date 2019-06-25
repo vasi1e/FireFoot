@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="success"></div>
+    <div class="flashMssg" style="display: none"></div>
     <div class="row py-5">
      <div class="col-md-6">
       <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
@@ -120,8 +120,17 @@
                     sizeNum: $('#size').val()
                 },
                 success: function (response) {
-                    if(response == "nooo") $('#success').text("You must be logged in to buy shoe");
-                    else if(response == "yess") $('#success').text("The shoe is in the fire cart!");
+                    var flashMssg = document.getElementsByClassName("flashMssg")[0];
+                    flashMssg.style.display = 'block';
+
+                    if(response == "not logged") flashMssg.innerHTML = 'You must be logged in to buy shoe';
+                    else if(response == "okay") flashMssg.innerHTML = 'The shoe is in the fire cart!';
+                    else if(response == "no size chosen") flashMssg.innerHTML = 'Please choose size';
+
+                    flashMssg.removeAttribute("style");
+                    setTimeout(function () {
+                        $('.flashMssg').fadeOut();
+                    }, 4000)
                 }})
             });
     </script>
@@ -152,7 +161,13 @@
                 type: "GET",
                 success: function (likeFlag) {
                     if (likeFlag == "null") {
-                         $('#success').text("You must be logged to like shoe")
+                        var flashMssg = document.getElementsByClassName("flashMssg")[0];
+                        flashMssg.style.display = 'block';
+                        flashMssg.innerHTML = "You must be logged to like shoe";
+                        flashMssg.removeAttribute("style");
+                        setTimeout(function () {
+                            $('.flashMssg').fadeOut();
+                        }, 4000)
                     } else if (likeFlag == true) {
                         likeButtn.style.color = "#f53803";
 

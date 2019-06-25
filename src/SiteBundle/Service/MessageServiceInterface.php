@@ -15,7 +15,6 @@ use SiteBundle\Entity\User;
 
 interface MessageServiceInterface
 {
-    public function updateMessage(Message $message);
     public function findChatByShoe(Shoe $shoe, User $user, User $recipient);
     public function getListOfChats($userId);
     public function isTheChatRead($chatId, $userId);
