@@ -1,74 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container" style="position: relative">
+    <div class="container card-content">
         <h3 class="display-4 mt-4 mb-4">Shopping Cart</h3>
         <hr>
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-8">
-    {% for order in orders %}
-    <div class="card mb-4">
-    <div class="card-body">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-lg-6 float-left">
-                <img class="img-fluid" style="object-fit: contain;width: 250px; height: 150px" src="{{  asset('uploads/images/' ~ order.shoeUser.shoe.images[0].name) }}">
+                {% for order in orders %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-6 float-left">
+                                <img class="img-fluid" style="object-fit: contain;width: 250px; height: 150px" src="{{  asset('uploads/images/' ~ order.shoeUser.shoe.images[0].name) }}">
+                            </div>
+
+                            <div class="col-lg-6 font-weight-bold align-middle" style="font-size: 19px">
+                            <a href="{{ path('delete_order', {'id': order.id}) }}"><i class="fas fa-times fa-2x float-right" style="position: absolute;top: -55%; right: 2%;color: black;"></i></a>
+                            {{ order.shoeUser.shoe.brand }}
+                            {{ order.shoeUser.shoe.model }}
+                            <br>
+                            Size: {{ order.shoeUser.size }}
+                            <br>
+                            Price: {{ order.shoeUser.price }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
             </div>
-            <div class="col-lg-6 font-weight-bold align-middle" style="font-size: 19px">
-                <a href="{{ path('delete_order', {'id': order.id}) }}"><i class="fas fa-times fa-2x float-right" style="position: absolute;top: -55%; right: 2%;color: black;"></i></a>
-                {{ order.shoeUser.shoe.brand }}
-                {{ order.shoeUser.shoe.model }}
+        </div>
+    </div>
+
+
+    <div class="side-bar">
+        <div class="card mb-4">
+            <div class="card-body">
+                Total price: {{ totalPrice }}
                 <br>
-                Size: {{ order.shoeUser.size }}
-                <br>
-                Price: {{ order.shoeUser.price }}
+                <a href="{{ path('address') }}"><button class="btn btn-ff">Order</button></a>
             </div>
         </div>
     </div>
-    </div>
-    {% endfor %}
-            </div>
-        <div class="col-lg-4 f-flex sticky" style="font-size: 20px;position: relative; float:right">
-            <div class="card mb-4">
-                <div class="card-body">
-        Total price: {{ totalPrice }}
-        <br>
-        <a href="{{ path('address') }}"><button class="btn btn-ff">Order</button></a>
-        </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="sticky-stopper"></div>
-
-{% endblock %}
-{% block javascripts %}
-    <script>$( document ).ready(function() {
-    console.log( "document ready!" );
-
-    var $sticky = $('.sticky');
-    var $stickyrStopper = $('.sticky-stopper');
-    if (!!$sticky.offset()) { // make sure ".sticky" element exists
-
-    var generalSidebarHeight = $sticky.innerHeight();
-    var stickyTop = $sticky.offset().top;
-    var stickOffset = 0;
-    var stickyStopperPosition = $stickyrStopper.offset().top;
-    var stopPoint = stickyStopperPosition - generalSidebarHeight - stickOffset;
-    var diff = stopPoint + stickOffset;
-
-    $(window).scroll(function(){ // scroll event
-    var windowTop = $(window).scrollTop(); // returns number
-
-    if (stopPoint < windowTop) {
-    $sticky.css({ position: 'absolute', top: diff });
-    } else if (stickyTop < windowTop+stickOffset) {
-    $sticky.css({ position: 'fixed', top: stickOffset });
-    } else {
-    $sticky.css({position: 'absolute', top: 'initial'});
-    }
-    });
-
-    }
-    });
-    </script>
 {% endblock %}

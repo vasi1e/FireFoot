@@ -1,34 +1,54 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>
-        {{ user.fullName }}
-        <a href="{{ path('chats_list') }}">
-            <i class="far fa-envelope"></i>
-            ({{ count }})
-        </a>
-    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-5">
+                <h3>
+                    <strong class="display-3">{{ user.fullName }}'s profile</strong>
+
+                    <a class="ml-2" href="{{ path('chats_list') }}">
+                        <i class="far fa-envelope"></i>
+                        ({{ count }})
+                    </a>
+                </h3>
+            </div>
+        </div>
     {% if(isAdmin) %}
     <div>
         You're admin. That's cool! You can <a href="{{ path('admin_shoe_create') }}">put new models</a> in FireFoot.
     </div>
     {% endif %}
+        <div class="col-8">
+            <div class="row mb-5 card-deck">
     {% for shoe in shoes %}
         {% if (shoe.shoe.condition == "used") %}
         {% if (shoe.sold == false) %}
-            <a href="{{ path('shoe_view', {'id': shoe.shoe.id}) }}">
-                <img src="{{ asset('uploads/images/' ~ shoe.shoe.images.snapshot[0].name) }}">
-                <div>
-                    {{ shoe.shoe.brand }}
-                    {{ shoe.shoe.model }}
+                <div class="mt-5 col-md-4">
+                    <div class="card">
+                        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+                            <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.shoe.images.snapshot[0].name) }}" alt="Card image cap">
+                        </a>
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.shoe.brand }} {{ shoe.shoe.model }}</a>
+                            </h5>
+
+                            <p class="card-text">
+                            <div>
+                                Size: {{ shoe.size }}
+                                Price: {{ shoe.price }}
+                            </div>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    Size: {{ shoe.size }}
-                    Price: {{ shoe.price }}
-                </div>
-            </a>
         {% endif %}
         {% endif %}
     {% endfor %}
+        </div>
+        </div>
+    </div>
 {% endblock %}
-

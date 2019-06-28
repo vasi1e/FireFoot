@@ -17,14 +17,17 @@ use SiteBundle\Repository\MessageRepository;
 class MessageService implements MessageServiceInterface
 {
     private $messageRepository;
+    private $SUDService;
 
     /**
      * MessageService constructor.
-     * @param $messageRepository
+     * @param MessageRepository $messageRepository
+     * @param SUDServiceInterface $SUDService
      */
-    public function __construct(MessageRepository $messageRepository)
+    public function __construct(MessageRepository $messageRepository, SUDServiceInterface $SUDService)
     {
         $this->messageRepository = $messageRepository;
+        $this->SUDService = $SUDService;
     }
 
     public function findChatByShoe(Shoe $shoe, User $sender, User $recipient)
@@ -55,7 +58,7 @@ class MessageService implements MessageServiceInterface
             if ($currUser === $m->getRecipient())
             {
                 $m->setRead(true);
-                $this->updateMessage($m);
+                $this->SUDService->updateProperty("message", $m);
             }
         }
     }

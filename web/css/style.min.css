@@ -1,3 +1,7 @@
+html,
+body {
+    min-height: 100%;
+}
 .navbar {
     background-color: black !important;
 }
@@ -22,6 +26,10 @@
     height: 10vw;
     object-fit: contain;
     padding: 5%;
+}
+.card {
+    box-shadow: 0 23px 20px -20px rgba(115, 162, 208 , 0.5),0 0 15px rgba(115, 162, 208, 0.15);
+    border-radius: 5px;
 }
 .pagination.pg-blue .page-item.active .page-link {
     background-color: #f53803;
@@ -53,4 +61,39 @@
 .btn-ff {
     background-color: black;
     color: white;
+}
+.flashMssg {
+    padding: 15px;
+    background-color: #f44336;
+    color: white;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 50%;
+    border-radius: 5px;
+    display: inline-block;
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    right: 0;
+}
+#statusMsg {
+    padding: 15px;
+    color: white;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 50%;
+    border-radius: 5px;
+    left: 5%;
+    position: absolute;
+    z-index: 5;
+}
+.card-content {
+    margin-right: 160px;
+}
+.side-bar {
+    width: 160px;
+    position: absolute;
+    overflow: hidden;
+    top: 30%;
+    right: 10%;
 }

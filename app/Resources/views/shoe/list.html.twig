@@ -2,6 +2,8 @@
 
 {% block body %}
     <div class="container">
+        <div class="row">
+            <div class="mt-5 col-2">
         <h1>FILTERS</h1>
 
         <h3>Brands</h3>
@@ -25,43 +27,46 @@
             <li style="display: inline;"><input id="43" type="checkbox" value="43">43</li>
             <li style="display: inline;"><input id="44" type="checkbox" value="44">44</li>
         </ul>
+            </div>
+            <div class="col-8">
+                <div class="row mb-5 card-deck">
+                    {% for shoe in pagination %}
+                        <div class="mt-5 col-md-4">
+                            <div class="card">
+                                <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+                                    <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap">
+                                </a>
 
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a>
+                                    </h5>
+
+                                    <p class="card-text">
+                                        <i class="fab fa-gripfire"></i>
+                                        <span>{{ shoe.likes }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row mt-5 mb-5">
+                        <div class="col-lg-12">
+                            <div class="navigation">
+                                {{ knp_pagination_render(pagination) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="mt-5 col-2">
         Sort by:
-        <select id="sort" class="browser-default custom-select" style="width: 15%;" onchange="location = this.value + '?{{ app.request.queryString }}';">
+        <select id="sort" class="browser-default custom-select" onchange="location = this.value + '?{{ app.request.queryString }}';">
             <option value="">Please choose</option>
             <option value="{{ path('list_shoes_id', {'id': 1}) }}">New release</option>
             <option value="{{ path('list_shoes_id', {'id': 2}) }}">Most fires</option>
         </select>
-
-        <div class="row mt-5 mb-5">
-            {% for shoe in pagination %}
-            <div class="col-md-2">
-                <div class="card">
-                    <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
-                        <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap">
-                    </a>
-
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a>
-                        </h5>
-
-                        <p class="card-text">
-                            <i class="fab fa-gripfire"></i>
-                            <span>{{ shoe.likes }}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
         </div>
-
-        <div class="row mt-5 mb-5">
-            <div class="col-lg-12">
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}

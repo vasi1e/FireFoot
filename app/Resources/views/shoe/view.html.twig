@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="flashMssg" style="display: none"></div>
+    <div id="statusMsg" style="display: none"></div>
     <div class="row py-5">
      <div class="col-md-6">
       <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
@@ -71,7 +71,7 @@
                      Size: {{ shoe.sellers.size }}
                  </div>
                  <div>
-                     <a href="{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}"><input type="button" value="Message seller"></a>
+                     <a href="{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}"><input class="btn rgba-gradient" type="button" value="Message seller"></a>
                      {% endif %}
                      {% if ((shoe.sizes != null)) %}
                          <input class="btn rgba-gradient" type="button" id="buy" value="Buy">
@@ -120,16 +120,27 @@
                     sizeNum: $('#size').val()
                 },
                 success: function (response) {
-                    var flashMssg = document.getElementsByClassName("flashMssg")[0];
+                    var flashMssg = document.getElementById("statusMsg");
                     flashMssg.style.display = 'block';
 
-                    if(response == "not logged") flashMssg.innerHTML = 'You must be logged in to buy shoe';
-                    else if(response == "okay") flashMssg.innerHTML = 'The shoe is in the fire cart!';
-                    else if(response == "no size chosen") flashMssg.innerHTML = 'Please choose size';
+                    if(response == "not logged")
+                    {
+                        flashMssg.innerHTML = 'You must be logged in to buy shoe';
+                        flashMssg.style.backgroundColor = "#f44336";
+                    }
+                    else if(response == "okay")
+                    {
+                        flashMssg.innerHTML = 'The shoe is in the fire cart!';
+                        flashMssg.style.backgroundColor = "green";
+                    }
+                    else if(response == "Please choose size.")
+                    {
+                        flashMssg.innerHTML = 'Please choose size';
+                        flashMssg.style.backgroundColor = "#ffc107";
+                    }
 
-                    flashMssg.removeAttribute("style");
                     setTimeout(function () {
-                        $('.flashMssg').fadeOut();
+                        $('#statusMsg').fadeOut();
                     }, 4000)
                 }})
             });
