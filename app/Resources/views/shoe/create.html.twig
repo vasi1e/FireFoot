@@ -19,6 +19,7 @@
         <div>
             <input class="btn rgba-gradient btn-block my-4" type="submit" name="Create" value="Create new shoe">
         </div>
+        {{ form_row(form._token) }}
     </form>
     </div>
     </div>
@@ -62,6 +63,7 @@
         <div>
             <input class="btn rgba-gradient btn-block my-4" type="submit" name="Create" value="Put for selling">
         </div>
+        {{ form_row(form._token) }}
     </form>
     {% endif %}
     </div>

@@ -7,10 +7,13 @@
                 <h3>
                     <strong class="display-3">{{ user.fullName }}'s profile</strong>
 
+                    {% if count is not same as("Nan") %}
                     <a class="ml-2" href="{{ path('chats_list') }}">
                         <i class="far fa-envelope"></i>
                         ({{ count }})
                     </a>
+                    {% endif %}
+
                 </h3>
             </div>
         </div>

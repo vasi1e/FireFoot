@@ -12,6 +12,7 @@ use SiteBundle\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends Controller
@@ -104,24 +105,29 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = $this->userService->findUserById($id);
+        /** @var User $currUser */
+        $currUser = $this->getUser();
+
         $isAdmin = false;
-        if ($this->userService->isAdmin($user)) $isAdmin = true;
+        if ($currUser->getId() == $user->getId() && $this->userService->isAdmin($user)) $isAdmin = true;
+
         $shoes = $user->getSellerShoes();
 
-        $counterForUnreadMessages = 0;
-        $chatIds = [];
-        /** @var Message $message */
-        foreach ($user->getReceivedMessages() as $message)
+        if ($currUser->getId() == $user->getId())
         {
-            $chatId = $message->getChatId();
+            $counterForUnreadMessages = 0;
+            $chatIds = [];
+            /** @var Message $message */
+            foreach ($user->getReceivedMessages() as $message) {
+                $chatId = $message->getChatId();
 
-            if(!in_array($chatId, $chatIds))
-            {
-                $chatIds[] = $chatId;
+                if (!in_array($chatId, $chatIds)) {
+                    $chatIds[] = $chatId;
 
-                if (!($this->messageService->isTheChatRead($chatId, $user->getId())[0]['read'])) $counterForUnreadMessages++;
+                    if (!($this->messageService->isTheChatRead($chatId, $user->getId())[0]['read'])) $counterForUnreadMessages++;
+                }
             }
-        }
+        } else $counterForUnreadMessages = "Nan";
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,
@@ -129,5 +135,15 @@ class UserController extends Controller
             'count' => $counterForUnreadMessages,
             'isAdmin' => $isAdmin,
         ]);
+    }
+
+    /**
+     * @Route("/user/isLogged", name="isLogged")
+     * @return Response
+     */
+    public function isLogged()
+    {
+        if ($this->getUser() == null) return new Response("No");
+        else return new Response("Yes");
     }
 }

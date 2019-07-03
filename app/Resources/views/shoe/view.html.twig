@@ -64,6 +64,7 @@
                  <a href="{{ path('shoe_sell_id', {'id': shoe.id}) }}"><input class="btn rgba-gradient" type="button" value="Sell"></a>
                  {% else %}
                  <div>
+                     Seller: <a href="{{ path('profile', {'id': shoe.sellers.seller.id}) }}">{{ shoe.sellers.seller.fullName }}</a>
                      Condition: {{ shoe.conditionOutOf10 }}
                  </div>
                  <div>
@@ -71,7 +72,7 @@
                      Size: {{ shoe.sellers.size }}
                  </div>
                  <div>
-                     <a href="{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}"><input class="btn rgba-gradient" type="button" value="Message seller"></a>
+                     <input id="chatButton" class="btn rgba-gradient" type="button" value="Message seller">
                      {% endif %}
                      {% if ((shoe.sizes != null)) %}
                          <input class="btn rgba-gradient" type="button" id="buy" value="Buy">
@@ -145,6 +146,38 @@
                 }})
             });
     </script>
+    {% if  (shoe.condition == "used")%}
+    <script>
+        $('#chatButton').on('click', function () {
+            $.ajax({
+                url: "{{ path('isLogged') }}",
+                type: "GET",
+                dataType: "TEXT",
+                success: function (isLogged) {
+                    var flashMssg = document.getElementById("statusMsg");
+                    flashMssg.style.display = 'block';
+
+                    if (isLogged == "No")
+                    {
+                        flashMssg.innerHTML = 'You must be logged in to message';
+                        flashMssg.style.backgroundColor = "#f44336";
+                    }
+                    else
+                    {
+                        window.location.replace("{{ path('message_chat', {"shoeId": shoe.id, "userId": shoe.sellers.seller.id}) }}");
+                    }
+
+                    setTimeout(function () {
+                        $('#statusMsg').fadeOut();
+                    }, 4000)
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+            })
+        });
+    </script>
+    {% endif %}
     <script>
         var likeButtn = document.getElementById("likeButtn");
         var colorOnStay = "";

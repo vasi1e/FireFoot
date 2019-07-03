@@ -52,6 +52,7 @@ class MessageController extends Controller
 
         /** @var User $currUser */
         $currUser = $this->getUser();
+        //if ($currUser == null) return $this->redirect("/shoe/view/" . $shoeId);
         /** @var User $recipient */
         $recipient = $this->userService->findUserById($userId);
 

@@ -2,7 +2,7 @@
 
 namespace SiteBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SiteBundle\Entity\Brand;
 use SiteBundle\Entity\CartOrder;

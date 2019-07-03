@@ -1,19 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for shoe in shoes %}
-        {% if (shoe.sellers.sold == false) %}
-            <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
-                <img src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}">
-                <div>
-                    {{ shoe.brand }}
-                    {{ shoe.model }}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="row mb-5 card-deck">
+            {% for shoe in shoes %}
+                {% if (shoe.sellers.sold == false) %}
+                    <div class="mt-5 col-md-4">
+                            <div class="card">
+                                <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+                                    <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.images.snapshot[0].name) }}" alt="Card image cap">
+                                </a>
+
+
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.brand }} {{ shoe.model }}</a>
+                                    </h5>
+
+                                    <p class="card-text">
+                                    <div>
+                                        Size: {{ shoe.sellers.size }}
+                                        Price: {{ shoe.sellers.price }}
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                {% endif %}
+            {% endfor %}
                 </div>
-                <div>
-                    Size: {{ shoe.sellers.size }}
-                    Price: {{ shoe.sellers.price }}
-                </div>
-            </a>
-        {% endif %}
-    {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
