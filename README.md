@@ -1,1 +1,1 @@
-This is website for shoes.
+This is reseller platform for shoes.
