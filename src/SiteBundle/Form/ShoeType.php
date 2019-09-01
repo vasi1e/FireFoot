@@ -56,7 +56,7 @@ class ShoeType extends AbstractType
 
     protected function addElements(FormInterface $form, Brand $brand = null) {
         $form->add('brand', EntityType::class, [
-            'required' => true,
+            'required' => false,
             'data' => $brand,
             'placeholder' => "Please select brand",
             'class' => 'SiteBundle\Entity\Brand'

@@ -58,14 +58,7 @@ class BrandModelService implements BrandModelServiceInterface
 
     public function isGoingToAddBrand()
     {
-        if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "") {
-            throw new \Exception("You must choose one brand or write a new one");
-        }
-
-        if ($_POST['shoe']['brand'] != "" && $_POST["brandToAdd"] != "") {
-            throw new \Exception("You must choose one brand or write a new one");
-        }
-
+        if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "") return "You must choose one brand or write a new one";
         if ($_POST['shoe']['brand'] == "") return true;
         else return false;
     }

@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flashMssg">
+                {{ message }}
+                <a class="alert-close">×</a>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     <div class="container">
     <div class="row justify-content-center align-items-center">
     <div class="col-md-4">
@@ -11,7 +20,7 @@
             Brand: {{ form_widget(form.brand, {'attr': {'class': 'form-control mb-4' }}) }} Or (CUSTOM): <input class="form-control mb-4" type="text" name="brandToAdd">
         </div>
         <div>
-            Model: <input class="form-control mb-4" type="text" name="modelToAdd">
+            Model: <input class="form-control mb-4" type="text" name="modelToAdd" required>
         </div>
         <div>
             Upload pictures: {{ form_widget(form.uploadImages, {'attr': {'class': '' }}) }}

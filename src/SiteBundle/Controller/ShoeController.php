@@ -72,7 +72,13 @@ class ShoeController extends Controller
 
         if ($form->isSubmitted())
         {
-            if ($this->brandmodelService->isGoingToAddBrand())
+            $error = false;
+            if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "")
+            {
+                $this->addFlash("error", "You must choose one brand or write a new one");
+                $error = true;
+            }
+            else if ($_POST['shoe']['brand'] == "")
             {
                 $brand = new Brand();
                 $brand->setName($_POST['brandToAdd']);
@@ -82,7 +88,19 @@ class ShoeController extends Controller
                     $this->SUDService->saveProperty("brand", $brand);
                     $shoe->setBrand($brand);
                 }
-                else throw new \Exception("We already have this brand");
+                else
+                {
+                    $this->addFlash("error", "We already have this brand");
+                    $error = true;
+                }
+            }
+
+            if ($error)
+            {
+                return $this->render('shoe/create.html.twig', [
+                    'form' => $form->createView(),
+                    'isAdmin' => true
+                ]);
             }
 
             $model = new Model();
@@ -99,7 +117,19 @@ class ShoeController extends Controller
                 $this->SUDService->saveProperty("model", $model);
                 $this->SUDService->updateProperty("brand", $currBrand);
             }
-            else throw new \Exception("We already have this model");
+            else
+            {
+                $this->addFlash("error", "We already have this model");
+                $error = true;
+            }
+
+            if ($error)
+            {
+                return $this->render('shoe/create.html.twig', [
+                    'form' => $form->createView(),
+                    'isAdmin' => true
+                ]);
+            }
 
             $shoe->setCondition("new");
             $shoe->setConditionOutOf10('10');
