@@ -87,6 +87,7 @@ class OrderController extends Controller
 
     /**
      * @Route("order/delete/{id}", name="delete_order")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

@@ -1,6 +1,7 @@
 <?php
 
 namespace SiteBundle\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SiteBundle\Entity\Message;
 use SiteBundle\Entity\Shoe;
 use SiteBundle\Entity\User;
@@ -38,6 +39,7 @@ class MessageController extends Controller
 
     /**
      * @Route("/message/chat/{shoeId}/{userId}", name="message_chat")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param $shoeId
      * @param $userId
@@ -91,6 +93,7 @@ class MessageController extends Controller
 
     /**
      * @Route("/messages-refresh", name="message_refresh")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */

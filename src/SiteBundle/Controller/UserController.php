@@ -97,7 +97,6 @@ class UserController extends Controller
 
     /**
      * @Route("/user/profile/{id}", name="profile")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -108,26 +107,28 @@ class UserController extends Controller
         /** @var User $currUser */
         $currUser = $this->getUser();
 
-        $isAdmin = false;
-        if ($currUser->getId() == $user->getId() && $this->userService->isAdmin($user)) $isAdmin = true;
-
         $shoes = $user->getSellerShoes();
+        $counterForUnreadMessages = "Nan";
+        $isAdmin = false;
 
-        if ($currUser->getId() == $user->getId())
-        {
-            $counterForUnreadMessages = 0;
-            $chatIds = [];
-            /** @var Message $message */
-            foreach ($user->getReceivedMessages() as $message) {
-                $chatId = $message->getChatId();
+        if ($currUser != null) {
+            if ($currUser->getId() == $user->getId() && $this->userService->isAdmin($user)) $isAdmin = true;
 
-                if (!in_array($chatId, $chatIds)) {
-                    $chatIds[] = $chatId;
+            if ($currUser->getId() == $user->getId()) {
+                $counterForUnreadMessages = 0;
+                $chatIds = [];
+                /** @var Message $message */
+                foreach ($user->getReceivedMessages() as $message) {
+                    $chatId = $message->getChatId();
 
-                    if (!($this->messageService->isTheChatRead($chatId, $user->getId())[0]['read'])) $counterForUnreadMessages++;
+                    if (!in_array($chatId, $chatIds)) {
+                        $chatIds[] = $chatId;
+
+                        if (!($this->messageService->isTheChatRead($chatId, $user->getId())[0]['read'])) $counterForUnreadMessages++;
+                    }
                 }
             }
-        } else $counterForUnreadMessages = "Nan";
+        }
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,

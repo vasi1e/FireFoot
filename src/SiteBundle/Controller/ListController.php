@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ListController extends Controller
 {
@@ -105,7 +106,7 @@ class ListController extends Controller
     }
 
     /**
-     * @Route("/shoe/used/{id}", name="list_used_shoes")
+     * @Route("/shoe/used/list/{id}", name="list_used_shoes")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -128,6 +129,7 @@ class ListController extends Controller
 
     /**
      * @Route("/message/list", name="chats_list")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function listMessages()
     {
@@ -195,6 +197,7 @@ class ListController extends Controller
 
     /**
      * @Route("/order/list", name="my_orders")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function listOrdersAction()
     {
