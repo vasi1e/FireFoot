@@ -39,7 +39,7 @@ class Model
     /**
      * @var Brand
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Brand", inversedBy="models")
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Brand", inversedBy="models", cascade={"persist"})
      */
     private $brand;
 

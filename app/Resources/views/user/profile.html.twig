@@ -29,14 +29,14 @@
         {% if (shoe.sold == false) %}
                 <div class="mt-5 col-md-4">
                     <div class="card">
-                        <a href="{{ path('shoe_view', {'id': shoe.id}) }}">
+                        <a href="{{ path('shoe_view', {'id': shoe.shoe.id}) }}">
                             <img class="card-img-top" src="{{ asset('uploads/images/' ~ shoe.shoe.images.snapshot[0].name) }}" alt="Card image cap">
                         </a>
 
 
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{{ path('shoe_view', {'id': shoe.id}) }}">{{ shoe.shoe.brand }} {{ shoe.shoe.model }}</a>
+                                <a href="{{ path('shoe_view', {'id': shoe.shoe.id}) }}">{{ shoe.shoe.brand }} {{ shoe.shoe.model }}</a>
                             </h5>
 
                             <p class="card-text">

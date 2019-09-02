@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -41,8 +42,11 @@ class ShoeType extends AbstractType
                     'placeholder' => "Please select condition",
                     'required' => true
                 ])
-                ->add('conditionOutOf10', TextType::class)
+                ->add('conditionOutOf10', TextType::class, [
+                    'required' => false,
+                ])
                 ->add('uploadImages', FileType::class, [
+                    'required' => false,
                     'multiple' => true,
                     'attr'     => [
                         'accept' => 'image/*',

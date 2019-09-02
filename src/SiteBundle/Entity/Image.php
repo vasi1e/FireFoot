@@ -31,7 +31,7 @@ class Image
     /**
      * @var Shoe
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Shoe", inversedBy="images")
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Shoe", inversedBy="images", cascade={"persist"})
      */
     private $shoe;
 

@@ -25,14 +25,14 @@ class ShoeUser
     /**
      * @var Shoe
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Shoe", inversedBy="sellers")
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Shoe", inversedBy="sellers", cascade={"persist"})
      */
     private $shoe;
 
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\User", inversedBy="sellerShoes")
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\User", inversedBy="sellerShoes", cascade={"persist"})
      */
     private $seller;
 

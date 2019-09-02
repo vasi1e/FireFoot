@@ -52,9 +52,10 @@ class ShoeService implements ShoeServiceInterface
     }
 
 
-    public function findShoesByBrandAndModel(Shoe $shoe)
+    public function findShoesByBrandAndModel(Shoe $shoe, $condition)
     {
-        return $this->shoeRepository->findBy(['brand' => $shoe->getBrand(), 'model' => $shoe->getModel()]);
+        if ($condition == "used") return $this->shoeRepository->findBy(['brand' => $shoe->getBrand(), 'model' => $shoe->getModel()]);
+        else if ($condition == "new") return $this->shoeRepository->findOneBy(['brand' => $shoe->getBrand(), 'model' => $shoe->getModel(), 'condition' => 'new']);
     }
 
     public function findShoeById(int $id)

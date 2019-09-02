@@ -56,23 +56,12 @@ class BrandModelService implements BrandModelServiceInterface
         return $property . "Repository";
     }
 
-    public function isGoingToAddBrand()
+    public function isModelExisting(Model $currModel)
     {
-        if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "") return "You must choose one brand or write a new one";
-        if ($_POST['shoe']['brand'] == "") return true;
+        $anotherModel = $this->modelRepository->findOneBy(['name' => $currModel->getName()]);
+
+        if ($anotherModel != null) return true;
         else return false;
-    }
-
-    public function isModelExisting(Model $currModel, $brandId)
-    {
-        $modelNames = [];
-
-        /** @var Model $model */
-        foreach ($this->modelRepository->getModelsForBrand($brandId) as $model) {
-            $modelNames[] = $model->getName();
-        }
-
-        return in_array($currModel->getName(), $modelNames);
     }
 
     public function getAllBrandsName()

@@ -73,24 +73,31 @@ class ShoeController extends Controller
         if ($form->isSubmitted())
         {
             $error = false;
+
+            $brand = null;
             if ($_POST['shoe']['brand'] == "" && $_POST["brandToAdd"] == "")
             {
-                $this->addFlash("error", "You must choose one brand or write a new one");
+                $this->addFlash("error", "You must choose one brand or write a new one!");
                 $error = true;
             }
-            else if ($_POST['shoe']['brand'] == "")
+            else if ($_POST['shoe']['brand'] != "" && $_POST["brandToAdd"] != "")
+            {
+                $this->addFlash("error", "You must choose between choosing one brand and writing a new one. Not bout!");
+                $error = true;
+            }
+            else if ($_POST['shoe']['brand'] != "")
+            {
+                $brand = $this->brandmodelService->findPropertyByName("brand", $shoe->getBrand()->getName());
+            }
+            else if ($_POST["brandToAdd"] != "")
             {
                 $brand = new Brand();
                 $brand->setName($_POST['brandToAdd']);
 
-                if ($this->brandmodelService->isBrandExisting($brand) == false)
-                {
-                    $this->SUDService->saveProperty("brand", $brand);
-                    $shoe->setBrand($brand);
-                }
+                if ($this->brandmodelService->isBrandExisting($brand) == false) $shoe->setBrand($brand);
                 else
                 {
-                    $this->addFlash("error", "We already have this brand");
+                    $this->addFlash("error", "We already have this brand. Choose it from the 'Brand'-Box.");
                     $error = true;
                 }
             }
@@ -103,23 +110,37 @@ class ShoeController extends Controller
                 ]);
             }
 
+
             $model = new Model();
             $model->setName($_POST['modelToAdd']);
-            /** @var Brand $currBrand */
-            $currBrand = $this->brandmodelService->findPropertyByName("brand", $shoe->getBrand()->getName());
 
-            if ($this->brandmodelService->isModelExisting($model, $currBrand->getId()) == false)
+            if ($this->brandmodelService->isModelExisting($model) == false)
             {
-                $currBrand->addModel($model);
-                $model->setBrand($currBrand);
+                $brand->addModel($model);
+                $model->setBrand($brand);
                 $shoe->setModel($model);
 
-                $this->SUDService->saveProperty("model", $model);
-                $this->SUDService->updateProperty("brand", $currBrand);
             }
             else
             {
-                $this->addFlash("error", "We already have this model");
+                $this->addFlash("error", "We already have this model. Tou must write a new one!");
+                $error = true;
+            }
+
+            if ($error) {
+                return $this->render('shoe/create.html.twig', [
+                    'form' => $form->createView(),
+                    'isAdmin' => true
+                ]);
+            }
+
+            $shoe->setCondition("new");
+            $shoe->setConditionOutOf10('10');
+
+            $imageFiles = $form->getData()->getUploadImages();
+            if ($imageFiles == null)
+            {
+                $this->addFlash("error", "You must upload picture!");
                 $error = true;
             }
 
@@ -131,12 +152,13 @@ class ShoeController extends Controller
                 ]);
             }
 
-            $shoe->setCondition("new");
-            $shoe->setConditionOutOf10('10');
-            $this->SUDService->saveProperty("shoe", $shoe);
+            $this->SUDService->saveProperty("model", $model);
 
-            $imageFiles = $form->getData()->getUploadImages();
+            if ($_POST['shoe']['brand'] != "") $this->SUDService->updateProperty("brand", $brand);
+            else if ($_POST["brandToAdd"] != "") $this->SUDService->saveProperty("brand", $brand);
+
             $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
+            $this->SUDService->saveProperty("shoe", $shoe);
 
             return $this->redirect("/");
         }
@@ -178,22 +200,57 @@ class ShoeController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            if ($shoe->getCondition() == 'new')
-            {
-                $shoes = $this->shoeService->findShoesByBrandAndModel($shoe);
+            $error = false;
 
-                /** @var Shoe $s */
-                foreach ($shoes as $s)
-                {
-                    if ($s->getCondition() == 'new')
-                    {
-                        $shoe = $s;
-                        break;
-                    }
-                }
+            if ($shoe->getBrand() == null)
+            {
+                $this->addFlash("error", "Please choose a brand.");
+                $error = true;
             }
-            else {
-                $this->SUDService->saveProperty("shoe", $shoe);
+
+            if ($shoe->getModel() == null)
+            {
+                $this->addFlash("error", "Please choose a model.");
+                $error = true;
+            }
+
+            if (!is_numeric($_POST['price']))
+            {
+                $this->addFlash("error", "Please use only numbers for the price.");
+                $error = true;
+            }
+
+            if ($error)
+            {
+                return $this->render('shoe/create.html.twig', [
+                    'form' => $form->createView(),
+                    'isAdmin' => false
+                ]);
+            }
+
+            if ($shoe->getCondition() == 'new') $shoe = $this->shoeService->findShoesByBrandAndModel($shoe, "new");
+            else
+            {
+                if ($shoe->getUploadImages() == null)
+                {
+                    $this->addFlash("error", "Please upload images.");
+                    $error = true;
+                }
+
+                if ($shoe->getConditionOutOf10() == null || !is_numeric($shoe->getConditionOutOf10()))
+                {
+                    $this->addFlash("error", "Please rate the condition with numbers.");
+                    $error = true;
+                }
+
+                if ($error)
+                {
+                    return $this->render('shoe/create.html.twig', [
+                        'form' => $form->createView(),
+                        'isAdmin' => false
+                    ]);
+                }
+
                 $imageFiles = $shoe->getUploadImages();
                 $this->shoeService->addingImagesForShoe($imageFiles, $this->getParameter('shoe_directory'), $shoe);
                 $shoe->setUploadImages(null);
@@ -229,6 +286,7 @@ class ShoeController extends Controller
 
             $shoe->addSeller($shoeUser);
             $seller->addSellerShoe($shoeUser);
+            $this->SUDService->saveProperty("shoe", $shoe);
 
             return $this->redirect("/");
         }

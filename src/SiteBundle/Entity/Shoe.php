@@ -27,14 +27,14 @@ class Shoe
     /**
      * @var Brand
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Brand", inversedBy="shoes")
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Brand", inversedBy="shoes", cascade={"persist"})
      */
     private $brand;
 
     /**
      * @var Model
      *
-     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Model", inversedBy="shoes")
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Model", inversedBy="shoes", cascade={"persist"})
      */
     private $model;
 
@@ -88,7 +88,7 @@ class Shoe
     /**
      * @var User[]
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups", cascade={"persist"})
      */
     private $usersThatLiked;
 

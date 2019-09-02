@@ -16,7 +16,7 @@ use SiteBundle\Entity\User;
 
 interface ShoeServiceInterface
 {
-    public function findShoesByBrandAndModel(Shoe $shoe);
+    public function findShoesByBrandAndModel(Shoe $shoe, $condition);
     public function findShoeById(int $id);
     public function findShoeSizeByShoeAndSize(Shoe $shoe, Size $size);
     public function findShoeUserByShoeAndSize(Shoe $shoe, Size $size);
